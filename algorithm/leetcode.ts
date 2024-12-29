@@ -81,3 +81,12 @@ function addStrings(num1: string, num2: string): string {
     }
     return result
 };
+
+function isSubsequence(s: string, t: string): boolean {
+    let [a, b] = [0, 0]
+    while (b < t.length) {
+        if (t[b] === s[a]) a++
+        b++
+    }
+    return a === s.length
+};
