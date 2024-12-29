@@ -31,3 +31,15 @@ function maxArea(height: number[]): number {
     }
     return maxArea
 };
+
+function removeDuplicates(nums: number[]): number {
+    let [a, b] = [0, 1]
+    while (b < nums.length) {
+        if (nums[a]!== nums[b]) {
+            a++
+            nums[a] = nums[b]
+        }
+        b++
+    }
+    return a + 1
+};
