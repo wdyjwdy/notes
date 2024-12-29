@@ -123,3 +123,14 @@ function sortColors(nums: number[]): void {
         }
     }
 };
+
+function moveZeroes(nums: number[]): void {
+    let [a, b] = [0, 0]
+    while (b < nums.length) {
+        if (nums[b] !== 0) {
+            [nums[a], nums[b]] = [nums[b], nums[a]]
+            a++
+        }
+        b++
+    }
+};
