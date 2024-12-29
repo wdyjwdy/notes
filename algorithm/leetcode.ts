@@ -134,3 +134,15 @@ function moveZeroes(nums: number[]): void {
         b++
     }
 };
+
+function removeElement(nums: number[], val: number): number {
+    let [a, b] = [0, 0]
+    while (b < nums.length) {
+        if (nums[b] !== val) {
+            [nums[a], nums[b]] = [nums[b], nums[a]]
+            a++
+        }
+        b++
+    }
+    return a
+};
