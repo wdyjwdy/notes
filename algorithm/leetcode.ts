@@ -145,3 +145,19 @@ function removeElement(nums: number[], val: number): number {
     }
     return a
 };
+
+function merge(nums1: number[], m: number, nums2: number[], n: number): void {
+    let [a, b, i] = [m - 1, n - 1, m + n - 1]
+    while (i >= 0) {
+        let v1 = nums1[a] ?? -Infinity
+        let v2 = nums2[b] ?? -Infinity
+        if (v1 < v2) {
+            nums1[i] = v2
+            b--
+        } else {
+            nums1[i] = v1
+            a--
+        }
+        i--
+    }
+};
