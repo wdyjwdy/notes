@@ -19,3 +19,15 @@ function isPalindrome(s: string): boolean {
     }
     return true
 };
+
+function maxArea(height: number[]): number {
+    let maxArea = 0
+    let [a, b] = [0, height.length - 1]
+    while (a < b) {
+        let area = (b - a) * Math.min(height[a], height[b])
+        maxArea = Math.max(area, maxArea)
+        if (height[a] < height[b]) a++
+        else b--
+    }
+    return maxArea
+};
