@@ -106,3 +106,20 @@ function sortedSquares(nums: number[]): number[] {
     }
     return result.reverse()
 };
+
+function sortColors(nums: number[]): void {
+    let i = 0
+    let [a, b] = [0, nums.length - 1]
+    while (i <= b) {
+        if (nums[i] === 0) {
+            [nums[a], nums[i]] = [nums[i], nums[a]]
+            a++
+            i++
+        } else if (nums[i] === 1) {
+            i++
+        } else {
+            [nums[b], nums[i]] = [nums[i], nums[b]]
+            b--
+        }
+    }
+};
