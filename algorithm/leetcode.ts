@@ -33,15 +33,27 @@ function maxArea(height: number[]): number {
 };
 
 function removeDuplicates(nums: number[]): number {
-    let [a, b] = [0, 1]
+    let [a, b] = [0, 0]
     while (b < nums.length) {
-        if (nums[a]!== nums[b]) {
-            a++
+        if (nums[a - 1] !== nums[b]) {
             nums[a] = nums[b]
+            a++
         }
         b++
     }
-    return a + 1
+    return a
+};
+
+function removeDuplicates(nums: number[]): number {
+    let [a, b] = [0, 0]
+    while (b < nums.length) {
+        if (nums[a - 2] !== nums[b]) {
+            nums[a] = nums[b]
+            a++
+        }
+        b++
+    }
+    return a
 };
 
 function intersection(nums1: number[], nums2: number[]): number[] {
