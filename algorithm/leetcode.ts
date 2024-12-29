@@ -108,8 +108,7 @@ function sortedSquares(nums: number[]): number[] {
 };
 
 function sortColors(nums: number[]): void {
-    let i = 0
-    let [a, b] = [0, nums.length - 1]
+    let [a, b, i] = [0, nums.length - 1, 0]
     while (i <= b) {
         if (nums[i] === 0) {
             [nums[a], nums[i]] = [nums[i], nums[a]]
