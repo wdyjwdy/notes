@@ -65,3 +65,19 @@ function intersection(nums1: number[], nums2: number[]): number[] {
     }
     return result
 };
+
+function addStrings(num1: string, num2: string): string {
+    let result = ''
+    let carry = 0
+    let [a, b] = [num1.length - 1, num2.length - 1]
+    while (a >= 0 || b >= 0 || carry > 0) {
+        let v1 = a < 0 ? 0 : Number(num1[a])
+        let v2 = b < 0 ? 0 : Number(num2[b])
+        let sum = v1 + v2 + carry
+        carry = sum < 10 ? 0 : 1
+        result = sum % 10 + result
+        a--
+        b--
+    }
+    return result
+};
