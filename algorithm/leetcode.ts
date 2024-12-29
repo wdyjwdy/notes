@@ -90,3 +90,19 @@ function isSubsequence(s: string, t: string): boolean {
     }
     return a === s.length
 };
+
+function sortedSquares(nums: number[]): number[] {
+    let result = []
+    let [a, b] = [0, nums.length - 1]
+    while (a <= b) {
+        let [A, B] = [nums[a] ** 2, nums[b] ** 2]
+        if (A > B) {
+            a++
+            result.push(A)
+        } else {
+            b--
+            result.push(B)
+        }
+    }
+    return result.reverse()
+};
