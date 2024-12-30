@@ -188,3 +188,19 @@ function numOfSubarrays(arr: number[], k: number, threshold: number): number {
     }
     return count
 };
+
+function lengthOfLongestSubstring(s: string): number {
+    let maxlen = 0
+    let set = new Set()
+    let [a, b] = [0, 0]
+    while (b < s.length) {
+        set.add(s[b])
+        while (b - a + 1 !== set.size) {
+            if (s[a] !== s[b]) set.delete(s[a])
+            a++
+        }
+        maxlen = Math.max(maxlen, b - a + 1)
+        b++
+    }
+    return maxlen
+};
