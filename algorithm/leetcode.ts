@@ -21,8 +21,7 @@ function isPalindrome(s: string): boolean {
 };
 
 function maxArea(height: number[]): number {
-    let maxArea = 0
-    let [a, b] = [0, height.length - 1]
+    let [a, b, maxArea] = [0, height.length - 1, 0]
     while (a < b) {
         let area = (b - a) * Math.min(height[a], height[b])
         maxArea = Math.max(area, maxArea)
@@ -61,8 +60,7 @@ function intersection(nums1: number[], nums2: number[]): number[] {
     nums2.sort((a, b) => a - b)
     let [m, n] = [nums1.length, nums2.length]
 
-    let result = []
-    let [a, b] = [0, 0]
+    let [a, b, result] = [0, 0, []]
     while (a < m && b < n) {
         if (nums1[a] < nums2[b]) {
             a++
@@ -79,9 +77,7 @@ function intersection(nums1: number[], nums2: number[]): number[] {
 };
 
 function addStrings(num1: string, num2: string): string {
-    let result = ''
-    let carry = 0
-    let [a, b] = [num1.length - 1, num2.length - 1]
+    let [a, b, carry, result] = [num1.length - 1, num2.length - 1, 0, '']
     while (a >= 0 || b >= 0 || carry > 0) {
         let v1 = a < 0 ? 0 : Number(num1[a])
         let v2 = b < 0 ? 0 : Number(num2[b])
@@ -104,8 +100,7 @@ function isSubsequence(s: string, t: string): boolean {
 };
 
 function sortedSquares(nums: number[]): number[] {
-    let result = []
-    let [a, b] = [0, nums.length - 1]
+    let [a, b, result] = [0, nums.length - 1, []]
     while (a <= b) {
         let [A, B] = [nums[a] ** 2, nums[b] ** 2]
         if (A > B) {
@@ -175,8 +170,7 @@ function merge(nums1: number[], m: number, nums2: number[], n: number): void {
 };
 
 function numOfSubarrays(arr: number[], k: number, threshold: number): number {
-    let [sum, count] = [0, 0]
-    let [a, b] = [0, 0]
+    let [a, b, count, sum] = [0, 0, 0, 0]
     while (b < arr.length) {
         sum += arr[b]
         if (b - a + 1 === k) {
@@ -190,9 +184,7 @@ function numOfSubarrays(arr: number[], k: number, threshold: number): number {
 };
 
 function lengthOfLongestSubstring(s: string): number {
-    let maxlen = 0
-    let set = new Set()
-    let [a, b] = [0, 0]
+    let [a, b, maxlen, set] = [0, 0, 0, new Set()]
     while (b < s.length) {
         set.add(s[b])
         while (b - a + 1 !== set.size) {
@@ -206,8 +198,7 @@ function lengthOfLongestSubstring(s: string): number {
 };
 
 function minSubArrayLen(target: number, nums: number[]): number {
-    let [minlen, sum] = [Infinity, 0]
-    let [a, b] = [0, 0]
+    let [a, b, minlen, sum] = [0, 0, Infinity, 0]
     while (b < nums.length) {
         sum += nums[b]
         while (sum >= target) {
@@ -218,4 +209,20 @@ function minSubArrayLen(target: number, nums: number[]): number {
         b++
     }
     return minlen === Infinity ? 0 : minlen
+};
+
+function numSubarrayProductLessThanK(nums: number[], k: number): number {
+    if (k < 2) return 0
+
+    let [a, b, count, product] = [0, 0, 0, 1]
+    while (b < nums.length) {
+        product *= nums[b]
+        while (product >= k) {
+            product /= nums[a]
+            a++
+        }
+        count += b - a + 1
+        b++
+    }
+    return count
 };
