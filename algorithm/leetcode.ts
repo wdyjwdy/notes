@@ -173,3 +173,18 @@ function merge(nums1: number[], m: number, nums2: number[], n: number): void {
         i--
     }
 };
+
+function numOfSubarrays(arr: number[], k: number, threshold: number): number {
+    let [sum, count] = [0, 0]
+    let [a, b] = [0, 0]
+    while (b < arr.length) {
+        sum += arr[b]
+        if (b - a + 1 === k) {
+            if (sum >= k * threshold) count++
+            sum -= arr[a]
+            a++
+        }
+        b++
+    }
+    return count
+};
