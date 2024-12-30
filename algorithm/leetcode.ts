@@ -204,3 +204,18 @@ function lengthOfLongestSubstring(s: string): number {
     }
     return maxlen
 };
+
+function minSubArrayLen(target: number, nums: number[]): number {
+    let [minlen, sum] = [Infinity, 0]
+    let [a, b] = [0, 0]
+    while (b < nums.length) {
+        sum += nums[b]
+        while (sum >= target) {
+            minlen = Math.min(minlen, b - a + 1)
+            sum -= nums[a]
+            a++
+        }
+        b++
+    }
+    return minlen === Infinity ? 0 : minlen
+};
