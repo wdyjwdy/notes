@@ -226,3 +226,17 @@ function numSubarrayProductLessThanK(nums: number[], k: number): number {
     }
     return count
 };
+
+function findMaxAverage(nums: number[], k: number): number {
+    let [a, b, maxavg, sum] = [0, 0, -Infinity, 0]
+    while (b < nums.length) {
+        sum += nums[b]
+        if (b - a + 1 === k) {
+            maxavg = Math.max(maxavg, sum / k)
+            sum -= nums[a]
+            a++
+        }
+        b++
+    }
+    return maxavg
+};
