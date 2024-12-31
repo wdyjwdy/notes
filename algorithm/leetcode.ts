@@ -240,3 +240,21 @@ function findMaxAverage(nums: number[], k: number): number {
     }
     return maxavg
 };
+
+function maxSatisfied(customers: number[], grumpy: number[], minutes: number): number {
+    let [a, b, sum, maxsum] = [0, 0, 0, 0]
+    while (b < customers.length) {
+        sum += grumpy[b] ? customers[b] : 0
+        if (b - a + 1 === minutes) {
+            maxsum = Math.max(maxsum, sum)
+            sum -= grumpy[a] ? customers[a] : 0
+            a++
+        }
+        b++
+    }
+
+    for (let i = 0; i < customers.length; i++) {
+        maxsum += grumpy[i] ? 0 : customers[i]
+    }
+    return maxsum
+};
