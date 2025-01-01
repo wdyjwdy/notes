@@ -324,3 +324,15 @@ function findLengthOfLCIS(nums: number[]): number {
     }
     return maxlen
 };
+
+function findMaxConsecutiveOnes(nums: number[]): number {
+    let [a, b, maxlen] = [0, 0, 0]
+    while (b < nums.length) {
+        if (nums[b] === 0) {
+            a = b + 1
+        }
+        maxlen = Math.max(maxlen, b - a + 1)
+        b++
+    }
+    return maxlen
+};
