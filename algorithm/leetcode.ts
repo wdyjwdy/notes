@@ -350,3 +350,18 @@ function longestOnes(nums: number[], k: number): number {
     }
     return maxlen
 };
+
+function totalFruit(fruits: number[]): number {
+    let [a, b, type, maxlen] = [0, 0, new Map(), 0]
+    while (b < fruits.length) {
+        type.set(fruits[b], (type.get(fruits[b]) ?? 0) + 1)
+        while (type.size > 2) {
+            type.set(fruits[a], type.get(fruits[a]) - 1)
+            if (type.get(fruits[a]) === 0) type.delete(fruits[a])
+            a++
+        }
+        maxlen = Math.max(maxlen, b - a + 1)
+        b++
+    }
+    return maxlen
+};
