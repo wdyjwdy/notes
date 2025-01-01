@@ -336,3 +336,17 @@ function findMaxConsecutiveOnes(nums: number[]): number {
     }
     return maxlen
 };
+
+function longestOnes(nums: number[], k: number): number {
+    let [a, b, count, maxlen] = [0, 0, 0, 0]
+    while (b < nums.length) {
+        if (nums[b] === 0) count++
+        while (count > k) {
+            if (nums[a] === 0) count--
+            a++
+        }
+        maxlen = Math.max(maxlen, b - a + 1)
+        b++
+    }
+    return maxlen
+};
