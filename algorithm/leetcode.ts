@@ -293,3 +293,22 @@ function checkInclusion(s1: string, s2: string): boolean {
     }
     return false
 };
+
+function findAnagrams(s: string, p: string): number[] {
+    let map = new Map()
+    for (let v of p) {
+        map.set(v, (map.get(v) ?? 0) - 1)
+    }
+
+    let [a, b, result] = [0, 0, []]
+    while (b < s.length) {
+        map.set(s[b], (map.get(s[b]) ?? 0) + 1)
+        if (b - a + 1 === p.length) {
+            if ([...map.values()].every(x => x === 0)) result.push(a)
+            map.set(s[a], (map.get(s[a]) ?? 0) - 1)
+            a++
+        }
+        b++
+    }
+    return result
+};
