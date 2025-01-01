@@ -312,3 +312,15 @@ function findAnagrams(s: string, p: string): number[] {
     }
     return result
 };
+
+function findLengthOfLCIS(nums: number[]): number {
+    let [a, b, maxlen] = [0, 0, 0]
+    while (b < nums.length) {
+        while (b - a + 1 > 1 && nums[b] <= nums[b - 1]) {
+            a++
+        }
+        maxlen = Math.max(maxlen, b - a + 1)
+        b++
+    }
+    return maxlen
+};
