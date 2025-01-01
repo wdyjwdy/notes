@@ -258,3 +258,19 @@ function maxSatisfied(customers: number[], grumpy: number[], minutes: number): n
     }
     return maxsum
 };
+
+function maxScore(cardPoints: number[], k: number): number {
+    let arr = [...cardPoints.slice(-k), ...cardPoints.slice(0, k)]
+
+    let [a, b, sum, maxsum] = [0, 0, 0, 0]
+    while (b < arr.length) {
+        sum += arr[b]
+        if (b - a + 1 === k) {
+            maxsum = Math.max(maxsum, sum)
+            sum -= arr[a]
+            a++
+        }
+        b++
+    }
+    return maxsum
+};
