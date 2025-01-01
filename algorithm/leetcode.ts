@@ -274,3 +274,22 @@ function maxScore(cardPoints: number[], k: number): number {
     }
     return maxsum
 };
+
+function checkInclusion(s1: string, s2: string): boolean {
+    let map = new Map()
+    for (let v of s1) {
+        map.set(v, (map.get(v) ?? 0) - 1)
+    }
+
+    let [a, b] = [0, 0]
+    while (b < s2.length) {
+        map.set(s2[b], (map.get(s2[b]) ?? 0) + 1)
+        if (b - a + 1 === s1.length) {
+            if ([...map.values()].every(x => x === 0)) return true
+            map.set(s2[a], (map.get(s2[a]) ?? 0) - 1)
+            a++
+        }
+        b++
+    }
+    return false
+};
