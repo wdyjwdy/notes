@@ -422,3 +422,28 @@ function findMin(nums: number[]): number {
     }
     return nums[a]
 };
+
+function search(nums: number[], target: number): number {
+    let [a, b] = [0, nums.length]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (nums[m] > nums.at(-1)) {
+            if (target > nums.at(-1)) {
+                if (nums[m] < target) a = m + 1
+                else if (nums[m] > target) b = m - 1
+                else return m
+            } else {
+                a = m + 1
+            }
+        } else {
+            if (target > nums.at(-1)) {
+                b = m - 1
+            } else {
+                if (nums[m] < target) a = m + 1
+                else if (nums[m] > target) b = m - 1
+                else return m
+            }
+        }
+    }
+    return -1
+};
