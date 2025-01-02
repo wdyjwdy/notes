@@ -376,3 +376,13 @@ function search(nums: number[], target: number): number {
     }
     return -1
 };
+
+function guessNumber(n: number): number {
+    let [a, b] = [1, n]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (guess(m) > 0) a = m + 1
+        else if (guess(m) < 0) b = m - 1
+        else return m
+    }
+};
