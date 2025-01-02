@@ -365,3 +365,14 @@ function totalFruit(fruits: number[]): number {
     }
     return maxlen
 };
+
+function search(nums: number[], target: number): number {
+    let [a, b] = [0, nums.length - 1]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (nums[m] < target) a = m + 1
+        else if (nums[m] > target) b = m - 1
+        else return m
+    }
+    return -1
+};
