@@ -397,3 +397,18 @@ function searchInsert(nums: number[], target: number): number {
     }
     return a
 };
+
+function searchRange(nums: number[], target: number): number[] {
+    function search(target: number): number {
+        let [a, b] = [0, nums.length - 1]
+        while (a <= b) {
+            let m = Math.floor((a + b) / 2)
+            if (nums[m] < target) a = m + 1
+            else if (nums[m] > target) b = m - 1
+        }
+        return a
+    }
+
+    let [a, b] = [search(target - 0.5), search(target + 0.5)]
+    return a === b ? [-1, -1] : [a, b - 1]
+};
