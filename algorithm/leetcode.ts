@@ -481,3 +481,16 @@ function searchMatrix(matrix: number[][], target: number): boolean {
     }
     return false
 };
+
+function searchMatrix(matrix: number[][], target: number): boolean {
+    for (let row of matrix) {
+        let [a, b] = [0, row.length - 1]
+        while (a <= b) {
+            let m = Math.floor((a + b) / 2)
+            if (row[m] < target) a = m + 1
+            else if (row[m] > target) b = m - 1
+            else return true
+        }
+    }
+    return false
+};
