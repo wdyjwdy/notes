@@ -457,3 +457,14 @@ function findPeakElement(nums: number[]): number {
     }
     return a
 };
+
+function nextGreatestLetter(letters: string[], target: string): string {
+    let [a, b] = [0, letters.length - 1]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (letters[m] < target) a = m + 1
+        else if (letters[m] > target) b = m - 1
+        else a = m + 1
+    }
+    return letters[a % letters.length]
+};
