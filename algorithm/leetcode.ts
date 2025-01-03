@@ -494,3 +494,14 @@ function searchMatrix(matrix: number[][], target: number): boolean {
     }
     return false
 };
+
+function mySqrt(x: number): number {
+    let [a, b] = [0, x]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (m * m < x) a = m + 1
+        else if (m * m > x) b = m - 1
+        else return m
+    }
+    return b
+};
