@@ -505,3 +505,14 @@ function mySqrt(x: number): number {
     }
     return b
 };
+
+function findDuplicate(nums: number[]): number {
+    let [a, b] = [1, nums.length - 1]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        let count = nums.filter(x => x <= m).length
+        if (m >= count) a = m + 1
+        else b = m - 1
+    }
+    return a
+};
