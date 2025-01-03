@@ -571,3 +571,20 @@ function pivotIndex(nums: number[]): number {
     }
     return -1
 };
+
+function productExceptSelf(nums: number[]): number[] {
+    let result = Array(nums.length).fill(1)
+
+    let lp = 1
+    for (let i = 0; i < nums.length; i++) {
+        result[i] *= lp
+        lp *= nums[i]
+    }
+
+    let rp = 1
+    for (let i = nums.length - 1; i >= 0; i--) {
+        result[i] *= rp
+        rp *= nums[i]
+    }
+    return result
+};
