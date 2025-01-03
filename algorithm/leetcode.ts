@@ -516,3 +516,14 @@ function findDuplicate(nums: number[]): number {
     }
     return a
 };
+
+function isPerfectSquare(num: number): boolean {
+    let [a, b] = [1, num]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (m * m < num) a = m + 1
+        else if (m * m > num) b = m - 1
+        else return true
+    }
+    return false
+};
