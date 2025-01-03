@@ -468,3 +468,16 @@ function nextGreatestLetter(letters: string[], target: string): string {
     }
     return letters[a % letters.length]
 };
+
+function searchMatrix(matrix: number[][], target: number): boolean {
+    let [r, c] = [matrix.length, matrix[0].length]
+    let [a, b] = [0, r * c - 1]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        let [i, j] = [Math.floor(m / c), m % c]
+        if (matrix[i][j] < target) a = m + 1
+        else if (matrix[i][j] > target) b = m - 1
+        else return true
+    }
+    return false
+};
