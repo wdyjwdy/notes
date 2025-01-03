@@ -545,3 +545,10 @@ function minEatingSpeed(piles: number[], h: number): number {
     }
     return a
 };
+
+function rotate(nums: number[], k: number): void {
+    let [arr, n]= [nums.slice(), nums.length]
+    for (let i = 0; i < n; i++) {
+        nums[(i + k) % n] = arr[i]
+    }
+};
