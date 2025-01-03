@@ -561,3 +561,13 @@ function plusOne(digits: number[]): number[] {
     if (digits[0] === 0) digits.unshift(1)
     return digits
 };
+
+function pivotIndex(nums: number[]): number {
+    let sum = nums.reduce((a, b) => a + b)
+    let leftsum = 0
+    for (let [i, v] of nums.entries()) {
+        if (leftsum * 2 === sum - v) return i
+        leftsum += v
+    }
+    return -1
+};
