@@ -447,3 +447,13 @@ function search(nums: number[], target: number): number {
     }
     return -1
 };
+
+function findPeakElement(nums: number[]): number {
+    let [a, b] = [0, nums.length - 2]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (nums[m] < nums[m + 1]) a = m + 1
+        else b = m - 1
+    }
+    return a
+};
