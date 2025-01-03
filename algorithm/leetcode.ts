@@ -527,3 +527,21 @@ function isPerfectSquare(num: number): boolean {
     }
     return false
 };
+
+function minEatingSpeed(piles: number[], h: number): number {
+    function finish(speed: number): boolean {
+        let hour = 0
+        for (let pile of piles) {
+            hour += Math.ceil(pile / speed)
+        }
+        return hour <= h
+    }
+    
+    let [a, b] = [1, Math.max(...piles)]
+    while (a <= b) {
+        let m = Math.floor((a + b) / 2)
+        if (finish(m)) b = m - 1
+        else a = m + 1
+    }
+    return a
+};
