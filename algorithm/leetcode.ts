@@ -602,3 +602,35 @@ function rotate(matrix: number[][]): void {
         }
     }
 };
+
+function setZeroes(matrix: number[][]): void {
+    let [m, n] = [matrix.length, matrix[0].length]
+    let [row_flag, col_flag] = [false, false]
+    for (let j = 0; j < n; j++) {
+        if (matrix[0][j] === 0) row_flag = true
+    }
+    for (let i = 0; i < m; i++) {
+        if (matrix[i][0] === 0) col_flag = true
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (matrix[i][j] === 0) {
+                matrix[0][j] = 0
+                matrix[i][0] = 0
+            }
+        }
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (matrix[0][j] === 0 || matrix[i][0] === 0) {
+                matrix[i][j] = 0
+            }
+        }
+    }
+    for (let j = 0; j < n; j++) {
+        if (row_flag) matrix[0][j] = 0
+    }
+    for (let i = 0; i < m; i++) {
+        if (col_flag) matrix[i][0] = 0
+    }
+};
