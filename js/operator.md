@@ -34,3 +34,44 @@ undefined === undefined // true
  1  + '2' // '12'
 '1' + '2' // '12'
 ```
+## &&
+> ECMA: [LogicalANDExpression(x, y)](https://tc39.es/ecma262/#sec-binary-logical-operators-runtime-semantics-evaluation)
+1. 如果 `Boolean(x)` 为 false，返回 `x`
+2. 否则，返回 `y`
+```js
+// 布尔值
+false && false // false
+true && false // false
+
+// 表达式
+1 && 2 // 2
+0 && 2 // 0
+'1' && '2' // '2'
+'' && '2' // ''
+```
+## ||
+> ECMA: [LogicalORExpression(x, y)](https://tc39.es/ecma262/#sec-binary-logical-operators-runtime-semantics-evaluation)
+1. 如果 `Boolean(x)` 为 true，返回 `x`
+2. 否则，返回 `y`
+```js
+// 布尔值
+true || false // true
+false || false // false
+
+// 表达式
+1 || 2 // 1
+0 || 2 // 2
+'1' || '2' // '1'
+'' || '2' // '2'
+```
+## ??
+> ECMA: [CoalesceExpression(x, y)](https://tc39.es/ecma262/#sec-binary-logical-operators-runtime-semantics-evaluation)
+1. 如果 `x` 为 null 或 undefined，返回 `y`
+2. 否则，返回 `x`
+```js
+// 表达式
+null ?? 123 // 123
+undefined ?? 123 // 123
+0 ?? 123 // 123
+'' ?? 123 // 123
+```
