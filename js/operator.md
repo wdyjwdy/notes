@@ -75,3 +75,22 @@ undefined ?? 123 // 123
 0 ?? 123 // 123
 '' ?? 123 // 123
 ```
+## typeof
+> ECMA: [typeof](https://tc39.es/ecma262/#sec-typeof-operator)
+1. 基础类型中，null 是特例
+2. 对象类型中，funciton 是特例
+```js
+// 基础类型
+typeof number    // 'number'
+typeof string    // 'string'
+typeof boolean   // 'boolean'
+typeof null      // 'object' ‼️
+typeof undefined // 'undefined'
+
+typeof bigint    // 'bigint'
+typeof symbol    // 'symbol'
+
+// 对象类型
+typeof function  // 'function' ‼️
+typeof others    // 'object'
+```
