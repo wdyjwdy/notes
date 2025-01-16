@@ -664,3 +664,15 @@ function twoSum(nums: number[], target: number): number[] {
         else map.set(v, i)
     }
 };
+
+function longestConsecutive(nums: number[]): number {
+    let maxlen = 0
+    let set = new Set(nums)
+    for (let v of set) {
+        if (set.has(v - 1)) continue
+        let len = 1
+        while (set.has(v + len)) len++
+        maxlen = Math.max(maxlen, len)
+    }
+    return maxlen
+};
