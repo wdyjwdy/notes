@@ -634,3 +634,12 @@ function setZeroes(matrix: number[][]): void {
         if (col_flag) matrix[i][0] = 0
     }
 };
+
+function containsDuplicate(nums: number[]): boolean {
+    let set = new Set()
+    for (let v of nums) {
+        if (set.has(v)) return true
+        set.add(v)
+    }
+    return false
+};
