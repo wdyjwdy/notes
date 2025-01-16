@@ -740,3 +740,19 @@ function calculate(s: string): number {
     }
     return nums.reduce((a, b) => a + b)
 };
+
+function evalRPN(tokens: string[]): number {
+    let nums = []
+    for (let v of tokens) {
+        if (/\d+/.test(v)) {
+            nums.push(Number(v))
+        } else {
+            let [a, b] = nums.splice(-2)
+            if (v === '+') nums.push(a + b)
+            if (v === '-') nums.push(a - b)
+            if (v === '*') nums.push(a * b)
+            if (v === '/') nums.push(~~(a / b))
+        }
+    }
+    return nums[0]
+};
