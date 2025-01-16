@@ -687,3 +687,16 @@ function isHappy(n: number): boolean {
     }
     return false
 };
+
+function isAnagram(s: string, t: string): boolean {
+    let map = new Map()
+    for (let v of s) {
+        if (map.has(v)) map.set(v, map.get(v) - 1)
+        else map.set(v, -1)
+    }
+    for (let v of t) {
+        if (map.has(v)) map.set(v, map.get(v) + 1)
+        else return false
+    }
+    return [...map.values()].every(x => x === 0)
+};
