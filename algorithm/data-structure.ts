@@ -29,7 +29,7 @@ class HashSet {
     }
 }
 
-class MyHashMap {
+class HashMap {
     buckets: number
     table: number[][][]
 
