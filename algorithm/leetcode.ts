@@ -667,3 +667,13 @@ function canConstruct(ransomNote: string, magazine: string): boolean {
     }
     return [...map.values()].every(x => x >= 0)
 };
+
+function intersection(nums1: number[], nums2: number[]): number[] {
+    let set1 = new Set(nums1)
+    let set2 = new Set(nums2)
+    let result = []
+    for (let v of set2) {
+        if (set1.has(v)) result.push(v)
+    }
+    return result
+};
