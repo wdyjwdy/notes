@@ -700,3 +700,12 @@ function isAnagram(s: string, t: string): boolean {
     }
     return [...map.values()].every(x => x === 0)
 };
+
+function removeDuplicates(s: string): string {
+    let stack = []
+    for (let v of s) {
+        if (v === stack.at(-1)) stack.pop()
+        else stack.push(v)
+    }
+    return stack.join('')
+};
