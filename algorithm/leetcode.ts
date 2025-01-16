@@ -676,3 +676,14 @@ function longestConsecutive(nums: number[]): number {
     }
     return maxlen
 };
+
+function isHappy(n: number): boolean {
+    let set = new Set()
+    let num = n
+    while (!set.has(num)) {
+        set.add(num)
+        num = Array.from(String(num)).map(x => Number(x) ** 2).reduce((a, b) => a + b)
+        if (num === 1) return true
+    }
+    return false
+};
