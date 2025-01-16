@@ -656,3 +656,11 @@ function intersection(nums1: number[], nums2: number[]): number[] {
     }
     return result
 };
+
+function twoSum(nums: number[], target: number): number[] {
+    let map = new Map()
+    for (let [i, v] of nums.entries()) {
+        if (map.has(target - v)) return [map.get(target - v), i]
+        else map.set(v, i)
+    }
+};
