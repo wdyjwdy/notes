@@ -643,3 +643,15 @@ function containsDuplicate(nums: number[]): boolean {
     }
     return false
 };
+
+function containsNearbyDuplicate(nums: number[], k: number): boolean {
+    let map = new Map()
+    for (let [i, v] of nums.entries()) {
+        if (map.has(v) && i - map.get(v) <= k) {
+            return true
+        } else {
+            map.set(v, i)
+        }
+    }
+    return false
+};
