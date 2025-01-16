@@ -55,27 +55,6 @@ function removeDuplicates(nums: number[]): number {
     return a
 };
 
-function intersection(nums1: number[], nums2: number[]): number[] {
-    nums1.sort((a, b) => a - b)
-    nums2.sort((a, b) => a - b)
-    let [m, n] = [nums1.length, nums2.length]
-
-    let [a, b, result] = [0, 0, []]
-    while (a < m && b < n) {
-        if (nums1[a] < nums2[b]) {
-            a++
-        } else if (nums1[a] > nums2[b]) {
-            b++
-        } else if (nums1[a] === result.at(-1)) {
-            a++
-            b++
-        } else {
-            result.push(nums1[a])
-        }
-    }
-    return result
-};
-
 function addStrings(num1: string, num2: string): string {
     let [a, b, carry, result] = [num1.length - 1, num2.length - 1, 0, '']
     while (a >= 0 || b >= 0 || carry > 0) {
