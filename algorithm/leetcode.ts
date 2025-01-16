@@ -709,3 +709,16 @@ function removeDuplicates(s: string): string {
     }
     return stack.join('')
 };
+
+function isValid(s: string): boolean {
+    let set = new Set(['()', '[]', '{}'])
+    let stack = []
+    for (let v of s) {
+        if (set.has(stack.at(-1) + v)) {
+            stack.pop()
+        } else {
+            stack.push(v)
+        }
+    }
+    return stack.length === 0
+};
