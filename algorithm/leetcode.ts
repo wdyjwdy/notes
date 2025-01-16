@@ -722,3 +722,21 @@ function isValid(s: string): boolean {
     }
     return stack.length === 0
 };
+
+function calculate(s: string): number {
+    let tokens = s.replace(/ /g, '').split(/(\D)/)
+    let nums = []
+    let op = '+'
+    for (let v of tokens) {
+        if (/\D/.test(v)) {
+            op = v
+        } else {
+            let num = Number(v)
+            if (op === '+') nums.push(num)
+            if (op === '-') nums.push(-num)
+            if (op === '*') nums.push(nums.pop() * num)
+            if (op === '/') nums.push(~~(nums.pop() / num))
+        }
+    }
+    return nums.reduce((a, b) => a + b)
+};
