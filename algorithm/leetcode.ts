@@ -655,3 +655,15 @@ function containsNearbyDuplicate(nums: number[], k: number): boolean {
     }
     return false
 };
+
+function canConstruct(ransomNote: string, magazine: string): boolean {
+    let map = new Map()
+    for (let v of ransomNote) {
+        if (map.has(v)) map.set(v, map.get(v) - 1)
+        else map.set(v, -1)
+    }
+    for (let v of magazine) {
+        if (map.has(v)) map.set(v, map.get(v) + 1)
+    }
+    return [...map.values()].every(x => x >= 0)
+};
