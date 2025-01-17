@@ -756,3 +756,18 @@ function evalRPN(tokens: string[]): number {
     }
     return nums[0]
 };
+
+function decodeString(s: string): string {
+    let tokens = s.split(/(\d+|\W)/).filter(x => x)
+    let stack = []
+    for (let v of tokens) {
+        if (v === ']') {
+            let i = stack.lastIndexOf('[')
+            let [num, , ...str] = stack.splice(i - 1)
+            stack.push(str.join('').repeat(num))
+        } else {
+            stack.push(v)
+        }
+    }
+    return stack.join('')
+};
