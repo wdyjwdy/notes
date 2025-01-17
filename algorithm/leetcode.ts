@@ -784,3 +784,16 @@ function validateStackSequences(pushed: number[], popped: number[]): boolean {
     }
     return stack.length === 0
 };
+
+function nextGreaterElement(nums1: number[], nums2: number[]): number[] {
+    let map = new Map()
+    let stack = []
+    for (let v of nums2) {
+        while (stack.length && v > stack.at(-1)) {
+            let num = stack.pop()
+            map.set(num, v)
+        }
+        stack.push(v)
+    }
+    return nums1.map(x => map.get(x) ?? -1)
+};
