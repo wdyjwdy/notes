@@ -771,3 +771,16 @@ function decodeString(s: string): string {
     }
     return stack.join('')
 };
+
+function validateStackSequences(pushed: number[], popped: number[]): boolean {
+    let stack = []
+    let i = 0
+    for (let v of pushed) {
+        stack.push(v)
+        while (stack.length && stack.at(-1) === popped[i]) {
+            stack.pop()
+            i++
+        }
+    }
+    return stack.length === 0
+};
