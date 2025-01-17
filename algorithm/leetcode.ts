@@ -797,3 +797,16 @@ function nextGreaterElement(nums1: number[], nums2: number[]): number[] {
     }
     return nums1.map(x => map.get(x) ?? -1)
 };
+
+function dailyTemperatures(temperatures: number[]): number[] {
+    let result = Array.from(temperatures, () => 0)
+    let stack = []
+    for (let [i, v] of temperatures.entries()) {
+        while (stack.length && v > temperatures[stack.at(-1)]) {
+            let j = stack.pop()
+            result[j] = i - j
+        }
+        stack.push(i)
+    }
+    return result
+};
