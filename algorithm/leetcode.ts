@@ -861,6 +861,7 @@ function sortArray(nums: number[]): number[] {
     }
 
     function partition(a, b) {
+        // swap(a, a + Math.round(Math.random() * (b - a)))
         let pivot = a
         let index = a + 1
         for (let i = index; i <= b; i++) {
