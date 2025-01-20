@@ -838,3 +838,18 @@ function sortArray(nums: number[]): number[] {
     }
     return nums
 };
+
+// Insertion Sort
+function sortArray(nums: number[]): number[] {
+    let n = nums.length
+    for (let i = 1; i < n; i++) {
+        let base = nums[i]
+        let j = i - 1
+        while (j >= 0 && nums[j] > base) {
+            nums[j + 1] = nums[j]
+            j--
+        }
+        nums[j + 1] = base
+    }
+    return nums
+};
