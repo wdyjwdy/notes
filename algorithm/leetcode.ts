@@ -817,7 +817,7 @@ function sortArray(nums: number[]): number[] {
     for (let i = n - 1; i > 0; i--) {
         for (let j = 0; j < i; j++) {
             if (nums[j] > nums[j + 1]) {
-                [nums[j], nums[j + 1], nums[j + 1], nums[j]]
+                [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]]
             }
         }
     }
@@ -834,7 +834,7 @@ function sortArray(nums: number[]): number[] {
                 min = j
             }
         }
-        [nums[i], nums[min], nums[min], nums[i]]
+        [nums[i], nums[min]] = [nums[min], nums[i]]
     }
     return nums
 };
