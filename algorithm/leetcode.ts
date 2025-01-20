@@ -853,3 +853,33 @@ function sortArray(nums: number[]): number[] {
     }
     return nums
 };
+
+// Quick Sort
+function sortArray(nums: number[]): number[] {
+    function swap(i, j) {
+        [nums[i], nums[j]] = [nums[j], nums[i]]
+    }
+
+    function partition(a, b) {
+        let pivot = a
+        let index = a + 1
+        for (let i = index; i <= b; i++) {
+            if (nums[i] < nums[pivot]) {
+                swap(i, index)
+                index++
+            }
+        }
+        swap(a, index - 1)
+        return index - 1
+    }
+
+    function sort(a, b) {
+        if (a >= b) return
+        let pivot = partition(a, b)
+        sort(a, pivot - 1)
+        sort(pivot + 1, b)
+    }
+
+    sort(0, nums.length - 1)
+    return nums
+};
