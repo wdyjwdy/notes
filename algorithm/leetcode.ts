@@ -811,18 +811,30 @@ function dailyTemperatures(temperatures: number[]): number[] {
     return result
 };
 
-function swap(nums, a, b) {
-    [nums[a], nums[b]] = [nums[b], nums[a]]
-}
-
 // Bubble Sort
 function sortArray(nums: number[]): number[] {
-    for (let i = nums.length - 1; i > 0; i--) {
+    let n = nums.length
+    for (let i = n - 1; i > 0; i--) {
         for (let j = 0; j < i; j++) {
             if (nums[j] > nums[j + 1]) {
-                swap(nums, j, j + 1)
+                [nums[j], nums[j + 1], nums[j + 1], nums[j]]
             }
         }
+    }
+    return nums
+};
+
+// Selection Sort
+function sortArray(nums: number[]): number[] {
+    let n = nums.length
+    for (let i = 0; i < n - 1; i++) {
+        let min = i
+        for (let j = i + 1; j < n; j++) {
+            if (nums[j] < nums[min]) {
+                min = j
+            }
+        }
+        [nums[i], nums[min], nums[min], nums[i]]
     }
     return nums
 };
