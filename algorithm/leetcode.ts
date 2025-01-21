@@ -893,7 +893,7 @@ function sortArray(nums: number[]): number[] {
         while (a <= m || b <= r) {
             let v1 = a <= m ? nums[a] : Infinity
             let v2 = b <= r ? nums[b] : Infinity
-            if (v1 < v2) {
+            if (v1 <= v2) {
                 tmp.push(v1)
                 a++
             } else {
