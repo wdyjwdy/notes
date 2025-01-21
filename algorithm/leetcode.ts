@@ -917,3 +917,19 @@ function sortArray(nums: number[]): number[] {
     sort(0, nums.length - 1)
     return nums
 };
+
+// Bucket Sort
+function sortArray(nums: number[]): number[] {
+    const size = 5
+    const min = Math.min(...nums)
+    const max = Math.max(...nums)
+    const count = Math.ceil((max - min) / size) + 1
+    const buckets = Array.from({ length: count }, () => [])
+    
+    for (const num of nums) {
+        const i = Math.floor((num - min) / size)
+        buckets[i].push(num)
+    }
+
+    return buckets.flatMap(x => x.sort((a, b) => a - b))
+};
