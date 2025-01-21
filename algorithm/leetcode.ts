@@ -884,3 +884,36 @@ function sortArray(nums: number[]): number[] {
     sort(0, nums.length - 1)
     return nums
 };
+
+// Merge Sort
+function sortArray(nums: number[]): number[] {
+    function merge(l, m, r) {
+        let tmp = []
+        let [a, b] = [l ,m + 1]
+        while (a <= m || b <= r) {
+            let v1 = a <= m ? nums[a] : Infinity
+            let v2 = b <= r ? nums[b] : Infinity
+            if (v1 < v2) {
+                tmp.push(v1)
+                a++
+            } else {
+                tmp.push(v2)
+                b++
+            }
+        }
+        for (let i = l; i <= r; i++) {
+            nums[i] = tmp[i - l]
+        }
+    }
+
+    function sort(l, r) {
+        if (l === r) return
+        let m = Math.floor((l + r) / 2)
+        sort(l, m)
+        sort(m + 1, r)
+        merge(l, m, r)
+    }
+
+    sort(0, nums.length - 1)
+    return nums
+};
