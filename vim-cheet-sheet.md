@@ -1,18 +1,24 @@
-# Vim Cheet Sheet
-## 文件
-| 命令        | 行为            |
-|-----------|---------------|
-| vim a.txt | 打开文件，默认进入普通模式 |
-## 模式
-| 命令  | 行为            |
-|-----|---------------|
-| i   | 插入模式          |
-| :   | 命令模式          |
-| esc | 退出其他模式，进入普通模式 |
-## 编辑
-| 命令  | 行为         |
-|-----|------------|
-| dd  | 普通模式，剪切当前行 |
-| p   | 普通模式，粘贴    |
-| wq  | 命令模式，保存并退出 |
-| q   | 命令模式，退出    |
+# Vim Cheat Sheet
+
+## File
+
+| Command   | Action                            |
+| --------- | --------------------------------- |
+| vim a.txt | Open file, default to normal mode |
+
+## Modes
+
+| Command | Action                              |
+| ------- | ----------------------------------- |
+| i       | Insert mode                         |
+| :       | Command mode                        |
+| esc     | Exit other modes, enter normal mode |
+
+## Editing
+
+| Command | Action                        |
+| ------- | ----------------------------- |
+| dd      | Normal mode, cut current line |
+| p       | Normal mode, paste            |
+| wq      | Command mode, save and exit   |
+| q       | Command mode, exit            |
