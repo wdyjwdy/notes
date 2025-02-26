@@ -1,2 +1,3 @@
-# notes
-前端学习笔记
+# Notes
+
+Frontend Study Notes
