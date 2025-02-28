@@ -6,29 +6,29 @@ JS 本身不是异步的，异步由 Browser 和 Node 提供
 
 1. Timer
 
-```js
-setTimeout(fn, 1000);
-setInterval(fn, 1000);
-```
+   ```js
+   setTimeout(fn, 1000);
+   setInterval(fn, 1000);
+   ```
 
 2. UI Event
 
-```js
-button.addEventListener("click", fn);
-```
+   ```js
+   button.addEventListener("click", fn);
+   ```
 
 3. Network Event
 
-```js
-request.onload = fn;
-request.onerror = fn;
-```
+   ```js
+   request.onload = fn;
+   request.onerror = fn;
+   ```
 
 4. Node Event
 
-```js
-fs.readFile("file", fn);
-```
+   ```js
+   fs.readFile("file", fn);
+   ```
 
 ## Promise
 
@@ -43,14 +43,14 @@ fs.readFile("file", fn);
 
 Promise 只有三种状态：
 
-1. Pending
-2. Fulfilled
-3. Rejected
+1. **Pending**
+2. **Fulfilled**
+3. **Rejected**
 
 经常同时出现的两个词：
 
-1. Settled：Promise 的状态为 Fulfilled 或 Rejected
-2. Resolved： 当 Promise 1 返回 Promise 2 时，Promise 1 被称为 Resolved（此时 P1 的状态取决于 P2，当 P2 Fulfilled 时 P1 也 Fulfilled，当 P2 Rejected 时，P1 也 Rejected）
+1. **Settled**：Promise 的状态为 Fulfilled 或 Rejected
+2. **Resolved**： 当 Promise 1 返回 Promise 2 时，Promise 1 被称为 Resolved（此时 P1 的状态取决于 P2，当 P2 Fulfilled 时 P1 也 Fulfilled，当 P2 Rejected 时，P1 也 Rejected）
 
 ### Example
 
