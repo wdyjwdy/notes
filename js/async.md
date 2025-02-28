@@ -127,3 +127,38 @@ If the network is ok
 1. p1 be fulfilled with a Response
 2. c1 be invoked, p3 be fulfilled
 3. c2 be invoked, p4 be fulfilled
+
+## Async and await
+
+async 和 await 关键字简化了 Promise 的使用，让异步代码看起来像同步代码
+
+- await 将 Promise 转换为 settled 后的值
+- 只能在 async 函数中使用 await（同步函数中仍需用[正常方式](#example-1)处理 Promise）
+- async 函数返回一个 Promise
+- 可以使用 try/catch 来处理异常
+
+### Example 1
+
+```js
+async function getJSON(theURL) {
+  let response = await fetch(theURL);
+  let json = await response.json();
+  return json;
+}
+```
+
+### Example 2
+
+同时解析多个 Promise
+
+```js
+// ❌
+let v1 = await p1;
+let v2 = await p2;
+
+// 等价于
+p1.then(() => p2).then(() => {});
+
+// ✅
+let [v1, v2] = await Promise.all([p1, p2]);
+```
