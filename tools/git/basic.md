@@ -265,4 +265,4 @@
 
 ## 图例
 
-![branch](../../imgs/branch.gif)
+![branch](../../imgs/branch.png)
