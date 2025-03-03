@@ -8,7 +8,7 @@
 
 ### 内部细节
 
-创建一个空文件夹 `Fruits`，并执行 `git init` 后，Git 会做以下事情：
+**初始化**：创建一个空文件夹 `Fruits`，并执行 `git init` 后，Git 会做以下事情：
 
 1. 创建一个 .git 文件
    ```diff
@@ -220,3 +220,45 @@
 
 4. 更新分支指向
 5. 更新日志文件
+
+## Branch
+
+### 描述
+
+创建一个新的分支
+
+### 例子
+
+1. `git branch`: 显示本地分支
+2. `git branch -a`: 显示本地和远程分支
+3. `git branch feat`: 创建一个名为 feat 的分支
+4. `git branch -d feat`: 删除 feat 分支
+5. `git branch -D feat`: 强制删除 feat 分支
+
+### 内部细节
+
+**新建分支**：执行 `git branch feat` 后，Git 会做以下事情：
+
+1. 在 refs/heads 目录下创建一个名为 feat 的文件，内容为当前分支最新 commit 的哈希值
+
+   ```diff
+   + .git/refs/heads/feat
+   ```
+
+   ```sh
+   $ cat refs/heads/feat
+   6cc8ff6
+   ```
+
+**如何找到当前分支的最新 commit**
+
+1. 查看 HEAD 文件，获取当前分支的引用
+   ```sh
+   $ cat HEAD
+   ref: refs/heads/main
+   ```
+2. 查看当前分支的最新 commit
+   ```sh
+   $ cat refs/heads/main
+   6cc8ff6
+   ```
