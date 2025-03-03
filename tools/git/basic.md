@@ -53,10 +53,7 @@
 1. 在 objects 目录下生成一个 blob 对象，其内容为 hello，文件名为 hello 的哈希值
 
    ```diff
-   .git/objects
-     ├── info
-     └── pack
-   + └── ce/01362
+   + .git/objects/ce01362
    ```
 
    ```sh
@@ -67,7 +64,7 @@
    hello
    ```
 
-2. 在 index 中添加一条记录，记录文件名和哈希值
+2. 在 index 中添加一条记录，记录文件路径和哈希值
 
    ```diff
    - .git/index
@@ -81,6 +78,34 @@
 
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
+
+若创建的文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也是一样的：
+
+1. 在 objects 目录下生成一个 blob 对象
+
+   ```diff
+   + .git/objects/ce01362
+   ```
+
+   ```sh
+   $ git cat-file -t ce01362 # type
+   blob
+
+   $ git cat-file -p ce01362 # value
+   hello
+   ```
+
+2. 在 index 中添加一条记录
+
+   ```diff
+   - .git/index
+   + .git/index
+   ```
+
+   ```sh
+   $ git ls-files -s # index
+   ce01362 greets/hello.txt # 这里不一样
+   ```
 
 ## Commit
 
@@ -102,10 +127,7 @@ Index 中有两个文件 `apple.txt` 和 `banana.txt`，执行 `git commit -m "u
 1. 在 objects 目录下生成一个 tree 对象，记录了文件目录树，以及文件对应的哈希值
 
    ```diff
-   .git/objects
-     ├── info
-     └── pack
-   + └── b0/665b8
+   + .git/objects/b0665b8
    ```
 
    ```sh
@@ -120,10 +142,7 @@ Index 中有两个文件 `apple.txt` 和 `banana.txt`，执行 `git commit -m "u
 2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 的目录树，和 commit message 相关内容
 
    ```diff
-   .git/objects
-     ├── info
-     └── pack
-   + └── 9a/fbf37
+   + .git/objects/9afbf37
    ```
 
    ```sh
