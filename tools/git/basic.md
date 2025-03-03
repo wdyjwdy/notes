@@ -272,6 +272,17 @@
    6cc8ff6
    ```
 
+**删除分支**：执行 `git branch -d feat` 后，Git 会做以下事情：
+
+1. 删除 refs/heads 目录下的 feat 文件
+
+   ```diff
+   - .git/refs/heads/feat
+   ```
+
+> [!NOTE]
+> 删除分支后，分支上的 commit 对象并不会被删除，这些对象会变成垃圾对象
+
 ## Switch
 
 ### 描述
@@ -317,3 +328,6 @@
    ```
 
 ![switch detach](../../imgs/git-switch-detach.png)
+
+> [!NOTE]
+> 如果想基于该提交开始工作，可以执行 `git switch -c <name>` 创建一个新分支，并在新分支上工作
