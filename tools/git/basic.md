@@ -52,6 +52,13 @@
 
 1. 在 objects 目录下生成一个 blob 对象，其内容为 hello，文件名为 hello 的哈希值
 
+   ```diff
+   .git/objects
+     ├── info
+     └── pack
+   + └── ce/01362
+   ```
+
    ```sh
    $ git cat-file -t ce01362 # type
    blob
@@ -61,23 +68,16 @@
    ```
 
 2. 在 index 中添加一条记录，记录文件名和哈希值
+
+   ```diff
+   - .git/index
+   + .git/index
+   ```
+
    ```sh
    $ git ls-files --stage # index
    ce01362 hello.txt
    ```
-
-```diff
-HEAD
-- index
-+ index
-objects
-  ├── info
-  └── pack
-+ └── ce/01362
-refs
-  ├── heads
-  └── tags
-```
 
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
