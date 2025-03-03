@@ -90,9 +90,14 @@
 
 ### 例子
 
+1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim-cheet-sheet.md) 输入 commit message
+2. `git commit -m 'update'`: 提交 Index 中的内容，并使用 'update' 作为 commit message
+3. `git commit -a`: 等价于 `git add .` 加 `git commit`
+4. `git commit -am 'update'`: 等价于 `git add .` 加 `git commit -m 'update'`
+
 ### 内部细节
 
-Index 中有两个文件　`apple.txt` 和 `banana.txt`，执行 `git commit -m "update"` 后，Git 会做以下事情：
+Index 中有两个文件 `apple.txt` 和 `banana.txt`，执行 `git commit -m "update"` 后，Git 会做以下事情：
 
 1. 在 objects 目录下生成一个 tree 对象，记录了文件目录树，以及文件对应的哈希值
 
@@ -108,11 +113,11 @@ Index 中有两个文件　`apple.txt` 和 `banana.txt`，执行 `git commit -m 
    tree
 
    $ git cat-file -p b0665b8 # value
-   blob 4c479de	apple.txt
-   blob 637a09b	banana.txt
+   blob 4c479de apple.txt
+   blob 637a09b banana.txt
    ```
 
-2. 在 objects 目录下生成一个 commit 对象，记录了文件目录书的信息，和 commit message 相关内容
+2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 的目录树，和 commit message 相关内容
 
    ```diff
    .git/objects
@@ -133,7 +138,7 @@ Index 中有两个文件　`apple.txt` 和 `banana.txt`，执行 `git commit -m 
    update
    ```
 
-3. 将当前分支指向最新的 commit 对象（HEAD 指向最新分支）
+3. 将当前分支指向最新的 commit 对象（HEAD 指向当前分支）
 
    ```diff
    - .git/refs/heads/main
