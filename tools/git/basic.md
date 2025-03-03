@@ -48,7 +48,7 @@
 
 ### 内部细节
 
-创建一个名为 `hello.txt`，内容为 `hello` 的文件，执行 `git add hello.txt` 后，Git 会做以下事情：
+**添加单个文件**：创建一个名为 `hello.txt`，内容为 `hello` 的文件，执行 `git add hello.txt` 后，Git 会做以下事情：
 
 1. 在 objects 目录下生成一个 blob 对象，其内容为 hello，文件名为 hello 的哈希值
 
@@ -76,10 +76,7 @@
    ce01362 hello.txt
    ```
 
-> [!NOTE]
-> 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
-
-若创建的是文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也几乎一样：
+**添加文件夹中的文件**：若创建的是文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
 
@@ -107,6 +104,9 @@
    ce01362 greets/hello.txt # 这里不一样
    ```
 
+> [!NOTE]
+> 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
+
 ## Commit
 
 ### 描述
@@ -122,9 +122,9 @@
 
 ### 内部细节
 
-若 Index 中有文件 `apple.txt`，执行 `git commit -m "update"` 后，Git 会做以下事情：
+**提交单个文件**：若 Index 中有文件 `apple.txt`，执行 `git commit -m 'update'` 后，Git 会做以下事情：
 
-1. 在 objects 目录下生成一个 tree 对象，记录了文件目录树，以及文件对应的哈希值
+1. 在 objects 目录下生成一个 tree 对象，该对象记录了根目录下文件的路径，以及对应的哈希值
 
    ```diff
    + .git/objects/1742682
@@ -138,7 +138,7 @@
    blob 4c479de apple.txt
    ```
 
-2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 的文件目录树，和 commit message 相关内容
+2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 根目录的 tree，和 commit message 相关内容
 
    ```diff
    + .git/objects/6cc8ff6
@@ -156,7 +156,7 @@
    update
    ```
 
-3. 将当前分支指向最新的 commit 对象（当前分支即 HEAD 指向的分支）
+3. 将当前分支指向生成的 commit 对象（当前分支即 HEAD 指向的分支）
 
    ```diff
    - .git/refs/heads/main
@@ -170,9 +170,9 @@
 
 4. 更新日志文件
 
-若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
+**提交文件夹中的文件**：若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
 
-1. 在 objects 目录下生成第一个 tree 对象，其中记录了 `apple.txt` 文件
+1. 在 objects 目录下生成第一个 tree 对象，该对象记录了 fruits 目录下文件的路径，以及对应的哈希值
 
    ```diff
    + .git/objects/1742682
@@ -186,7 +186,7 @@
    blob 4c479de apple.txt
    ```
 
-2. 在 objects 目录下生成第二个 tree 对象，其中记录了 `fruits` 文件夹对应的 tree （也就是第一步的 tree 对象）
+2. 在 objects 目录下生成第二个 tree 对象，该对象记录了根目录下文件的路径，以及对应的哈希值
 
    ```diff
    + .git/objects/5635283
@@ -197,10 +197,10 @@
    tree
 
    $ git cat-file -p 5635283 # value
-   tree 1742682 fruits
+   tree 1742682 fruits # 指向第一步的 tree 对象
    ```
 
-3. 在 objects 目录下生成一个 commit 对象
+3. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 根目录的 tree，和 commit message 相关内容
 
    ```diff
    + .git/objects/c2594b5
