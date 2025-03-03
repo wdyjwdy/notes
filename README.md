@@ -17,3 +17,6 @@ Frontend Study Notes
 
 - [Regex cheet sheet](tools/regex-cheat-sheet.md)
 - [Vim cheet sheet](tools/vim-cheet-sheet.md)
+- Git
+  - [init](/tools/git/basic.md#init)
+  - [add](/tools/git/basic.md#add), [commit](/tools/git/basic.md#commit)
