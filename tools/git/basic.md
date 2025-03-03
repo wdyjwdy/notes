@@ -107,6 +107,10 @@
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
 
+## 图例
+
+![add](../../imgs/git-add.png)
+
 ## Commit
 
 ### 描述
@@ -221,6 +225,12 @@
 4. 更新分支指向
 5. 更新日志文件
 
+## 图例
+
+![commit](../../imgs/git-commit.png)
+
+![commit](../../imgs/git-commit-1.png)
+
 ## Branch
 
 ### 描述
@@ -265,4 +275,4 @@
 
 ## 图例
 
-![branch](../../imgs/branch.png)
+![branch](../../imgs/git-branch.png)
