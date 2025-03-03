@@ -8,9 +8,9 @@
 
 ### 例子
 
-1. `git add aaa.txt`: 添加 aaa.txt
+1. `git add hello.txt`: 添加 hello.txt
 
-2. `git add files`: 添加 files 目录下所有文件
+2. `git add fruits`: 添加 fruits 目录下所有文件
 
 3. `git add .`: 添加所有文件
 
@@ -18,9 +18,9 @@
 
 ### 内部细节
 
-创建一个文件名为 `hello.txt`，内容为 `hello`，执行 `git add hello.txt` 后会发生以下事情：
+创建一个名为 `hello.txt`，内容为 `hello` 的文件，执行 `git add hello.txt` 后，Git 会做以下事情：
 
-1. objects 下生成一个 blob 对象，其内容为 hello，文件名为内容的哈希值
+1. 在 objects 目录下生成一个 blob 对象，其内容为 hello，文件名为 hello 的哈希值
 
    ```sh
    $ git cat-file -t ce01362 # type
@@ -30,7 +30,7 @@
    hello
    ```
 
-2. index 中添加一条记录，记录文件名和哈希值
+2. 在 index 中添加一条记录，记录文件名和哈希值
    ```sh
    $ git ls-files --stage # index
    ce01362 hello.txt
