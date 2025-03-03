@@ -1,5 +1,35 @@
 # Basic
 
+## Init
+
+### 描述
+
+初始化一个代码仓库
+
+### 内部细节
+
+创建一个空文件夹 `Fruits`，并执行 `git init` 后，Git 会做以下事情：
+
+1. 创建一个 .git 文件
+   ```diff
+   Fruits
+   + └── .git
+   +   ├── config
+   +   ├── description
+   +   ├── HEAD
+   +   ├── index
+   +   ├── hooks
+   +   │   └── samples
+   +   ├── info
+   +   │   └── exclude
+   +   ├── objects
+   +   │   ├── info
+   +   │   └── pack
+   +   └── refs
+   +     ├── heads
+   +     └── tags
+   ```
+
 ## Add
 
 ### 描述
