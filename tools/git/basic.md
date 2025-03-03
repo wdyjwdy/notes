@@ -174,8 +174,6 @@
 
 ![commit](../../imgs/git-commit.png)
 
-![commit](../../imgs/git-commit-1.png)
-
 **提交文件夹中的文件**：若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
 
 1. 在 objects 目录下生成第一个 tree 对象，该对象记录了 fruits 目录下文件的路径，以及对应的哈希值
