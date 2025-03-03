@@ -79,7 +79,7 @@
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
 
-若创建的文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也是一样的：
+若创建的是文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
 
@@ -122,42 +122,41 @@
 
 ### 内部细节
 
-Index 中有两个文件 `apple.txt` 和 `banana.txt`，执行 `git commit -m "update"` 后，Git 会做以下事情：
+若 Index 中有文件 `apple.txt`，执行 `git commit -m "update"` 后，Git 会做以下事情：
 
 1. 在 objects 目录下生成一个 tree 对象，记录了文件目录树，以及文件对应的哈希值
 
    ```diff
-   + .git/objects/b0665b8
+   + .git/objects/1742682
    ```
 
    ```sh
-   $ git cat-file -t b0665b8 # type
+   $ git cat-file -t 1742682 # type
    tree
 
-   $ git cat-file -p b0665b8 # value
+   $ git cat-file -p 1742682 # value
    blob 4c479de apple.txt
-   blob 637a09b banana.txt
    ```
 
-2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 的目录树，和 commit message 相关内容
+2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 的文件目录树，和 commit message 相关内容
 
    ```diff
-   + .git/objects/9afbf37
+   + .git/objects/6cc8ff6
    ```
 
    ```sh
-   $ git cat-file -t 9afbf37 # type
+   $ git cat-file -t 6cc8ff6 # type
    commit
 
-   $ git cat-file -p 9afbf37 # value
-   tree b0665b8
+   $ git cat-file -p 6cc8ff6 # value
+   tree 1742682
    author wdyjwdy <email.com>
    committer wdyjwdy <email.com>
 
    update
    ```
 
-3. 将当前分支指向最新的 commit 对象（HEAD 指向当前分支）
+3. 将当前分支指向最新的 commit 对象（当前分支即 HEAD 指向的分支）
 
    ```diff
    - .git/refs/heads/main
@@ -166,7 +165,58 @@ Index 中有两个文件 `apple.txt` 和 `banana.txt`，执行 `git commit -m "u
 
    ```sh
    $ cat refs/heads/main
-   9afbf37
+   6cc8ff6
    ```
 
-4. 更新 Logs 文件 （TODO）
+4. 更新日志文件
+
+若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
+
+1. 在 objects 目录下生成第一个 tree 对象，其中记录了 `apple.txt` 文件
+
+   ```diff
+   + .git/objects/1742682
+   ```
+
+   ```sh
+   $ git cat-file -t 1742682 # type
+   tree
+
+   $ git cat-file -p 1742682 # value
+   blob 4c479de apple.txt
+   ```
+
+2. 在 objects 目录下生成第二个 tree 对象，其中记录了 `fruits` 文件夹对应的 tree （也就是第一步的 tree 对象）
+
+   ```diff
+   + .git/objects/5635283
+   ```
+
+   ```sh
+   $ git cat-file -t 5635283 # type
+   tree
+
+   $ git cat-file -p 5635283 # value
+   tree 1742682 fruits
+   ```
+
+3. 在 objects 目录下生成一个 commit 对象
+
+   ```diff
+   + .git/objects/c2594b5
+   ```
+
+   ```sh
+   $ git cat-file -t c2594b5 # type
+   commit
+
+   $ git cat-file -p c2594b5 # value
+   tree 5635283
+   author wdyjwdy <email.com>
+   committer wdyjwdy <email.com>
+
+   update
+   ```
+
+4. 更新分支指向
+5. 更新日志文件
