@@ -20,4 +20,4 @@ Frontend Study Notes
 - Git
   - [init](/tools/git/basic.md#init)
   - [add](/tools/git/basic.md#add), [commit](/tools/git/basic.md#commit)
-  - [branch](/tools/git/basic.md#branch)
+  - [branch](/tools/git/basic.md#branch), [switch](/tools/git/basic.md#switch)

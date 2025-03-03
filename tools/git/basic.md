@@ -76,6 +76,8 @@
    ce01362 hello.txt
    ```
 
+![add](../../imgs/git-add.png)
+
 **添加文件夹中的文件**：若创建的是文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
@@ -106,10 +108,6 @@
 
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
-
-## 图例
-
-![add](../../imgs/git-add.png)
 
 ## Commit
 
@@ -174,6 +172,10 @@
 
 4. 更新日志文件
 
+![commit](../../imgs/git-commit.png)
+
+![commit](../../imgs/git-commit-1.png)
+
 **提交文件夹中的文件**：若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
 
 1. 在 objects 目录下生成第一个 tree 对象，该对象记录了 fruits 目录下文件的路径，以及对应的哈希值
@@ -225,12 +227,6 @@
 4. 更新分支指向
 5. 更新日志文件
 
-## 图例
-
-![commit](../../imgs/git-commit.png)
-
-![commit](../../imgs/git-commit-1.png)
-
 ## Branch
 
 ### 描述
@@ -260,19 +256,66 @@
    6cc8ff6
    ```
 
+![branch](../../imgs/git-branch.png)
+
 **如何找到当前分支的最新 commit**
 
 1. 查看 HEAD 文件，获取当前分支的引用
+
    ```sh
    $ cat HEAD # value
    ref: refs/heads/main
    ```
+
 2. 查看当前分支的最新 commit
+
    ```sh
    $ cat refs/heads/main # value
    6cc8ff6
    ```
 
-## 图例
+## Switch
 
-![branch](../../imgs/git-branch.png)
+### 描述
+
+切换分支
+
+### 例子
+
+1. `git switch feat`: 切换到 feat 分支
+2. `git switch -c feat`: 创建并切换到 feat 分支
+3. `git switch --detach 6cc8ff6`: 切换到 commit 6cc8ff6
+
+### 原理
+
+**切换到分支**：执行 `git switch feat` 后，Git 会做以下事情：
+
+1. 更新 HEAD 文件，将其指向 feat 分支
+
+   ```diff
+   - .git/HEAD
+   + .git/HEAD
+   ```
+
+   ```sh
+   $ cat HEAD # value
+   ref: refs/heads/feat
+   ```
+
+![switch](../../imgs/git-switch.png)
+
+**切换到提交**：执行 `git switch --detach 6cc8ff6` 后，Git 会做以下事情：
+
+1. 更新 HEAD 文件，将其指向 commit 6cc8ff6
+
+   ```diff
+   - .git/HEAD
+   + .git/HEAD
+   ```
+
+   ```sh
+   $ cat HEAD # value
+   6cc8ff6
+   ```
+
+![switch detach](../../imgs/git-switch-detach.png)
