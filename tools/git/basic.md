@@ -262,3 +262,7 @@
    $ cat refs/heads/main # value
    6cc8ff6
    ```
+
+## 图例
+
+![branch](../../imgs/branch.gif)
