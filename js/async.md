@@ -162,3 +162,17 @@ p1.then(() => p2).then(() => {});
 // ✅
 let [v1, v2] = await Promise.all([p1, p2]);
 ```
+
+### Example 3
+
+```js
+for await (const val of promises) {
+  handle(val);
+}
+
+// 等价于
+for (const promise of promises) {
+  const val = await promise;
+  handle(val);
+}
+```
