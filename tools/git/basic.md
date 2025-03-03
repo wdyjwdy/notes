@@ -6,7 +6,7 @@
 
 初始化一个代码仓库
 
-### 内部细节
+### 原理
 
 **初始化**：创建一个空文件夹 `Fruits`，并执行 `git init` 后，Git 会做以下事情：
 
@@ -46,7 +46,7 @@
 
 4. `git add *.js`: 添加所有 js 文件
 
-### 内部细节
+### 原理
 
 **添加单个文件**：创建一个名为 `hello.txt`，内容为 `hello` 的文件，执行 `git add hello.txt` 后，Git 会做以下事情：
 
@@ -120,7 +120,7 @@
 3. `git commit -a`: 等价于 `git add .` 加 `git commit`
 4. `git commit -am 'update'`: 等价于 `git add .` 加 `git commit -m 'update'`
 
-### 内部细节
+### 原理
 
 **提交单个文件**：若 Index 中有文件 `apple.txt`，执行 `git commit -m 'update'` 后，Git 会做以下事情：
 
@@ -235,7 +235,7 @@
 4. `git branch -d feat`: 删除 feat 分支
 5. `git branch -D feat`: 强制删除 feat 分支
 
-### 内部细节
+### 原理
 
 **新建分支**：执行 `git branch feat` 后，Git 会做以下事情：
 
@@ -246,7 +246,7 @@
    ```
 
    ```sh
-   $ cat refs/heads/feat
+   $ cat refs/heads/feat # value
    6cc8ff6
    ```
 
@@ -254,11 +254,11 @@
 
 1. 查看 HEAD 文件，获取当前分支的引用
    ```sh
-   $ cat HEAD
+   $ cat HEAD # value
    ref: refs/heads/main
    ```
 2. 查看当前分支的最新 commit
    ```sh
-   $ cat refs/heads/main
+   $ cat refs/heads/main # value
    6cc8ff6
    ```
