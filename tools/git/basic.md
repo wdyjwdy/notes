@@ -525,3 +525,56 @@ $ git log --oneline --all --graph
 |/
 * ccf620f commit 1
 ```
+
+## Rebase
+
+**简述**：将一系列 commit 重新应用到指定分支
+
+1. `git rebase feat`: 将 feat 分支的 commit 重新应用到当前分支
+
+### rebase branch
+
+```sh
+$ git log --oneline --all --graph
+* fda4ab8 (feat) commit 3
+| * 3007e64 (HEAD -> main) commit 2
+|/
+* 2239c5b commit 1
+```
+
+假设有以上历史记录，此时我们在 feat 分支执行 `git rebase main` 后，Git 会做以下事情：
+
+1. 将 feat 分支中 root 节点之后的 commit（即 commit 3），重新提交到 main 分支上
+
+   ```diff
+   # tree
+   + .git/objects/830241f
+   # commit
+   + .git/objects/37ffdf1
+   ```
+
+2. 更新 feat 分支指针，指向新的 commit
+
+   ```diff
+   - .git/refs/heads/feat
+   + .git/refs/heads/feat
+   ```
+
+   ```sh
+   $ cat refs/heads/feat # value
+   37ffdf1
+   ```
+
+合并完成后，历史记录如下：
+
+```sh
+$ git log --oneline --all --graph
+* 37ffdf1 (feat) commit 3
+* 3007e64 (HEAD -> main) commit 2
+* 2239c5b commit 1
+```
+
+> [!CAUTION]
+> 注意 rebase 后的 commit 哈希值会改变
+
+![git rebase](../../imgs/git-rebase.png)
