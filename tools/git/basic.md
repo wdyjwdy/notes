@@ -343,10 +343,10 @@
 ### fast-forward
 
 ```sh
-$ git log --oneline --all # history
-b0cd9f5 commit 3 (feat)
-e1e6af3 commit 2 (main <- HEAD)
-1b157d3 commit 1
+$ git log --oneline --all --graph # history
+* b0cd9f5 (feat) commit 3
+* e1e6af3 (HEAD -> main) commit 2
+* 1b157d3 commit 1
 ```
 
 假设有以上历史记录，feat 为 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
@@ -378,15 +378,15 @@ e1e6af3 commit 2 (main <- HEAD)
 合并完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all # history
-b0cd9f5 commit 3 (feat, main <- HEAD)
-e1e6af3 commit 2
-1b157d3 commit 1
+$ git log --oneline --all --graph # history
+* b0cd9f5 (HEAD -> main, feat) commit 3
+* e1e6af3 commit 2
+* 1b157d3 commit 1
 ```
 
 ![fast-forward](../../imgs/git-fast-forward.png)
 
-## 3-way merge
+###*  3-way merge
 
 ```sh
 $ git log --oneline --all --graph # history
