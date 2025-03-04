@@ -413,10 +413,14 @@ $ git log --oneline --all --graph # history
 2. 创建一个新的 merge commit 对象，记录了 feat 中的修改（注意 merge commit 对象有两个 parent）
 
    ```diff
-   + .git/objects/cbd588d
+   + .git/objects/03b2125 # tree
+   + .git/objects/cbd588d # commit
    ```
 
    ```sh
+   $ git cat-file -t 03b2125 # type
+   tree
+
    $ git cat-file -t cbd588d # type
    commit
 
