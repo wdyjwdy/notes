@@ -455,3 +455,74 @@ $ git log --oneline --all --graph # history
 ```
 
 ![3-way-merge](../../imgs/git-3way-merge.png)
+
+### 3-way merge with conflict
+
+```sh
+$ git log --oneline --all --graph
+* fb1c925 (feat) commit 3
+| * bcf8030 (HEAD -> main) commit 2
+|/
+* ccf620f commit 1
+```
+
+假设有以上历史记录，如果 feat 和 main 分支在同一行上都有修改，此时执行 `git merge feat` 会产生冲突，Git 会做以下事情：
+
+1. 更新 ORIG_HEAD 指针
+2. 更新 Index，记录用于解决冲突的文件的三个版本
+
+   ```diff
+   - .git/index
+   + .git/index
+   ```
+
+   ```sh
+   $ git ls-files -s # value
+   4c479de	apple.txt # commit 1 (root)
+   4a77268	apple.txt # commit 2 (main)
+   29b651e	apple.txt # commit 3 (feat)
+   ```
+
+3. 创建一个 conflict 对象，记录了冲突的 diff，用来帮助用户解决冲突
+
+   ```diff
+   # tree
+   + .git/objects/b3535c9
+   # blob
+   + .git/objects/675e90a
+   ```
+
+   ```sh
+   $ git cat-file -p 675e90
+   apple
+   <<<<<<< HEAD
+   banana
+   =======
+   cherry
+   >>>>>>> feat
+   ```
+
+4. 在 .git 目录下还生成了许多其他文件，用于记录冲突的状态
+
+   ```diff
+   .git
+   + ├── AUTO_MERGE # 指向 conflict 对象
+   + ├── MERGE_HEAD # 指向 feat 分支的最新提交
+   + ├── MERGE_MODE # 合并模式
+   + └── MERGE_MSG  # 合并信息
+   ```
+
+5. 用户解决冲突后（修改并暂存 conflict），手动提交 merge commit（提交 conflict），Git 会删除之前用于解决冲突的临时文件
+6. 更新 main 分支指针
+
+合并完成后，历史记录如下：
+
+```sh
+$ git log --oneline --all --graph
+*   ab3525e (HEAD -> main) Merge branch 'feat'
+|\
+| * fb1c925 (feat) commit 3
+* | bcf8030 commit 2
+|/
+* ccf620f commit 1
+```
