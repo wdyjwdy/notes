@@ -469,9 +469,10 @@ $ git log --oneline --all --graph
 假设有以上历史记录，如果 feat 和 main 分支在同一行上都有修改，此时执行 `git merge feat` 会产生冲突，Git 会做以下事情：
 
 1. 更新 ORIG_HEAD 指针
-2. 更新 Index，记录用于解决冲突的文件的三个版本
+2. 新增或修改一些文件，用于解决冲突
 
    ```diff
+   # 记录冲突文件的三个版本
    - .git/index
    + .git/index
    ```
@@ -483,9 +484,8 @@ $ git log --oneline --all --graph
    29b651e	apple.txt # commit 3 (feat)
    ```
 
-3. 创建一个 conflict 对象，记录了冲突的 diff，用来帮助用户解决冲突
-
    ```diff
+   # 用户解决冲突的文件
    # tree
    + .git/objects/b3535c9
    # blob
@@ -493,7 +493,7 @@ $ git log --oneline --all --graph
    ```
 
    ```sh
-   $ git cat-file -p 675e90
+   $ git cat-file -p 675e90 # value
    apple
    <<<<<<< HEAD
    banana
@@ -502,18 +502,17 @@ $ git log --oneline --all --graph
    >>>>>>> feat
    ```
 
-4. 在 .git 目录下还生成了许多其他文件，用于记录冲突的状态
-
    ```diff
+   # 记录冲突的状态
    .git
-   + ├── AUTO_MERGE # 指向 conflict 对象
+   + ├── AUTO_MERGE # 指向解决冲突的文件
    + ├── MERGE_HEAD # 指向 feat 分支的最新提交
    + ├── MERGE_MODE # 合并模式
-   + └── MERGE_MSG  # 合并信息
+   + └── MERGE_MSG  # merge commit message
    ```
 
-5. 用户解决冲突后（修改并暂存 conflict），手动提交 merge commit（提交 conflict），Git 会删除之前用于解决冲突的临时文件
-6. 更新 main 分支指针
+3. 用户解决冲突，即暂存了所有解决冲突的文件后，执行 `git commit` 命令，手动提交 merge commit（提交后，Git 会删除之前用于解决冲突的临时文件）
+4. 更新 main 分支指针
 
 合并完成后，历史记录如下：
 
