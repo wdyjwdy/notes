@@ -648,3 +648,11 @@ $ git log --oneline --all --graph # history
 > 注意 rebase 后的 commit 哈希值会改变
 
 ![git rebase](../../imgs/git-rebase.png)
+
+### 带冲突的分支变基
+
+和[带冲突的三路合并](#带冲突的三路合并)几乎一样，只有以下区别：
+
+1. 当有多个 commit 需要处理时，rebase 会逐个处理 commit 的冲突，而 merge 会一次性处理所有 commit 的冲突
+2. rebase 会新增多个 commit，而 merge 只会新增一个 commit
+3. rebase 会移动 feat 分支指针，而 merge 会移动 main 分支指针
