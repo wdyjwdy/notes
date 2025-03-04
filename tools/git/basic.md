@@ -334,10 +334,16 @@
 
 ## Merge
 
+**简述**：合并分支
+
+**例子**：
+
+1. `git merge feat`: 将 feat 分支合并到当前分支
+
 ### fast-forward
 
 ```sh
-$ git log --oneline --all
+$ git log --oneline --all # history
 b0cd9f5 commit 3 (feat)
 e1e6af3 commit 2 (main <- HEAD)
 1b157d3 commit 1
@@ -372,7 +378,7 @@ e1e6af3 commit 2 (main <- HEAD)
 合并完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all
+$ git log --oneline --all # history
 b0cd9f5 commit 3 (feat, main <- HEAD)
 e1e6af3 commit 2
 1b157d3 commit 1
