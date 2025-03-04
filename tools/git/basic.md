@@ -2,17 +2,21 @@
 
 ## Init
 
-### 描述
+Git Init 会初始化一个代码仓库，例如：
 
-初始化一个代码仓库
+1. `git init`: 在当前目录下初始化一个代码仓库
 
-### 原理
+### Create a repository
 
-**初始化**：创建一个空文件夹 `Fruits`，并执行 `git init` 后，Git 会做以下事情：
+```sh
+fruits
+```
+
+假设有以上目录结构，在 `fruits` 路径下执行 `git init` 后，Git 会做以下事情：
 
 1. 创建一个 .git 文件
    ```diff
-   Fruits
+   fruits
    + └── .git
    +   ├── config
    +   ├── description
@@ -32,25 +36,23 @@
 
 ## Add
 
-### 描述
-
-使用[文件通配符]()，将 Working Tree 的文件添加到 Index
-
-### 例子
+Git Add 使用[文件通配符]()，将 Working Tree 的文件添加到 Index，例如：
 
 1. `git add hello.txt`: 添加 hello.txt
-
 2. `git add fruits`: 添加 fruits 目录下所有文件
-
 3. `git add .`: 添加所有文件
-
 4. `git add *.js`: 添加所有 js 文件
 
-### 原理
+### 添加单个文件
 
-**添加单个文件**：创建一个名为 `hello.txt`，内容为 `hello` 的文件，执行 `git add hello.txt` 后，Git 会做以下事情：
+```txt
+// hello.txt
+hello
+```
 
-1. 在 objects 目录下生成一个 blob 对象，其内容为 hello，文件名为 hello 的哈希值
+假设有以上文件，执行 `git add hello.txt` 后，Git 会做以下事情：
+
+1. 在 objects 目录下生成一个 blob 对象，其内容为 'hello'，文件名为 'hello' 的哈希值
 
    ```diff
    + .git/objects/ce01362
@@ -78,7 +80,14 @@
 
 ![add](../../imgs/git-add.png)
 
-**添加文件夹中的文件**：若创建的是文件夹中的文件，例如创建 `greets/hello.txt`，Git 处理也几乎一样：
+### 添加文件夹中的文件
+
+```txt
+// greets/hello.txt
+hello
+```
+
+若创建的是文件夹中的文件，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
 
@@ -111,20 +120,20 @@
 
 ## Commit
 
-### 描述
-
-将 Index 中的内容提交到 Repository
-
-### 例子
+Git Commit 会将 Index 中的内容提交到 Repository，例如：
 
 1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim-cheet-sheet.md) 输入 commit message
 2. `git commit -m 'update'`: 提交 Index 中的内容，并使用 'update' 作为 commit message
 3. `git commit -a`: 等价于 `git add .` 加 `git commit`
 4. `git commit -am 'update'`: 等价于 `git add .` 加 `git commit -m 'update'`
 
-### 原理
+### 提交单个文件
 
-**提交单个文件**：若 Index 中有文件 `apple.txt`，执行 `git commit -m 'update'` 后，Git 会做以下事情：
+```txt
+apple.txt
+```
+
+假设 index 文件中有以上内容，执行 `git commit -m 'update'` 后，Git 会做以下事情：
 
 1. 在 objects 目录下生成一个 tree 对象，该对象记录了根目录下文件的路径，以及对应的哈希值
 
@@ -170,11 +179,15 @@
    6cc8ff6
    ```
 
-4. 更新日志文件
-
 ![commit](../../imgs/git-commit.png)
 
-**提交文件夹中的文件**：若 Index 中存在文件夹，例如 `fruits/apple.txt`，则 Git 会用 tree in tree 的方式来储存文件路径：
+### 提交文件夹中的文件
+
+```txt
+fruits/apple.txt
+```
+
+若 Index 中存在文件夹，如上，则 Git 会用 tree in tree 的方式来储存文件路径：
 
 1. 在 objects 目录下生成第一个 tree 对象，该对象记录了 fruits 目录下文件的路径，以及对应的哈希值
 
@@ -223,15 +236,10 @@
    ```
 
 4. 更新分支指向
-5. 更新日志文件
 
 ## Branch
 
-### 描述
-
-创建一个新的分支
-
-### 例子
+Git Branch 会创建一个新的分支，例如：
 
 1. `git branch`: 显示本地分支
 2. `git branch -a`: 显示本地和远程分支
@@ -239,9 +247,16 @@
 4. `git branch -d feat`: 删除 feat 分支
 5. `git branch -D feat`: 强制删除 feat 分支
 
-### 原理
+### 新建分支
 
-**新建分支**：执行 `git branch feat` 后，Git 会做以下事情：
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
+假设有以上提交历史，在 main 分支上执行 `git branch feat` 后，Git 会做以下事情：
 
 1. 在 refs/heads 目录下创建一个名为 feat 的文件，内容为当前分支最新 commit 的哈希值
 
@@ -251,12 +266,21 @@
 
    ```sh
    $ cat refs/heads/feat # value
-   6cc8ff6
+   846aac5
    ```
+
+新建分支后，历史记录如下：
+
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main, feat) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
 
 ![branch](../../imgs/git-branch.png)
 
-**如何找到当前分支的最新 commit**
+### 如何找到当前分支的最新提交
 
 1. 查看 HEAD 文件，获取当前分支的引用
 
@@ -265,14 +289,23 @@
    ref: refs/heads/main
    ```
 
-2. 查看当前分支的最新 commit
+2. 查看当前分支的最新提交
 
    ```sh
    $ cat refs/heads/main # value
-   6cc8ff6
+   846aac5
    ```
 
-**删除分支**：执行 `git branch -d feat` 后，Git 会做以下事情：
+### 删除分支
+
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main, feat) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
+假设有以上提交历史，执行 `git branch -d feat` 后，Git 会做以下事情：
 
 1. 删除 refs/heads 目录下的 feat 文件
 
@@ -280,24 +313,36 @@
    - .git/refs/heads/feat
    ```
 
+删除分支后，历史记录如下：
+
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
 > [!NOTE]
 > 删除分支后，分支上的 commit 对象并不会被删除，这些对象会变成垃圾对象
 
 ## Switch
 
-### 描述
-
-切换分支
-
-### 例子
+Git Switch 会切换分支，例如：
 
 1. `git switch feat`: 切换到 feat 分支
 2. `git switch -c feat`: 创建并切换到 feat 分支
 3. `git switch --detach 6cc8ff6`: 切换到 commit 6cc8ff6
 
-### 原理
+### 切换分支
 
-**切换到分支**：执行 `git switch feat` 后，Git 会做以下事情：
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main, feat) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
+假设有以上提交历史，执行 `git switch feat` 后，Git 会做以下事情：
 
 1. 更新 HEAD 文件，将其指向 feat 分支
 
@@ -311,11 +356,29 @@
    ref: refs/heads/feat
    ```
 
+切换分支后，历史记录如下：
+
+```sh
+$ git log --oneline
+846aac5 (HEAD -> feat, main) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
 ![switch](../../imgs/git-switch.png)
 
-**切换到提交**：执行 `git switch --detach 6cc8ff6` 后，Git 会做以下事情：
+### 切换到提交
 
-1. 更新 HEAD 文件，将其指向 commit 6cc8ff6
+```sh
+$ git log --oneline
+846aac5 (HEAD -> main) commit 3
+d58f2f5 commit 2
+43bed3d commit 1
+```
+
+假设有以上提交历史，执行 `git switch --detach 43bed3d` 后，Git 会做以下事情：
+
+1. 更新 HEAD 文件，将其指向 43bed3d (commit 1)
 
    ```diff
    - .git/HEAD
@@ -324,8 +387,17 @@
 
    ```sh
    $ cat HEAD # value
-   6cc8ff6
+   43bed3d
    ```
+
+切换到提交后，历史记录如下：
+
+```sh
+$ git log --oneline --all
+846aac5 (main) commit 3
+d58f2f5 commit 2
+43bed3d (HEAD) commit 1
+```
 
 ![switch-detach](../../imgs/git-switch-detach.png)
 
@@ -334,9 +406,7 @@
 
 ## Merge
 
-**简述**：合并分支
-
-**例子**：
+Git Merge 会合并分支，例如：
 
 1. `git merge feat`: 将 feat 分支合并到当前分支
 
@@ -528,9 +598,9 @@ $ git log --oneline --all --graph
 
 ## Rebase
 
-**简述**：将一系列 commit 重新应用到指定分支
+Rebase 会将一系列 commit 重新应用到指定分支，例如：
 
-1. `git rebase feat`: 将 feat 分支的 commit 重新应用到当前分支
+1. `git rebase main`: 将当前分支的 commit 重新提交到 main 分支上
 
 ### rebase branch
 
