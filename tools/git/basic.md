@@ -6,7 +6,7 @@ Git Init 会初始化一个代码仓库，例如：
 
 1. `git init`: 在当前目录下初始化一个代码仓库
 
-### Create a repository
+### 新建仓库
 
 ```sh
 fruits
@@ -78,6 +78,9 @@ hello
    ce01362 hello.txt
    ```
 
+> [!NOTE]
+> 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
+
 ![add](../../imgs/git-add.png)
 
 ### 添加文件夹中的文件
@@ -87,7 +90,7 @@ hello
 hello
 ```
 
-若创建的是文件夹中的文件，Git 处理也几乎一样：
+若添加的是文件夹中的文件，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
 
@@ -115,9 +118,6 @@ hello
    ce01362 greets/hello.txt # 这里不一样
    ```
 
-> [!NOTE]
-> 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
-
 ## Commit
 
 Git Commit 会将 Index 中的内容提交到 Repository，例如：
@@ -130,7 +130,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
 ### 提交单个文件
 
 ```txt
-apple.txt
+4c479de apple.txt
 ```
 
 假设 index 文件中有以上内容，执行 `git commit -m 'update'` 后，Git 会做以下事情：
@@ -175,7 +175,7 @@ apple.txt
    ```
 
    ```sh
-   $ cat refs/heads/main
+   $ cat refs/heads/main # value
    6cc8ff6
    ```
 
@@ -184,7 +184,7 @@ apple.txt
 ### 提交文件夹中的文件
 
 ```txt
-fruits/apple.txt
+4c479de fruits/apple.txt
 ```
 
 若 Index 中存在文件夹，如上，则 Git 会用 tree in tree 的方式来储存文件路径：
@@ -250,7 +250,7 @@ Git Branch 会创建一个新的分支，例如：
 ### 新建分支
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -272,7 +272,7 @@ d58f2f5 commit 2
 新建分支后，历史记录如下：
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -299,7 +299,7 @@ d58f2f5 commit 2
 ### 删除分支
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -316,7 +316,7 @@ d58f2f5 commit 2
 删除分支后，历史记录如下：
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -336,7 +336,7 @@ Git Switch 会切换分支，例如：
 ### 切换分支
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -359,7 +359,7 @@ d58f2f5 commit 2
 切换分支后，历史记录如下：
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> feat, main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -370,7 +370,7 @@ d58f2f5 commit 2
 ### 切换到提交
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -393,7 +393,7 @@ d58f2f5 commit 2
 切换到提交后，历史记录如下：
 
 ```sh
-$ git log --oneline --all
+$ git log --oneline --all # history
 846aac5 (main) commit 3
 d58f2f5 commit 2
 43bed3d (HEAD) commit 1
@@ -410,7 +410,7 @@ Git Merge 会合并分支，例如：
 
 1. `git merge feat`: 将 feat 分支合并到当前分支
 
-### fast-forward
+### 快速合并
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -456,7 +456,7 @@ $ git log --oneline --all --graph # history
 
 ![fast-forward](../../imgs/git-fast-forward.png)
 
-### 3-way merge
+### 三路合并
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -526,10 +526,10 @@ $ git log --oneline --all --graph # history
 
 ![3-way-merge](../../imgs/git-3way-merge.png)
 
-### 3-way merge with conflict
+### 带冲突的三路合并
 
 ```sh
-$ git log --oneline --all --graph
+$ git log --oneline --all --graph # history
 * fb1c925 (feat) commit 3
 | * bcf8030 (HEAD -> main) commit 2
 |/
@@ -587,7 +587,7 @@ $ git log --oneline --all --graph
 合并完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph
+$ git log --oneline --all --graph # history
 *   ab3525e (HEAD -> main) Merge branch 'feat'
 |\
 | * fb1c925 (feat) commit 3
@@ -602,10 +602,10 @@ Rebase 会将一系列 commit 重新应用到指定分支，例如：
 
 1. `git rebase main`: 将当前分支的 commit 重新提交到 main 分支上
 
-### rebase branch
+### 分支变基
 
 ```sh
-$ git log --oneline --all --graph
+$ git log --oneline --all --graph # history
 * fda4ab8 (feat) commit 3
 | * 3007e64 (HEAD -> main) commit 2
 |/
@@ -638,7 +638,7 @@ $ git log --oneline --all --graph
 合并完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph
+$ git log --oneline --all --graph # history
 * 37ffdf1 (feat) commit 3
 * 3007e64 (HEAD -> main) commit 2
 * 2239c5b commit 1
