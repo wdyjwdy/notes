@@ -349,7 +349,7 @@ e1e6af3 commit 2 (main <- HEAD)
 1b157d3 commit 1
 ```
 
-假设有以上历史记录，我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
+假设有以上历史记录，feat 为 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
 
 1. 更新 ORIG_HEAD 指针，指向 main 分支的最新提交，即 commit 2
 
@@ -385,3 +385,73 @@ e1e6af3 commit 2
 ```
 
 ![fast-forward](../../imgs/git-fast-forward.png)
+
+## 3-way merge
+
+```sh
+$ git log --oneline --all --graph # history
+* a9532ef (HEAD -> main) commit 3
+| * 88d8b74 (feat) commit 2
+|/
+* 34b711b commit 1
+```
+
+假设有以上历史记录，feat 不是 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
+
+1. 更新 ORIG_HEAD 指针，指向 main 分支的最新提交，即 commit 3
+
+   ```diff
+   - .git/ORIG_HEAD
+   + .git/ORIG_HEAD
+   ```
+
+   ```sh
+   $ cat ORIG_HEAD # value
+   a9532ef
+   ```
+
+2. 创建一个新的 merge commit 对象，记录了 feat 中的修改（注意 merge commit 对象有两个 parent）
+
+   ```diff
+   + .git/objects/cbd588d
+   ```
+
+   ```sh
+   $ git cat-file -t cbd588d # type
+   commit
+
+   $ git cat-file -p cbd588d # value
+   tree 03b2125
+   parent a9532ef # commit 3
+   parent 88d8b74 # commit 2
+   author wdyjwdy <email.com>
+   committer wdyjwdy <email.com>
+
+   Merge branch 'feat'
+   ```
+
+3. 更新 main 分支指针，指向新的 merge commit 对象
+
+   ```diff
+   - .git/refs/heads/main
+   + .git/refs/heads/main
+   ```
+
+   ```sh
+   $ cat refs/heads/main # value
+   cbd588d
+   ```
+
+合并完成后，历史记录如下：
+
+```sh
+$ git log --oneline --all --graph # history
+*   cbd588d (HEAD -> main) Merge branch 'feat'
+|\
+| * 88d8b74 (feat) commit 2
+* | a9532ef commit 3
+|/
+* 34b711b commit 1
+```
+
+![3-way-merge](../../imgs/git-3way-merge.png)
