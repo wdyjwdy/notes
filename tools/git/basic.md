@@ -327,7 +327,55 @@
    6cc8ff6
    ```
 
-![switch detach](../../imgs/git-switch-detach.png)
+![switch-detach](../../imgs/git-switch-detach.png)
 
 > [!NOTE]
 > 如果想基于该提交开始工作，可以执行 `git switch -c <name>` 创建一个新分支，并在新分支上工作
+
+## Merge
+
+### fast-forward
+
+```sh
+$ git log --oneline --all
+b0cd9f5 commit 3 (feat)
+e1e6af3 commit 2 (main <- HEAD)
+1b157d3 commit 1
+```
+
+假设有以上历史记录，我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
+
+1. 更新 ORIG_HEAD 指针，指向 main 分支的最新提交，即 commit 2
+
+   ```diff
+   - .git/ORIG_HEAD
+   + .git/ORIG_HEAD
+   ```
+
+   ```sh
+   $ cat ORIG_HEAD # value
+   e1e6af3
+   ```
+
+2. 更新 main 分支指针，指向 feat 分支的最新提交，即 commit 3
+
+   ```diff
+   - .git/refs/heads/main
+   + .git/refs/heads/main
+   ```
+
+   ```sh
+   $ cat refs/heads/main # value
+   b0cd9f5
+   ```
+
+合并完成后，历史记录如下：
+
+```sh
+$ git log --oneline --all
+b0cd9f5 commit 3 (feat, main <- HEAD)
+e1e6af3 commit 2
+1b157d3 commit 1
+```
+
+![fast-forward](../../imgs/git-fast-forward.png)
