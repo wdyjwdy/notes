@@ -386,7 +386,7 @@ $ git log --oneline --all --graph # history
 
 ![fast-forward](../../imgs/git-fast-forward.png)
 
-###*  3-way merge
+### 3-way merge
 
 ```sh
 $ git log --oneline --all --graph # history
