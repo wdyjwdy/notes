@@ -597,6 +597,11 @@ $ git log --oneline --all --graph # history
 * ccf620f commit 1
 ```
 
+### ORIG_HEAD 是做什么工作的
+
+每次执行 `git merge` 时，都会更新 ORIG_HEAD 文件，ORIG_HEAD 的作用是，
+当想要回滚刚刚的 merge 操作时，可以执行 `git reset ORIG_HEAD`。
+
 ## Rebase
 
 Rebase 会将一系列 commit 重新应用到指定分支，例如：
@@ -889,6 +894,11 @@ $ git log --oneline --all # history
 > 注意，`git fetch` 命令不会更新本地的 main 分支指针
 
 ![git fetch](../imgs/git-fetch.png)
+
+### FETCH_HEAD 是做什么工作的
+
+每次执行 `git fetch` 时（包括 `git pull` 内部执行的），都会更新 FETCH_HEAD 文件，
+FETCH_HEAD 的作用是，指定 `git pull` 中的 merge 操作所 merge 的分支。
 
 ## Pull
 
