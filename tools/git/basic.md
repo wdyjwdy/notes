@@ -758,11 +758,17 @@ e7f88c9 commit 1
 
 Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 
-1. `git clone https://github.com/wdyjwdy/learn-git.git`: 克隆仓库
+1. `git clone <url>`: 克隆仓库
 
 ### 场景一：克隆远程仓库
 
-在本地执行 `git clone <url>` 后，Git 会做以下事情：
+```sh
+98890cc commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+```
+
+假设远程仓库有以上提交历史，在本地执行 `git clone <url>` 后，Git 会做以下事情：
 
 1. 下载 .git 文件，并重建工作区
 
@@ -773,6 +779,17 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
    # Repository
    + .git
    ```
+
+克隆完成后，历史记录如下：
+
+```sh
+$ git log --oneline
+98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+```
+
+![git clone](../../imgs/git-clone.png)
 
 与在本地 init 的仓库相比，clone 下来的仓库，有以下一些变化：
 
@@ -791,8 +808,8 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 
    ```diff
    + packed-refs
-   + objects
-   + └── pack
+     objects
+     └── pack
    +     ├── pack-ebd0add.idx
    +     └── pack-ebd0add.pack
    ```
@@ -802,3 +819,69 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
    ```diff
    + refs/remotes/origin/HEAD
    ```
+
+## Fetch
+
+Git Fetch 会同步远程仓库的代码到本地，例如：
+
+1. `git fetch`: 同步远程仓库
+
+### 场景一：同步远程仓库
+
+```sh
+# remote
+98890cc commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+
+# local
+5650cb4 commit 2
+8c7a5ee commit 1
+```
+
+假设有以上提交历史，在本地执行 `git fetch` 后，Git 会做以下事情：
+
+1. 在 objects 目录下生成远程新提交的相关对象（即 commit 3）
+
+   ```diff
+   # blob, tree, commit
+   objects
+   + ├── 38ea824
+   + ├── 1318e47
+   + └── 98890cc
+   ```
+
+2. 更新 origin/main 分支指针，指向远程最新提交（即 commit 3）
+
+   ```diff
+   - .git/refs/remotes/origin/main
+   + .git/refs/remotes/origin/main
+   ```
+
+   ```sh
+   $ cat refs/remotes/origin/main
+   98890cc
+   ```
+
+3. 更新 FETCH_HEAD，记录了本次 fetch 时，远程仓库的 commit, branch, url
+
+   ```diff
+   - FETCH_HEAD
+   + FETCH_HEAD
+   ```
+
+   ```sh
+   $ cat FETCH_HEAD # value
+   98890cc branch 'main' of <url>
+   ```
+
+拉取成功后，历史记录如下：
+
+```sh
+$ git log --oneline --all
+98890cc (origin/main, origin/HEAD) commit 3
+5650cb4 (HEAD -> main) commit 2
+8c7a5ee commit 1
+```
+
+![git clone](../../imgs/git-clone.png)
