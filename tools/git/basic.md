@@ -885,6 +885,9 @@ $ git log --oneline --all # history
 8c7a5ee commit 1
 ```
 
+> [!NOTE]
+> 注意，`git fetch` 命令不会更新本地的 main 分支指针
+
 ![git fetch](../../imgs/git-fetch.png)
 
 ## Pull
@@ -909,6 +912,45 @@ Git Pull 会拉取远程仓库的代码到本地，例如：
 假设有以上提交历史，在本地执行 `git pull` 后，Git 会做以下事情：
 
 1. 执行 `git fetch`（见 [fetch](#fetch) 部分）
-2. 执行 `git merge origin/main`（见 [merge](merge) 部分）
+2. 执行 `git merge origin/main`（见 [merge](#merge) 部分）
+
+拉取成功后，历史记录如下：
+
+```sh
+$ git log --oneline --all # history
+98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+```
 
 ![git pull](../../imgs/git-pull.png)
+
+### 场景二：拉取远程仓库产生冲突
+
+```sh
+# remote
+98890cc (HEAD -> main) commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+
+# local
+177e217 (HEAD -> main) commit 4
+5650cb4 commit 2
+8c7a5ee commit 1
+```
+
+假设有以上提交历史，在执行 `git merge origin/main` 时，
+会产生冲突，在手动解决冲突后，历史记录如下：
+
+```sh
+$ git log --oneline --graph # history
+*   264bbb3 (HEAD -> main) Merge branch 'main' of url
+|\
+| * 98890cc (origin/main, origin/HEAD) commit 3
+* | 177e217 commit 4
+|/
+* 5650cb4 commit 2
+* 8c7a5ee commit 1
+```
+
+![git pull conflict](../../imgs/git-pull-conflict.png)
