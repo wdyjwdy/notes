@@ -876,7 +876,7 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
    98890cc branch 'main' of <url>
    ```
 
-拉取成功后，历史记录如下：
+同步成功后，历史记录如下：
 
 ```sh
 $ git log --oneline --all # history
@@ -886,3 +886,29 @@ $ git log --oneline --all # history
 ```
 
 ![git fetch](../../imgs/git-fetch.png)
+
+## Pull
+
+Git Pull 会拉取远程仓库的代码到本地，例如：
+
+1. `git pull`: 拉取远程仓库
+
+### 场景一：拉取远程仓库
+
+```sh
+# remote
+98890cc (HEAD -> main) commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+
+# local
+5650cb4 (HEAD -> main) commit 2
+8c7a5ee commit 1
+```
+
+假设有以上提交历史，在本地执行 `git pull` 后，Git 会做以下事情：
+
+1. 执行 `git fetch`（见 [fetch](#fetch) 部分）
+2. 执行 `git merge origin/main`（见 [merge](merge) 部分）
+
+![git pull](../../imgs/git-pull.png)
