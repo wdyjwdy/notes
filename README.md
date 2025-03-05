@@ -23,8 +23,8 @@ Frontend Study Notes
 - [Regex cheet sheet](tools/regex-cheat-sheet.md)
 - [Vim cheet sheet](tools/vim-cheet-sheet.md)
 - Git
-  - [init](/tools/git/basic.md#init)
-  - [add](/tools/git/basic.md#add), [commit](/tools/git/basic.md#commit)
-  - [branch](/tools/git/basic.md#branch), [tag](/tools/git/basic.md#rebase)
-  - [switch](/tools/git/basic.md#switch), [merge](/tools/git/basic.md#merge), [rebase](/tools/git/basic.md#rebase)
-  - [clone](/tools/git/basic.md#clone)
+  - [init](/tools/git.md#init)
+  - [add](/tools/git.md#add), [commit](/tools/git.md#commit)
+  - [branch](/tools/git.md#branch), [tag](/tools/git.md#rebase)
+  - [switch](/tools/git.md#switch), [merge](/tools/git.md#merge), [rebase](/tools/git.md#rebase)
+  - [clone](/tools/git.md#clone)
