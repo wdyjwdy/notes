@@ -16,6 +16,7 @@ Frontend Study Notes
 ## Network
 
 - [TCP](network/tcp.md), [UDP](network/udp.md)
+- [DNS](network/dns.md), [CDN](network/cdn.md)
 
 ## Tools
 
@@ -26,3 +27,4 @@ Frontend Study Notes
   - [add](/tools/git/basic.md#add), [commit](/tools/git/basic.md#commit)
   - [branch](/tools/git/basic.md#branch), [tag](/tools/git/basic.md#rebase)
   - [switch](/tools/git/basic.md#switch), [merge](/tools/git/basic.md#merge), [rebase](/tools/git/basic.md#rebase)
+  - [clone](/tools/git/basic.md#clone)

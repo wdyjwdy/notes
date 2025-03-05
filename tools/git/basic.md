@@ -753,3 +753,52 @@ e7f88c9 commit 1
 > 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
 
 ![git tag](../../imgs/git-tag.png)
+
+## Clone
+
+Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
+
+1. `git clone https://github.com/wdyjwdy/learn-git.git`: 克隆仓库
+
+### 场景一：克隆远程仓库
+
+在本地执行 `git clone <url>` 后，Git 会做以下事情：
+
+1. 下载 .git 文件，并重建工作区
+
+   ```diff
+   # Working Tree
+   + hello.txt
+
+   # Repository
+   + .git
+   ```
+
+与在本地 init 的仓库相比，clone 下来的仓库，有以下一些变化：
+
+1. config 文件增加了远程分支的信息
+
+   ```diff
+   + [remote "origin"]
+   +    url = https://github.com/wdyjwdy/learn-git.git
+   +    fetch = +refs/heads/*:refs/remotes/origin/*
+   + [branch "main"]
+   +    remote = origin
+   +    merge = refs/heads/main
+   ```
+
+2. objects 目录下的对象会被打包
+
+   ```diff
+   + packed-refs
+   + objects
+   + └── pack
+   +     ├── pack-ebd0add.idx
+   +     └── pack-ebd0add.pack
+   ```
+
+3. refs 目录下增加了远程分支的引用
+
+   ```diff
+   + refs/remotes/origin/HEAD
+   ```
