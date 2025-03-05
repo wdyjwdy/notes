@@ -13,6 +13,10 @@ Frontend Study Notes
 - [Sorting algorithm](algorithm/sorting.md)
 - [Leetcode](algorithm/leetcode.ts)
 
+## Network
+
+- [TCP](network/tcp.md), [UDP](network/udp.md)
+
 ## Tools
 
 - [Regex cheet sheet](tools/regex-cheat-sheet.md)
@@ -20,4 +24,5 @@ Frontend Study Notes
 - Git
   - [init](/tools/git/basic.md#init)
   - [add](/tools/git/basic.md#add), [commit](/tools/git/basic.md#commit)
-  - [branch](/tools/git/basic.md#branch), [switch](/tools/git/basic.md#switch), [merge](/tools/git/basic.md#merge), [rebase](/tools/git/basic.md#rebase)
+  - [branch](/tools/git/basic.md#branch), [tag](/tools/git/basic.md#rebase)
+  - [switch](/tools/git/basic.md#switch), [merge](/tools/git/basic.md#merge), [rebase](/tools/git/basic.md#rebase)
