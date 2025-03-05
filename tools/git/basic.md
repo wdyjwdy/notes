@@ -419,7 +419,7 @@ $ git log --oneline --all --graph # history
 * 1b157d3 commit 1
 ```
 
-假设有以上历史记录，feat 为 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
+假设有以上提交历史，feat 为 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
 
 1. 更新 ORIG_HEAD 指针，指向 main 分支的最新提交，即 commit 2
 
@@ -466,7 +466,7 @@ $ git log --oneline --all --graph # history
 * 34b711b commit 1
 ```
 
-假设有以上历史记录，feat 不是 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
+假设有以上提交历史，feat 不是 main 的直接后继节点，此时我们在 main 分支执行 `git merge feat` 后，Git 会做以下事情：
 
 1. 更新 ORIG_HEAD 指针，指向 main 分支的最新提交，即 commit 3
 
@@ -536,7 +536,7 @@ $ git log --oneline --all --graph # history
 * ccf620f commit 1
 ```
 
-假设有以上历史记录，如果 feat 和 main 分支在同一行上都有修改，此时执行 `git merge feat` 会产生冲突，Git 会做以下事情：
+假设有以上提交历史，如果 feat 和 main 分支在同一行上都有修改，此时执行 `git merge feat` 会产生冲突，Git 会做以下事情：
 
 1. 更新 ORIG_HEAD 指针
 2. 新增或修改一些文件，用于解决冲突
@@ -612,7 +612,7 @@ $ git log --oneline --all --graph # history
 * 2239c5b commit 1
 ```
 
-假设有以上历史记录，此时我们在 feat 分支执行 `git rebase main` 后，Git 会做以下事情：
+假设有以上提交历史，此时我们在 feat 分支执行 `git rebase main` 后，Git 会做以下事情：
 
 1. 将 feat 分支中 root 节点之后的 commit（即 commit 3），重新提交到 main 分支上
 
@@ -656,3 +656,44 @@ $ git log --oneline --all --graph # history
 1. 当有多个 commit 需要处理时，rebase 会逐个处理 commit 的冲突，而 merge 会一次性处理所有 commit 的冲突
 2. rebase 会新增多个 commit，而 merge 只会新增一个 commit
 3. rebase 会移动 feat 分支指针，而 merge 会移动 main 分支指针
+
+## Tag
+
+Git Tag 会为指定提交创建一个标签，例如：
+
+1. `git tag v1`: 为当前提交，创建一个名为 'v1' 的标签
+2. `git tag -a v1 -m 'version 1'`: 为当前提交，创建一个名为 'v1' 的标签，标签信息为 'version 1'
+3. `git tag -a v1 2239c5b`: 为指定提交，创建一个名为 'v1' 的标签
+4. `git tag`: 列出所有标签
+5. `git tag -d v1`: 删除名为 'v1' 标签
+
+### 简单标签
+
+```sh
+$ git log --oneline # history
+a0f247e (HEAD -> main) commit 3
+57ca93f commit 2
+e7f88c9 commit 1
+```
+
+假设有以上提交历史，此时执行 `git tag v1` 后，Git 会做以下事情：
+
+1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为当前 commit 的哈希值
+
+   ```diff
+   + .git/refs/tags/v1
+   ```
+
+   ```sh
+   $ cat refs/tags/v1 # value
+   a0f247e
+   ```
+
+创建完成后，历史记录如下：
+
+```sh
+$ git log --oneline # history
+a0f247e (HEAD -> main, tag: v1) commit 3
+57ca93f commit 2
+e7f88c9 commit 1
+```
