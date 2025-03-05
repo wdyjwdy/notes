@@ -697,3 +697,49 @@ a0f247e (HEAD -> main, tag: v1) commit 3
 57ca93f commit 2
 e7f88c9 commit 1
 ```
+
+### 内容标签
+
+```sh
+$ git log --oneline # history
+a0f247e (HEAD -> main) commit 3
+57ca93f commit 2
+e7f88c9 commit 1
+```
+
+假设有以上提交历史，此时执行 `git tag -a v1 -m 'version 1'` 后，Git 会做以下事情：
+
+1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为当前 commit 的哈希值
+
+   ```diff
+   + .git/refs/tags/v1
+   ```
+
+   ```sh
+   $ cat refs/tags/v1 # value
+   a0f247e
+   ```
+
+2. 在 objects 目录下创建一个 tag 对象，内容为 tag message 信息
+
+   ```diff
+   + .git/objects/adf306e
+   ```
+
+   ```sh
+   $ git cat-file -t adf306e # type
+   tag
+
+   $ git cat-file -p adf306e # value
+   object a0f247e
+   type commit
+   tag v1
+   tagger wdyjwdy <email.com>
+
+   version 1
+   ```
+
+> [!NOTE]
+> 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
+
+![git rebase](../../imgs/git-rebase.png)
