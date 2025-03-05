@@ -81,7 +81,7 @@ hello
 > [!NOTE]
 > 当两个文件的内容相同时，它们的哈希值也相同，因此只会生成一个 blob 对象
 
-![add](../../imgs/git-add.png)
+![add](../imgs/git-add.png)
 
 ### 添加文件夹中的文件
 
@@ -179,7 +179,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    6cc8ff6
    ```
 
-![commit](../../imgs/git-commit.png)
+![commit](../imgs/git-commit.png)
 
 ### 提交文件夹中的文件
 
@@ -279,7 +279,7 @@ d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-![branch](../../imgs/git-branch.png)
+![branch](../imgs/git-branch.png)
 
 ### 查找当前最新提交
 
@@ -366,7 +366,7 @@ d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-![switch](../../imgs/git-switch.png)
+![switch](../imgs/git-switch.png)
 
 ### 切换到提交
 
@@ -400,7 +400,7 @@ d58f2f5 commit 2
 43bed3d (HEAD) commit 1
 ```
 
-![switch-detach](../../imgs/git-switch-detach.png)
+![switch-detach](../imgs/git-switch-detach.png)
 
 > [!NOTE]
 > 如果想基于该提交开始工作，可以执行 `git switch -c <name>` 创建一个新分支，并在新分支上工作
@@ -455,7 +455,7 @@ $ git log --oneline --all --graph # history
 * 1b157d3 commit 1
 ```
 
-![fast-forward](../../imgs/git-fast-forward.png)
+![fast-forward](../imgs/git-fast-forward.png)
 
 ### 三路合并
 
@@ -525,7 +525,7 @@ $ git log --oneline --all --graph # history
 * 34b711b commit 1
 ```
 
-![3-way-merge](../../imgs/git-3way-merge.png)
+![3-way-merge](../imgs/git-3way-merge.png)
 
 ### 三路合并产生冲突
 
@@ -648,7 +648,7 @@ $ git log --oneline --all --graph # history
 > [!CAUTION]
 > 注意 rebase 后的 commit 哈希值会改变
 
-![git rebase](../../imgs/git-rebase.png)
+![git rebase](../imgs/git-rebase.png)
 
 ### 分支变基产生冲突
 
@@ -752,7 +752,7 @@ e7f88c9 commit 1
 > [!NOTE]
 > 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
 
-![git tag](../../imgs/git-tag.png)
+![git tag](../imgs/git-tag.png)
 
 ## Clone
 
@@ -790,7 +790,7 @@ $ git log --oneline # history
 8c7a5ee commit 1
 ```
 
-![git clone](../../imgs/git-clone.png)
+![git clone](../imgs/git-clone.png)
 
 与在本地 init 的仓库相比，clone 下来的仓库，有以下一些变化：
 
@@ -888,7 +888,7 @@ $ git log --oneline --all # history
 > [!NOTE]
 > 注意，`git fetch` 命令不会更新本地的 main 分支指针
 
-![git fetch](../../imgs/git-fetch.png)
+![git fetch](../imgs/git-fetch.png)
 
 ## Pull
 
@@ -923,7 +923,7 @@ $ git log --oneline --all # history
 8c7a5ee commit 1
 ```
 
-![git pull](../../imgs/git-pull.png)
+![git pull](../imgs/git-pull.png)
 
 > [!NOTE]
 > 这里演示的是快速合并，如果是三路合并的话，则会产生一次新的提交
@@ -956,4 +956,4 @@ $ git log --oneline --graph # history
 * 8c7a5ee commit 1
 ```
 
-![git pull conflict](../../imgs/git-pull-conflict.png)
+![git pull conflict](../imgs/git-pull-conflict.png)
