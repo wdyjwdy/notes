@@ -241,11 +241,12 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
 
 Git Branch 会创建一个新的分支，例如：
 
-1. `git branch`: 显示本地分支
-2. `git branch -a`: 显示本地和远程分支
-3. `git branch feat`: 创建一个名为 feat 的分支
-4. `git branch -d feat`: 删除 feat 分支
-5. `git branch -D feat`: 强制删除 feat 分支
+1. `git branch feat`: 创建一个名为 feat 的分支
+2. `git branch -d feat`: 删除 feat 分支
+3. `git branch -D feat`: 强制删除 feat 分支
+4. `git branch`: 显示本地分支
+5. `git branch -r`: 显示远程分支
+6. `git branch -a`: 显示本地和远程分支
 
 ### 新建分支
 
