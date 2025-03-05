@@ -25,3 +25,36 @@ packet-beta
 160-191: "(Options and Padding)"
 192-255: "Data (variable length)"
 ```
+
+## Connection
+
+### 三次握手
+
+```mermaid
+%%{init: { "showSequenceNumbers": "true" } }%%
+sequenceDiagram
+  Client ->> Server: SYN
+  Server ->> Client: SYN, ACK
+  Client ->> Server: ACK
+```
+
+1. 客户端请求建立连接，发送 SYN 报文 (SEQ: 100)
+2. 服务端返回 SYN 的 ACK，并请求建立连接，发送 SYN 报文 (SEQ: 300, ACK: 101)
+3. 客户端返回 SYN 的 ACK (SEQ: 101, ACK: 301)
+4. 客户端开始传数据 (SEQ: 101, ACK: 301)
+
+### 四次挥手
+
+```mermaid
+%%{init: { "showSequenceNumbers": "true" } }%%
+sequenceDiagram
+  Client ->> Server: FIN
+  Server ->> Client: ACK
+  Server ->> Client: FIN
+  Client ->> Server: ACK
+```
+
+1. 客户端请求断开连接，发送 FIN 报文 (SEQ: 100, ACK: 300)
+2. 服务端返回 FIN 的 ACK (SEQ: 300, ACK: 101)
+3. 服务端请求断开连接，发送 FIN 报文 (SEQ: 300, ACK: 101)
+4. 客户端返回 FIN 的 ACK (SEQ: 101, ACK: 301)
