@@ -6,7 +6,7 @@ Git Init 会初始化一个代码仓库，例如：
 
 1. `git init`: 在当前目录下初始化一个代码仓库
 
-### 新建仓库
+### 场景一：新建仓库
 
 ```sh
 fruits
@@ -43,7 +43,7 @@ Git Add 使用[文件通配符]()，将 Working Tree 的文件添加到 Index，
 3. `git add .`: 添加所有文件
 4. `git add *.js`: 添加所有 js 文件
 
-### 添加单个文件
+### 场景一：添加单个文件
 
 ```txt
 // hello.txt
@@ -83,7 +83,7 @@ hello
 
 ![add](../../imgs/git-add.png)
 
-### 添加文件夹中的文件
+### 场景二：添加文件夹中的文件
 
 ```txt
 // greets/hello.txt
@@ -127,7 +127,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
 3. `git commit -a`: 等价于 `git add .` 加 `git commit`
 4. `git commit -am 'update'`: 等价于 `git add .` 加 `git commit -m 'update'`
 
-### 提交单个文件
+### 场景一：提交单个文件
 
 ```txt
 4c479de apple.txt
@@ -181,7 +181,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
 
 ![commit](../../imgs/git-commit.png)
 
-### 提交文件夹中的文件
+### 场景二：提交文件夹中的文件
 
 ```txt
 4c479de fruits/apple.txt
@@ -248,7 +248,7 @@ Git Branch 会创建一个新的分支，例如：
 5. `git branch -r`: 显示远程分支
 6. `git branch -a`: 显示本地和远程分支
 
-### 新建分支
+### 场景一：新建分支
 
 ```sh
 $ git log --oneline # history
@@ -297,7 +297,7 @@ d58f2f5 commit 2
    846aac5
    ```
 
-### 删除分支
+### 场景二：删除分支
 
 ```sh
 $ git log --oneline # history
@@ -334,7 +334,7 @@ Git Switch 会切换分支，例如：
 2. `git switch -c feat`: 创建并切换到 feat 分支
 3. `git switch --detach 6cc8ff6`: 切换到 commit 6cc8ff6
 
-### 切换分支
+### 场景一：切换分支
 
 ```sh
 $ git log --oneline # history
@@ -368,7 +368,7 @@ d58f2f5 commit 2
 
 ![switch](../../imgs/git-switch.png)
 
-### 切换到提交
+### 场景二：切换到提交
 
 ```sh
 $ git log --oneline # history
@@ -411,7 +411,7 @@ Git Merge 会合并分支，例如：
 
 1. `git merge feat`: 将 feat 分支合并到当前分支
 
-### 快速合并
+### 场景一：快速合并
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -457,7 +457,7 @@ $ git log --oneline --all --graph # history
 
 ![fast-forward](../../imgs/git-fast-forward.png)
 
-### 三路合并
+### 场景二：三路合并
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -527,7 +527,7 @@ $ git log --oneline --all --graph # history
 
 ![3-way-merge](../../imgs/git-3way-merge.png)
 
-### 带冲突的三路合并
+### 场景三：三路合并产生冲突
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -603,7 +603,7 @@ Rebase 会将一系列 commit 重新应用到指定分支，例如：
 
 1. `git rebase main`: 将当前分支的 commit 重新提交到 main 分支上
 
-### 分支变基
+### 场景一：分支变基
 
 ```sh
 $ git log --oneline --all --graph # history
@@ -650,7 +650,7 @@ $ git log --oneline --all --graph # history
 
 ![git rebase](../../imgs/git-rebase.png)
 
-### 带冲突的分支变基
+### 场景二：分支变基产生冲突
 
 和[带冲突的三路合并](#带冲突的三路合并)几乎一样，只有以下区别：
 
@@ -668,7 +668,7 @@ Git Tag 会为指定提交创建一个标签，例如：
 4. `git tag`: 列出所有标签
 5. `git tag -d v1`: 删除名为 'v1' 标签
 
-### 简单标签
+### 场景一：创建简单标签
 
 ```sh
 $ git log --oneline # history
@@ -699,7 +699,7 @@ a0f247e (HEAD -> main, tag: v1) commit 3
 e7f88c9 commit 1
 ```
 
-### 内容标签
+### 场景二：创建内容标签
 
 ```sh
 $ git log --oneline # history
@@ -905,7 +905,7 @@ Git Pull 会拉取远程仓库的代码到本地，例如：
 8c7a5ee commit 1
 
 # local
-5650cb4 (HEAD -> main) commit 2
+5650cb4 (HEAD -> main, origin/main, origin/HEAD) commit 2
 8c7a5ee commit 1
 ```
 
@@ -925,6 +925,9 @@ $ git log --oneline --all # history
 
 ![git pull](../../imgs/git-pull.png)
 
+> [!NOTE]
+> 这里演示的是快速合并，如果是三路合并的话，则会产生一次新的提交
+
 ### 场景二：拉取远程仓库产生冲突
 
 ```sh
@@ -935,7 +938,7 @@ $ git log --oneline --all # history
 
 # local
 177e217 (HEAD -> main) commit 4
-5650cb4 commit 2
+5650cb4 (origin/main, origin/HEAD) commit 2
 8c7a5ee commit 1
 ```
 
