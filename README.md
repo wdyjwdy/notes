@@ -27,4 +27,4 @@ Frontend Study Notes
   - [add](/tools/git.md#add), [commit](/tools/git.md#commit)
   - [branch](/tools/git.md#branch), [tag](/tools/git.md#rebase)
   - [switch](/tools/git.md#switch), [merge](/tools/git.md#merge), [rebase](/tools/git.md#rebase)
-  - [clone](/tools/git.md#clone)
+  - [clone](/tools/git.md#clone), [fetch](/tools/git.md#fetch), [pull](/tools/git.md#pull)
