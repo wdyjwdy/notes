@@ -455,7 +455,7 @@ $ git log --oneline --all --graph # history
 * 1b157d3 commit 1
 ```
 
-![fast-forward](../imgs/git-fast-forward.png)
+![fast-forward](../imgs/git-merge-ff.png)
 
 ### 三路合并
 
@@ -525,7 +525,7 @@ $ git log --oneline --all --graph # history
 * 34b711b commit 1
 ```
 
-![3-way-merge](../imgs/git-3way-merge.png)
+![3-way-merge](../imgs/git-merge.png)
 
 ### 三路合并产生冲突
 
@@ -933,7 +933,7 @@ $ git log --oneline --all # history
 8c7a5ee commit 1
 ```
 
-![git pull](../imgs/git-pull.png)
+![git pull](../imgs/git-pull-ff.png)
 
 > [!NOTE]
 > 这里演示的是快速合并，如果是三路合并的话，则会产生一次新的提交
@@ -966,4 +966,4 @@ $ git log --oneline --graph # history
 * 8c7a5ee commit 1
 ```
 
-![git pull conflict](../imgs/git-pull-conflict.png)
+![git pull conflict](../imgs/git-pull.png)
