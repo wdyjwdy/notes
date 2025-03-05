@@ -763,7 +763,8 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 ### 场景一：克隆远程仓库
 
 ```sh
-98890cc commit 3
+# remote
+98890cc (HEAD -> main) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
 ```
@@ -783,7 +784,7 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 克隆完成后，历史记录如下：
 
 ```sh
-$ git log --oneline
+$ git log --oneline # history
 98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
@@ -830,12 +831,12 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
 
 ```sh
 # remote
-98890cc commit 3
+98890cc (HEAD -> main) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
 
 # local
-5650cb4 commit 2
+5650cb4 (HEAD -> main) commit 2
 8c7a5ee commit 1
 ```
 
@@ -859,7 +860,7 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
    ```
 
    ```sh
-   $ cat refs/remotes/origin/main
+   $ cat refs/remotes/origin/main # value
    98890cc
    ```
 
@@ -878,10 +879,10 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
 拉取成功后，历史记录如下：
 
 ```sh
-$ git log --oneline --all
+$ git log --oneline --all # history
 98890cc (origin/main, origin/HEAD) commit 3
 5650cb4 (HEAD -> main) commit 2
 8c7a5ee commit 1
 ```
 
-![git clone](../../imgs/git-clone.png)
+![git fetch](../../imgs/git-fetch.png)
