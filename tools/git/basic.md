@@ -739,7 +739,16 @@ e7f88c9 commit 1
    version 1
    ```
 
+创建完成后，历史记录如下：
+
+```sh
+$ git log --oneline # history
+a0f247e (HEAD -> main, tag: v1) commit 3
+57ca93f commit 2
+e7f88c9 commit 1
+```
+
 > [!NOTE]
 > 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
 
-![git rebase](../../imgs/git-rebase.png)
+![git tag](../../imgs/git-tag.png)
