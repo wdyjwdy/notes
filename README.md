@@ -28,3 +28,4 @@ Frontend Study Notes
   - [branch](/tools/git.md#branch), [tag](/tools/git.md#rebase), [switch](/tools/git.md#switch)
   - [merge](/tools/git.md#merge), [rebase](/tools/git.md#rebase), [cherry-pick](/tools/git.md#cherry-pick)
   - [clone](/tools/git.md#clone), [fetch](/tools/git.md#fetch), [pull](/tools/git.md#pull)
+  - [reset](/tools/git.md#reset), [revert](/tools/git.md#revert)
