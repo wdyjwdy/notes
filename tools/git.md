@@ -1055,3 +1055,204 @@ Git Push 上传本地修改到远程仓库，例如：
 在本地执行 `git push -d origin feat` 后，Git 会做以下事情：
 
 1. 删除远程 refs/heads/feat 文件
+
+## Revert
+
+Git Revert 用于抵消某次提交。例如：
+
+1. `git revert A`: 抵消 commit A
+2. `git revert A B`: 抵消 commit A B
+3. `git revert A..C`: 抵消 commit B C
+
+### 抵消单个提交
+
+```
+A <- B <- C
+```
+
+假设有以上提交历史，此时执行 `git revert B` 后，Git 会做以下事情：
+
+1.  创建一个 commit B'，其内容与 commit B 相反
+
+抵消完成后，历史记录如下：
+
+```
+A <- B <- C <- B'
+```
+
+### 抵消多个提交
+
+```
+A <- B <- C <- D
+```
+
+假设有以上提交历史，此时执行 `git revert B..D` 后，Git 会做以下事情：
+
+1.  创建 commit D', C'，其内容分别与 commit D, C 相反
+
+抵消完成后，历史记录如下：
+
+```
+A <- B <- C <- D <- D' <- C'
+```
+
+> [!NOTE]
+> 注意 `git revert` 会先抵消最新的提交 D，再抵消提交 C
+
+## Reset
+
+Git Reset 用于还原到指定提交。例如：
+
+1. `git reset --soft A`: 重置 HEAD 指针到 A
+2. `git reset --mixed A`: 重置 HEAD 指针到 A，并更新 Index
+3. `git reset --hard A`: 重置 HEAD 指针到 A，并更新 Index 和 Working Tree
+
+### 重置指针
+
+```
+947a868 (HEAD -> main) commit 3
+04022cf commit 2
+8de34b2 commit 1
+```
+
+假设有以上提交历史，此时执行 `git reset --soft 04022cf` 后，Git 会做以下事情：
+
+1. 更新 main 指针，指向 commit 2
+   ```diff
+   - .git/refs/heads/main
+   + .git/refs/heads/main
+   ```
+   ```sh
+   $ cat .git/refs/heads/main
+   04022cf
+   ```
+
+操作完成后，历史记录如下：
+
+```
+04022cf (HEAD -> feat) commit 2
+8de34b2 commit 1
+```
+
+操作完成后，文件状态如下：
+
+```
+工作区：
+暂存区：apple.txt
+```
+
+> [!NOTE]
+> 由于 `reset --soft` 仅仅移动了指针，因此还原 Reset 之前的状态很容易，
+> 只需要把指针移动回去：`git reset --soft 947a868`
+
+### 重置指针，暂存区
+
+```
+947a868 (HEAD -> main) commit 3
+04022cf commit 2
+8de34b2 commit 1
+```
+
+假设有以上提交历史，此时执行 `git reset --mixed 04022cf` 后，Git 会做以下事情：
+
+1. 更新 main 指针，指向 commit 2
+   ```diff
+   - .git/refs/heads/main
+   + .git/refs/heads/main
+   ```
+   ```sh
+   $ cat .git/refs/heads/main
+   04022cf
+   ```
+2. 更新 Index，内容为 commit 2 tree 对象的内容
+
+```diff
+- .git/index
++ .git/index
+```
+
+```sh
+$ git ls-files -s # Index content
+dbee026 apple.txt
+
+$ git cat-file -p 04022cf # commit 2 content
+tree 9fb894a
+$ git cat-file -p 9fb894a # commit 2 tree content
+dbee026 apple.txt
+```
+
+操作完成后，历史记录如下：
+
+```
+04022cf (HEAD -> feat) commit 2
+8de34b2 commit 1
+```
+
+操作完成后，文件状态如下：
+
+```
+工作区：apple.txt
+暂存区：
+```
+
+> [!NOTE]
+> 由于 `reset --mixed` 仅仅移动了指针，并修改了 Index，因此还原 Reset 之前的状态很容易，
+> 只需要把指针移动回去，并把 Index 改回去：`git reset --mixed 947a868`
+
+### 重置指针，暂存区，工作区
+
+```
+947a868 (HEAD -> main) commit 3
+04022cf commit 2
+8de34b2 commit 1
+```
+
+假设有以上提交历史，此时执行 `git reset --hard 04022cf` 后，Git 会做以下事情：
+
+1. 更新 main 指针，指向 commit 2
+   ```diff
+   - .git/refs/heads/main
+   + .git/refs/heads/main
+   ```
+   ```sh
+   $ cat .git/refs/heads/main
+   04022cf
+   ```
+2. 更新 Index，内容为 commit 2 tree 对象的内容
+
+```diff
+- .git/index
++ .git/index
+```
+
+```sh
+$ git ls-files -s # Index content
+dbee026 apple.txt
+
+$ git cat-file -p 04022cf # commit 2 content
+tree 9fb894a
+$ git cat-file -p 9fb894a # commit 2 tree content
+dbee026 apple.txt
+```
+
+3. 更新 Working Tree，内容与 Index 相同
+
+操作完成后，历史记录如下：
+
+```
+04022cf (HEAD -> feat) commit 2
+8de34b2 commit 1
+```
+
+操作完成后，文件状态如下：
+
+```
+工作区：
+暂存区：
+```
+
+> [!NOTE]
+> 由于 `reset --hard` 不仅修改了指针和 Index，还修改了 Working Tree，
+> 因此还原 Reset 之前的状态比较困难，使用 `git reset --hard 947a868`
+> 仅会还原指针和 Index，由于 Working Tree 的内容没有保存为 Git 对象，
+> 因此 Working Tree 中修改的内容会丢失
