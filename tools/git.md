@@ -665,11 +665,13 @@ $ git log --oneline --all --graph # history
 
 ## Cherry-pick
 
-Cherry-pick 会将指定 commit 重新应用到指定分支，例如：
+Cherry-pick 会将指定 commit 重新应用到当前分支，例如：
 
-1. `git cherry-pick 2239c5b`: 将指定 commit 应用到当前分支
+1. `git cherry-pick A`: 将 commit A 应用到当前分支
+2. `git cherry-pick A B`: 将 commit A, B 应用到当前分支
+3. `git cherry-pick A..D`: 将 commit B, C, D 应用到当前分支
 
-### 应用指定提交
+### 应用单个提交
 
 ```
 A <- B <- C <- D (main)
@@ -677,9 +679,9 @@ A <- B <- C <- D (main)
        E <- F (feat)
 ```
 
-假设有以上提交历史，此时我们在 feat 分支执行 `git cherry-pick hash(D)` 后，Git 会做以下事情：
+假设有以上提交历史，此时我们在 feat 分支执行 `git cherry-pick D` 后，Git 会做以下事情：
 
-1. 将 commit D 重新提交到 feat 分支
+1. 将 commit D 应用到 feat 分支
 
 应用完成后，历史记录如下：
 
@@ -687,6 +689,26 @@ A <- B <- C <- D (main)
 A <- B <- C <- D (main)
       \
        E <- F <- D' (feat)
+```
+
+### 应用多个提交
+
+```
+A <- B <- C <- D <- E (main)
+      \
+       F <- G (feat)
+```
+
+假设有以上提交历史，此时我们在 feat 分支执行 `git cherry-pick C..E` 后，Git 会做以下事情：
+
+1. 将 commit D, E 应用到 feat 分支
+
+应用完成后，历史记录如下：
+
+```
+A <- B <- C <- D <- E (main)
+      \
+       F <- G <- D' <- E' (feat)
 ```
 
 ## Tag
