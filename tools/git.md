@@ -1145,6 +1145,8 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 > 由于 `reset --soft` 仅仅移动了指针，因此还原 Reset 之前的状态很容易，
 > 只需要把指针移动回去：`git reset --soft 947a868`
 
+![git-reset-soft](../imgs/git-reset-soft.png)
+
 ### 重置指针，暂存区
 
 ```
@@ -1198,6 +1200,8 @@ dbee026 apple.txt
 > [!NOTE]
 > 由于 `reset --mixed` 仅仅移动了指针，并修改了 Index，因此还原 Reset 之前的状态很容易，
 > 只需要把指针移动回去，并把 Index 改回去：`git reset --mixed 947a868`
+
+![git-reset-mixed](../imgs/git-reset-mixed.png)
 
 ### 重置指针，暂存区，工作区
 
@@ -1257,3 +1261,5 @@ dbee026 apple.txt
 > 仅会还原指针和 Index。如果 Working Tree 的修改已经暂存，那么暂存的文件
 > 可以去垃圾对象里翻找，如果 Working Tree 的修改没有暂存，那么 Git 将会丢失
 > 这部分内容，但 IDE 的缓存文件里有可能可以找到
+
+![git-reset-hard](../imgs/git-reset-hard.png)
