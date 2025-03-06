@@ -663,6 +663,32 @@ $ git log --oneline --all --graph # history
 2. rebase 会新增多个 commit，而 merge 只会新增一个 commit
 3. rebase 会移动 feat 分支指针，而 merge 会移动 main 分支指针
 
+## Cherry-pick
+
+Cherry-pick 会将指定 commit 重新应用到指定分支，例如：
+
+1. `git cherry-pick 2239c5b`: 将指定 commit 应用到当前分支
+
+### 应用指定提交
+
+```
+A <- B <- C <- D (main)
+      \
+       E <- F (feat)
+```
+
+假设有以上提交历史，此时我们在 feat 分支执行 `git cherry-pick hash(D)` 后，Git 会做以下事情：
+
+1. 将 commit D 重新提交到 feat 分支
+
+应用完成后，历史记录如下：
+
+```
+A <- B <- C <- D (main)
+      \
+       E <- F <- D' (feat)
+```
+
 ## Tag
 
 Git Tag 会为指定提交创建一个标签，例如：
@@ -967,3 +993,43 @@ $ git log --oneline --graph # history
 ```
 
 ![git pull conflict](../imgs/git-pull.png)
+
+## Push
+
+Git Push 上传本地修改到远程仓库，例如：
+
+1. `git push origin feat`: 将 feat 分支上的修改推送到远程 origin feat 分支
+2. `git push -u origin feat`: 将 feat 分支上的修改推送到远程 origin feat 分支，并将 feat 和 origin feat 进行关联
+3. `git push`: 将当前分支的修改推送到远程同名分支（需要分支已关联）
+4. `git push -d origin feat`: 删除远程 origin feat 分支
+
+### 推送本地修改
+
+```sh
+5637202 (HEAD -> feat) commit 3
+5650cb4 (origin/feat) commit 2
+8c7a5ee commit 1
+```
+
+假设有以上提交历史，在本地执行 `git push` 后，Git 会做以下事情：
+
+1. 将修改文件的对象推送到远程的 objects 文件
+2. 更新远程 refs/heads/feat 分支指针，指向最新 commit
+
+推送成功后，历史记录如下：
+
+```sh
+5637202 (HEAD -> hello, origin/hello) commit 3
+5650cb4 commit 2
+8c7a5ee commit 1
+```
+
+> [!CAUTION]
+> 使用 `git push` 上传的文件的内容有大小限制，默认为 1MB，如果超过了 1MB 则需要
+> 使用 `git config http.postBuffer` 配置缓冲区大小
+
+### 删除远程分支
+
+在本地执行 `git push -d origin feat` 后，Git 会做以下事情：
+
+1. 删除远程 refs/heads/feat 文件
