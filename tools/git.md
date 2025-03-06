@@ -8,8 +8,10 @@ Git Init 会初始化一个代码仓库，例如：
 
 ### 新建仓库
 
-```sh
+```
 fruits
+├── apple.txt
+└── banana.txt
 ```
 
 假设有以上目录结构，在 `fruits` 路径下执行 `git init` 后，Git 会做以下事情：
@@ -17,6 +19,8 @@ fruits
 1. 创建一个 .git 文件
    ```diff
    fruits
+     ├── apple.txt
+     ├── banana.txt
    + └── .git
    +   ├── config
    +   ├── description
@@ -30,8 +34,8 @@ fruits
    +   │   ├── info
    +   │   └── pack
    +   └── refs
-   +     ├── heads
-   +     └── tags
+   +       ├── heads
+   +       └── tags
    ```
 
 ## Add
@@ -45,7 +49,7 @@ Git Add 使用[文件通配符]()，将 Working Tree 的文件添加到 Index，
 
 ### 添加单个文件
 
-```txt
+```
 // hello.txt
 hello
 ```
@@ -66,7 +70,7 @@ hello
    hello
    ```
 
-2. 在 index 中添加一条记录，记录文件路径和哈希值
+2. 在 Index 中添加一条记录，记录文件路径和哈希值
 
    ```diff
    - .git/index
@@ -83,14 +87,14 @@ hello
 
 ![add](../imgs/git-add.png)
 
-### 添加文件夹中的文件
+### 添加嵌套文件
 
 ```txt
 // greets/hello.txt
 hello
 ```
 
-若添加的是文件夹中的文件，Git 处理也几乎一样：
+若添加的是嵌套文件，Git 处理也几乎一样：
 
 1. 在 objects 目录下生成一个 blob 对象
 
@@ -118,14 +122,16 @@ hello
    ce01362 greets/hello.txt # 这里不一样
    ```
 
+> [!NOTE]
+> Git 看不到文件夹，仅创建文件夹不会被 Git 管理
+
 ## Commit
 
 Git Commit 会将 Index 中的内容提交到 Repository，例如：
 
-1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim-cheet-sheet.md) 输入 commit message
-2. `git commit -m 'update'`: 提交 Index 中的内容，并使用 'update' 作为 commit message
-3. `git commit -a`: 等价于 `git add .` 加 `git commit`
-4. `git commit -am 'update'`: 等价于 `git add .` 加 `git commit -m 'update'`
+1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim-cheet-sheet.md) 输入提交信息
+2. `git commit -m 'update'`: 提交 Index 中的内容，并使用 'update' 作为提交信息
+3. `git commit --amend`: 等价于 `git reset --soft HEAD~1` 加 `git commit`（参考 [Reset](#reset) 和 [Commit](commit)）
 
 ### 提交单个文件
 
@@ -133,9 +139,9 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
 4c479de apple.txt
 ```
 
-假设 index 文件中有以上内容，执行 `git commit -m 'update'` 后，Git 会做以下事情：
+假设 Index 中有以上内容，执行 `git commit -m 'update'` 后，Git 会做以下事情：
 
-1. 在 objects 目录下生成一个 tree 对象，该对象记录了根目录下文件的路径，以及对应的哈希值
+1. 在 objects 目录下生成一个 tree 对象，内容为 Index 中文件的快照
 
    ```diff
    + .git/objects/1742682
@@ -149,7 +155,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    blob 4c479de apple.txt
    ```
 
-2. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 根目录的 tree，和 commit message 相关内容
+2. 在 objects 目录下生成一个 commit 对象，记录了刚刚的 tree 对象，和相关的提交信息
 
    ```diff
    + .git/objects/6cc8ff6
@@ -167,7 +173,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    update
    ```
 
-3. 将当前分支指向生成的 commit 对象（当前分支即 HEAD 指向的分支）
+3. 更新[当前分支](#当前分支与当前提交)指针，指向刚刚生成的 commit 对象
 
    ```diff
    - .git/refs/heads/main
@@ -175,21 +181,21 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    ```
 
    ```sh
-   $ cat refs/heads/main # value
+   $ cat .git/refs/heads/main # value
    6cc8ff6
    ```
 
 ![commit](../imgs/git-commit.png)
 
-### 提交文件夹中的文件
+### 提交嵌套文件
 
 ```txt
 4c479de fruits/apple.txt
 ```
 
-若 Index 中存在文件夹，如上，则 Git 会用 tree in tree 的方式来储存文件路径：
+若 Index 有如上嵌套文件，则 Git 会用 tree in tree 的方式来储存文件快照
 
-1. 在 objects 目录下生成第一个 tree 对象，该对象记录了 fruits 目录下文件的路径，以及对应的哈希值
+1. 在 objects 目录下生成第一个 tree 对象，记录了 fruits 目录下文件的快照
 
    ```diff
    + .git/objects/1742682
@@ -203,7 +209,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    blob 4c479de apple.txt
    ```
 
-2. 在 objects 目录下生成第二个 tree 对象，该对象记录了根目录下文件的路径，以及对应的哈希值
+2. 在 objects 目录下生成第二个 tree 对象，记录了 root 目录下文件的快照
 
    ```diff
    + .git/objects/5635283
@@ -217,7 +223,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    tree 1742682 fruits # 指向第一步的 tree 对象
    ```
 
-3. 在 objects 目录下生成一个 commit 对象，记录了本次 commit 根目录的 tree，和 commit message 相关内容
+3. 在 objects 目录下生成一个 commit 对象，记录了第二步的 tree 对象，和相关的提交信息
 
    ```diff
    + .git/objects/c2594b5
@@ -235,7 +241,7 @@ Git Commit 会将 Index 中的内容提交到 Repository，例如：
    update
    ```
 
-4. 更新分支指向
+4. 更新[当前分支](#当前分支与当前提交)指针，指向刚刚生成的 commit 对象
 
 ## Branch
 
@@ -250,8 +256,7 @@ Git Branch 会创建一个新的分支，例如：
 
 ### 新建分支
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -259,7 +264,7 @@ d58f2f5 commit 2
 
 假设有以上提交历史，在 main 分支上执行 `git branch feat` 后，Git 会做以下事情：
 
-1. 在 refs/heads 目录下创建一个名为 feat 的文件，内容为当前分支最新 commit 的哈希值
+1. 在 refs/heads 目录下创建一个名为 feat 的文件，内容为[当前提交](#当前分支与当前提交)
 
    ```diff
    + .git/refs/heads/feat
@@ -270,10 +275,9 @@ d58f2f5 commit 2
    846aac5
    ```
 
-新建分支后，历史记录如下：
+操作完成后，历史记录如下：
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -281,26 +285,9 @@ d58f2f5 commit 2
 
 ![branch](../imgs/git-branch.png)
 
-### 查找当前最新提交
-
-1. 查看 HEAD 文件，获取当前分支的引用
-
-   ```sh
-   $ cat HEAD # value
-   ref: refs/heads/main
-   ```
-
-2. 查看当前分支的最新提交
-
-   ```sh
-   $ cat refs/heads/main # value
-   846aac5
-   ```
-
 ### 删除分支
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -314,10 +301,9 @@ d58f2f5 commit 2
    - .git/refs/heads/feat
    ```
 
-删除分支后，历史记录如下：
+操作完成后，历史记录如下：
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -326,18 +312,33 @@ d58f2f5 commit 2
 > [!NOTE]
 > 删除分支后，分支上的 commit 对象并不会被删除，这些对象会变成垃圾对象
 
+### 当前分支与当前提交
+
+1. 查看 HEAD 文件，获取当前分支的引用
+
+   ```sh
+   $ cat .git/HEAD # value
+   ref: refs/heads/main
+   ```
+
+2. 查看当前分支的最新提交
+
+   ```sh
+   $ cat .git/refs/heads/main # value
+   846aac5
+   ```
+
 ## Switch
 
 Git Switch 会切换分支，例如：
 
 1. `git switch feat`: 切换到 feat 分支
 2. `git switch -c feat`: 创建并切换到 feat 分支
-3. `git switch --detach 6cc8ff6`: 切换到 commit 6cc8ff6
+3. `git switch --detach 6cc8ff6`: 切换到 6cc8ff6 提交
 
-### 切换分支
+### 切换到分支
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main, feat) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -353,14 +354,22 @@ d58f2f5 commit 2
    ```
 
    ```sh
-   $ cat HEAD # value
+   $ cat .git/HEAD # value
    ref: refs/heads/feat
    ```
 
-切换分支后，历史记录如下：
+2. 更新 Index，内容为 feat 分支对应 tree 的内容
 
-```sh
-$ git log --oneline # history
+   ```diff
+   - .git/index
+   + .git/index
+   ```
+
+3. 更新 Working Tree，内容为 feat 分支对应 tree 的内容
+
+操作完成后，历史记录如下：
+
+```
 846aac5 (HEAD -> feat, main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
@@ -370,16 +379,15 @@ d58f2f5 commit 2
 
 ### 切换到提交
 
-```sh
-$ git log --oneline # history
+```
 846aac5 (HEAD -> main) commit 3
 d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-假设有以上提交历史，执行 `git switch --detach 43bed3d` 后，Git 会做以下事情：
+假设有以上提交历史，执行 `git switch --detach d58f2f5` 后，Git 会做以下事情：
 
-1. 更新 HEAD 文件，将其指向 43bed3d (commit 1)
+1. 更新 HEAD 文件，将其指向 d58f2f5 (commit 2)
 
    ```diff
    - .git/HEAD
@@ -387,23 +395,31 @@ d58f2f5 commit 2
    ```
 
    ```sh
-   $ cat HEAD # value
-   43bed3d
+   $ cat .git/HEAD # value
+   d58f2f5
    ```
 
-切换到提交后，历史记录如下：
+2. 更新 Index，内容为 d58f2f5 (commit 2) 对应 tree 的内容
 
-```sh
-$ git log --oneline --all # history
+   ```diff
+   - .git/index
+   + .git/index
+   ```
+
+3. 更新 Working Tree，内容为 d58f2f5 (commit 2) 对应 tree 的内容
+
+操作完成后，历史记录如下：
+
+```
 846aac5 (main) commit 3
-d58f2f5 commit 2
-43bed3d (HEAD) commit 1
+d58f2f5 (HEAD) commit 2
+43bed3d commit 1
 ```
 
-![switch-detach](../imgs/git-switch-detach.png)
-
 > [!NOTE]
-> 如果想基于该提交开始工作，可以执行 `git switch -c <name>` 创建一个新分支，并在新分支上工作
+> 如果想基于该提交工作，可以执行 `git switch -c <name>` 创建一个新分支开始工作
+
+![switch-detach](../imgs/git-switch-detach.png)
 
 ## Merge
 
@@ -414,7 +430,6 @@ Git Merge 会合并分支，例如：
 ### 快速合并
 
 ```sh
-$ git log --oneline --all --graph # history
 * b0cd9f5 (feat) commit 3
 * e1e6af3 (HEAD -> main) commit 2
 * 1b157d3 commit 1
@@ -430,7 +445,7 @@ $ git log --oneline --all --graph # history
    ```
 
    ```sh
-   $ cat ORIG_HEAD # value
+   $ cat .git/ORIG_HEAD # value
    e1e6af3
    ```
 
@@ -442,14 +457,13 @@ $ git log --oneline --all --graph # history
    ```
 
    ```sh
-   $ cat refs/heads/main # value
+   $ cat .git/refs/heads/main # value
    b0cd9f5
    ```
 
-合并完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph # history
 * b0cd9f5 (HEAD -> main, feat) commit 3
 * e1e6af3 commit 2
 * 1b157d3 commit 1
@@ -460,7 +474,6 @@ $ git log --oneline --all --graph # history
 ### 三路合并
 
 ```sh
-$ git log --oneline --all --graph # history
 * a9532ef (HEAD -> main) commit 3
 | * 88d8b74 (feat) commit 2
 |/
@@ -477,11 +490,11 @@ $ git log --oneline --all --graph # history
    ```
 
    ```sh
-   $ cat ORIG_HEAD # value
+   $ cat .git/ORIG_HEAD # value
    a9532ef
    ```
 
-2. 创建一个新的 merge commit 对象，记录了 feat 中的修改（注意 merge commit 对象有两个 parent）
+2. 创建一个新提交，记录了 feat 中的修改
 
    ```diff
    # tree
@@ -501,7 +514,7 @@ $ git log --oneline --all --graph # history
    Merge branch 'feat'
    ```
 
-3. 更新 main 分支指针，指向新的 merge commit 对象
+3. 更新 main 分支指针，指向刚刚的提交对象
 
    ```diff
    - .git/refs/heads/main
@@ -509,14 +522,13 @@ $ git log --oneline --all --graph # history
    ```
 
    ```sh
-   $ cat refs/heads/main # value
+   $ cat .git/refs/heads/main # value
    cbd588d
    ```
 
-合并完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph # history
 *   cbd588d (HEAD -> main) Merge branch 'feat'
 |\
 | * 88d8b74 (feat) commit 2
@@ -525,12 +537,14 @@ $ git log --oneline --all --graph # history
 * 34b711b commit 1
 ```
 
+> [!NOTE]
+> 注意，Merge 操作产生的提交，有两个 parent，即两个父节点
+
 ![3-way-merge](../imgs/git-merge.png)
 
 ### 三路合并产生冲突
 
 ```sh
-$ git log --oneline --all --graph # history
 * fb1c925 (feat) commit 3
 | * bcf8030 (HEAD -> main) commit 2
 |/
@@ -582,13 +596,12 @@ $ git log --oneline --all --graph # history
    + └── MERGE_MSG  # merge commit message
    ```
 
-3. 用户解决冲突，即暂存了所有解决冲突的文件后，执行 `git commit` 命令，手动提交 merge commit（提交后，Git 会删除之前用于解决冲突的临时文件）
+3. 用户解决冲突，即暂存了所有解决冲突的文件后，执行 `git commit` 命令手动进行提交
 4. 更新 main 分支指针
 
-合并完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph # history
 *   ab3525e (HEAD -> main) Merge branch 'feat'
 |\
 | * fb1c925 (feat) commit 3
@@ -597,21 +610,23 @@ $ git log --oneline --all --graph # history
 * ccf620f commit 1
 ```
 
+> [!NOTE]
+> Merge 操作完成后，中间状态产生的文件会被删除
+
 ### ORIG_HEAD 是做什么工作的
 
-每次执行 `git merge` 时，都会更新 ORIG_HEAD 文件，ORIG_HEAD 的作用是，
-当想要回滚刚刚的 merge 操作时，可以执行 `git reset ORIG_HEAD`。
+Merge 操作时会更新 ORIG_HEAD，指向 Merge 前的 commit 对象，
+需要撤销刚刚的 Merge 操作时，可以执行 `git reset ORIG_HEAD`
 
 ## Rebase
 
-Rebase 会将一系列 commit 重新应用到指定分支，例如：
+Rebase 会将提交重新应用到指定分支，例如：
 
 1. `git rebase main`: 将当前分支的 commit 重新提交到 main 分支上
 
-### 分支变基
+### 应用分支
 
-```sh
-$ git log --oneline --all --graph # history
+```
 * fda4ab8 (feat) commit 3
 | * 3007e64 (HEAD -> main) commit 2
 |/
@@ -629,7 +644,7 @@ $ git log --oneline --all --graph # history
    + .git/objects/37ffdf1
    ```
 
-2. 更新 feat 分支指针，指向新的 commit
+2. 更新 feat 分支指针，指向最新 commit
 
    ```diff
    - .git/refs/heads/feat
@@ -637,14 +652,13 @@ $ git log --oneline --all --graph # history
    ```
 
    ```sh
-   $ cat refs/heads/feat # value
+   $ cat .git/refs/heads/feat # value
    37ffdf1
    ```
 
-合并完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all --graph # history
 * 37ffdf1 (feat) commit 3
 * 3007e64 (HEAD -> main) commit 2
 * 2239c5b commit 1
@@ -655,7 +669,7 @@ $ git log --oneline --all --graph # history
 
 ![git rebase](../imgs/git-rebase.png)
 
-### 分支变基产生冲突
+### 应用分支产生冲突
 
 和[带冲突的三路合并](#带冲突的三路合并)几乎一样，只有以下区别：
 
@@ -665,7 +679,7 @@ $ git log --oneline --all --graph # history
 
 ## Cherry-pick
 
-Cherry-pick 会将指定 commit 重新应用到当前分支，例如：
+Git Cherry-pick 会将指定 commit 重新应用到当前分支，例如：
 
 1. `git cherry-pick A`: 将 commit A 应用到当前分支
 2. `git cherry-pick A B`: 将 commit A, B 应用到当前分支
@@ -683,7 +697,7 @@ A <- B <- C <- D (main)
 
 1. 将 commit D 应用到 feat 分支
 
-应用完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```
 A <- B <- C <- D (main)
@@ -703,7 +717,7 @@ A <- B <- C <- D <- E (main)
 
 1. 将 commit D, E 应用到 feat 分支
 
-应用完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```
 A <- B <- C <- D <- E (main)
@@ -723,8 +737,7 @@ Git Tag 会为指定提交创建一个标签，例如：
 
 ### 创建简单标签
 
-```sh
-$ git log --oneline # history
+```
 a0f247e (HEAD -> main) commit 3
 57ca93f commit 2
 e7f88c9 commit 1
@@ -732,30 +745,30 @@ e7f88c9 commit 1
 
 假设有以上提交历史，此时执行 `git tag v1` 后，Git 会做以下事情：
 
-1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为当前 commit 的哈希值
+1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为[当前提交](#当前分支与当前提交)
 
    ```diff
    + .git/refs/tags/v1
    ```
 
    ```sh
-   $ cat refs/tags/v1 # value
+   $ cat .git/refs/tags/v1 # value
    a0f247e
    ```
 
-创建完成后，历史记录如下：
+操作完成后，历史记录如下：
 
-```sh
-$ git log --oneline # history
+```
 a0f247e (HEAD -> main, tag: v1) commit 3
 57ca93f commit 2
 e7f88c9 commit 1
 ```
 
+![git tag](../imgs/git-tag.png)
+
 ### 创建内容标签
 
-```sh
-$ git log --oneline # history
+```
 a0f247e (HEAD -> main) commit 3
 57ca93f commit 2
 e7f88c9 commit 1
@@ -763,18 +776,18 @@ e7f88c9 commit 1
 
 假设有以上提交历史，此时执行 `git tag -a v1 -m 'version 1'` 后，Git 会做以下事情：
 
-1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为当前 commit 的哈希值
+1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为[当前提交](#当前分支与当前提交)
 
    ```diff
    + .git/refs/tags/v1
    ```
 
    ```sh
-   $ cat refs/tags/v1 # value
+   $ cat .git/refs/tags/v1 # value
    a0f247e
    ```
 
-2. 在 objects 目录下创建一个 tag 对象，内容为 tag message 信息
+2. 在 objects 目录下创建一个 tag 对象，内容为 tag message
 
    ```diff
    + .git/objects/adf306e
@@ -793,10 +806,9 @@ e7f88c9 commit 1
    version 1
    ```
 
-创建完成后，历史记录如下：
+操作完成后，历史记录如下：
 
-```sh
-$ git log --oneline # history
+```
 a0f247e (HEAD -> main, tag: v1) commit 3
 57ca93f commit 2
 e7f88c9 commit 1
@@ -804,8 +816,6 @@ e7f88c9 commit 1
 
 > [!NOTE]
 > 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
-
-![git tag](../imgs/git-tag.png)
 
 ## Clone
 
@@ -820,9 +830,11 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 98890cc (HEAD -> main) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
+
+# local
 ```
 
-假设远程仓库有以上提交历史，在本地执行 `git clone <url>` 后，Git 会做以下事情：
+假设有以上提交历史，在本地执行 `git clone <url>` 后，Git 会做以下事情：
 
 1. 下载 .git 文件，并重建工作区
 
@@ -834,10 +846,10 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
    + .git
    ```
 
-克隆完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline # history
+# local
 98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
@@ -913,7 +925,7 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
    ```
 
    ```sh
-   $ cat refs/remotes/origin/main # value
+   $ cat .git/refs/remotes/origin/main # value
    98890cc
    ```
 
@@ -925,14 +937,14 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
    ```
 
    ```sh
-   $ cat FETCH_HEAD # value
+   $ cat .git/FETCH_HEAD # value
    98890cc branch 'main' of <url>
    ```
 
-同步成功后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```sh
-$ git log --oneline --all # history
+# local
 98890cc (origin/main, origin/HEAD) commit 3
 5650cb4 (HEAD -> main) commit 2
 8c7a5ee commit 1
@@ -945,8 +957,8 @@ $ git log --oneline --all # history
 
 ### FETCH_HEAD 是做什么工作的
 
-每次执行 `git fetch` 时（包括 `git pull` 内部执行的），都会更新 FETCH_HEAD 文件，
-FETCH_HEAD 的作用是，指定 `git pull` 中的 merge 操作所 merge 的分支。
+Fetch 操作时会更新 FETCH_HEAD，指向了所 Fetch 的远程分支，
+在指向 Pull 操作时，用来确定所 Merge 的目标
 
 ## Pull
 
@@ -975,16 +987,16 @@ Git Pull 会拉取远程仓库的代码到本地，例如：
 拉取成功后，历史记录如下：
 
 ```sh
-$ git log --oneline --all # history
+# local
 98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
 ```
 
-![git pull](../imgs/git-pull-ff.png)
-
 > [!NOTE]
 > 这里演示的是快速合并，如果是三路合并的话，则会产生一次新的提交
+
+![git pull](../imgs/git-pull-ff.png)
 
 ### 拉取远程仓库产生冲突
 
@@ -1003,8 +1015,7 @@ $ git log --oneline --all # history
 假设有以上提交历史，在执行 `git merge origin/main` 时，
 会产生冲突，在手动解决冲突后，历史记录如下：
 
-```sh
-$ git log --oneline --graph # history
+```
 *   264bbb3 (HEAD -> main) Merge branch 'main' of url
 |\
 | * 98890cc (origin/main, origin/HEAD) commit 3
@@ -1027,7 +1038,7 @@ Git Push 上传本地修改到远程仓库，例如：
 
 ### 推送本地修改
 
-```sh
+```
 5637202 (HEAD -> feat) commit 3
 5650cb4 (origin/feat) commit 2
 8c7a5ee commit 1
@@ -1040,7 +1051,7 @@ Git Push 上传本地修改到远程仓库，例如：
 
 推送成功后，历史记录如下：
 
-```sh
+```
 5637202 (HEAD -> hello, origin/hello) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
@@ -1054,11 +1065,12 @@ Git Push 上传本地修改到远程仓库，例如：
 
 在本地执行 `git push -d origin feat` 后，Git 会做以下事情：
 
-1. 删除远程 refs/heads/feat 文件
+1. 删除远程 .git/refs/heads/feat 文件
+2. 删除本地 .git/refs/remotes/origin/feat 文件
 
 ## Revert
 
-Git Revert 用于抵消某次提交。例如：
+Git Revert 用于抵消某次提交，例如：
 
 1. `git revert A`: 抵消 commit A
 2. `git revert A B`: 抵消 commit A B
@@ -1074,7 +1086,7 @@ A <- B <- C
 
 1.  创建一个 commit B'，其内容与 commit B 相反
 
-抵消完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```
 A <- B <- C <- B'
@@ -1090,7 +1102,7 @@ A <- B <- C <- D
 
 1.  创建 commit D', C'，其内容分别与 commit D, C 相反
 
-抵消完成后，历史记录如下：
+操作完成后，历史记录如下：
 
 ```
 A <- B <- C <- D <- D' <- C'
@@ -1263,3 +1275,11 @@ dbee026 apple.txt
 > 这部分内容，但 IDE 的缓存文件里有可能可以找到
 
 ![git-reset-hard](../imgs/git-reset-hard.png)
+
+## Stash
+
+## Restore
+
+## Log
+
+## Reflog
