@@ -139,7 +139,7 @@ ce01362 hello.txt
    ```
 
    ```sh
-   $ git cat-file -t 3ea2839 # type
+   $ git cat-file -t b0665b8 # type
    tree
 
    $ git cat-file -p b0665b8 # value
@@ -176,15 +176,6 @@ ce01362 hello.txt
    $ cat .git/refs/heads/main # value
    705d22a
    ```
-
-> [!NOTE]
-> 用 tree 表示文件的示意图
->
-> ```
-> tree -> hello.txt
->      -> tree -> apple.txt
->              -> banana.txt
-> ```
 
 ![commit](../imgs/git-commit.png)
 
@@ -254,7 +245,7 @@ d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-> [!NOTE]
+> [!CAUTION]
 > 删除分支后，分支上的 commit 对象并不会被删除，这些对象会变成垃圾对象
 
 ### 当前分支与当前提交
@@ -303,14 +294,14 @@ d58f2f5 commit 2
    ref: refs/heads/feat
    ```
 
-2. 更新 Index，内容为 feat 分支对应 tree 的内容
+2. 更新 Index，内容为 feat 的文件列表（把 tree 展平得到的列表）
 
    ```diff
    - .git/index
    + .git/index
    ```
 
-3. 更新 Working Tree，内容为 feat 分支对应 tree 的内容
+3. 更新 Working Tree，和 Index 保持一致
 
 操作完成后，历史记录如下：
 
@@ -332,7 +323,7 @@ d58f2f5 commit 2
 
 假设有以上提交历史，执行 `git switch --detach d58f2f5` 后，Git 会做以下事情：
 
-1. 更新 HEAD 文件，将其指向 d58f2f5 (commit 2)
+1. 更新 HEAD 文件，将其指向 d58f2f5
 
    ```diff
    - .git/HEAD
@@ -344,14 +335,14 @@ d58f2f5 commit 2
    d58f2f5
    ```
 
-2. 更新 Index，内容为 d58f2f5 (commit 2) 对应 tree 的内容
+2. 更新 Index，内容为 d58f2f5 的文件列表（把 tree 展平得到的列表）
 
    ```diff
    - .git/index
    + .git/index
    ```
 
-3. 更新 Working Tree，内容为 d58f2f5 (commit 2) 对应 tree 的内容
+3. 更新 Working Tree，和 Index 保持一致
 
 操作完成后，历史记录如下：
 
@@ -442,10 +433,10 @@ Git Merge 会合并分支，例如：
 2. 创建一个新提交，记录了 feat 中的修改
 
    ```diff
-   # tree
-   + .git/objects/03b2125
-   # commit
-   + .git/objects/cbd588d
+   # tree, commit
+   .git/objects
+   + ├── 03b2125
+   + └── cbd588d
    ```
 
    ```sh
@@ -541,8 +532,7 @@ Git Merge 会合并分支，例如：
    + └── MERGE_MSG  # merge commit message
    ```
 
-3. 用户解决冲突，即暂存了所有解决冲突的文件后，执行 `git commit` 命令手动进行提交
-4. 更新 main 分支指针
+3. 用户解决冲突，即暂存了所有解决冲突的文件后，手动执行 `git commit` 命令手动进行提交
 
 操作完成后，历史记录如下：
 
@@ -583,10 +573,10 @@ Rebase 会将提交重新应用到指定分支，例如：
 1. 将 feat 分支中 root 节点之后的 commit（即 commit 3），重新提交到 main 分支上
 
    ```diff
-   # tree
-   + .git/objects/830241f
-   # commit
-   + .git/objects/37ffdf1
+   # tree, commit
+   .git/objects
+   + ├── 830241f
+   + └── 37ffdf1
    ```
 
 2. 更新 feat 分支指针，指向最新 commit
@@ -721,18 +711,7 @@ e7f88c9 commit 1
 
 假设有以上提交历史，此时执行 `git tag -a v1 -m 'version 1'` 后，Git 会做以下事情：
 
-1. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为[当前提交](#当前分支与当前提交)
-
-   ```diff
-   + .git/refs/tags/v1
-   ```
-
-   ```sh
-   $ cat .git/refs/tags/v1 # value
-   a0f247e
-   ```
-
-2. 在 objects 目录下创建一个 tag 对象，内容为 tag message
+1. 在 objects 目录下创建一个 tag 对象，内容为[当前提交](#当前分支与当前提交)和 tag message
 
    ```diff
    + .git/objects/adf306e
@@ -751,6 +730,17 @@ e7f88c9 commit 1
    version 1
    ```
 
+2. 在 refs/tags 目录下创建一个名为 v1 的文件，内容为 tag 对象的引用
+
+   ```diff
+   + .git/refs/tags/v1
+   ```
+
+   ```sh
+   $ cat .git/refs/tags/v1 # value
+   adf306e
+   ```
+
 操作完成后，历史记录如下：
 
 ```
@@ -759,7 +749,7 @@ a0f247e (HEAD -> main, tag: v1) commit 3
 e7f88c9 commit 1
 ```
 
-> [!NOTE]
+> [!CAUTION]
 > 删除内容标签后，tag 对象不会被删除，成为了垃圾对象
 
 ## Clone
@@ -770,13 +760,11 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 
 ### 克隆远程仓库
 
-```sh
+```txt
 # remote
 98890cc (HEAD -> main) commit 3
 5650cb4 commit 2
 8c7a5ee commit 1
-
-# local
 ```
 
 假设有以上提交历史，在本地执行 `git clone <url>` 后，Git 会做以下事情：
@@ -793,7 +781,7 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 
 操作完成后，历史记录如下：
 
-```sh
+```txt
 # local
 98890cc (HEAD -> main, origin/main, origin/HEAD) commit 3
 5650cb4 commit 2
@@ -1075,10 +1063,12 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 假设有以上提交历史，此时执行 `git reset --soft 04022cf` 后，Git 会做以下事情：
 
 1. 更新 main 指针，指向 commit 2
+
    ```diff
    - .git/refs/heads/main
    + .git/refs/heads/main
    ```
+
    ```sh
    $ cat .git/refs/heads/main
    04022cf
@@ -1089,13 +1079,6 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 ```
 04022cf (HEAD -> feat) commit 2
 8de34b2 commit 1
-```
-
-操作完成后，文件状态如下：
-
-```
-工作区：
-暂存区：apple.txt
 ```
 
 > [!NOTE]
@@ -1115,43 +1098,29 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 假设有以上提交历史，此时执行 `git reset --mixed 04022cf` 后，Git 会做以下事情：
 
 1. 更新 main 指针，指向 commit 2
+
    ```diff
    - .git/refs/heads/main
    + .git/refs/heads/main
    ```
+
    ```sh
    $ cat .git/refs/heads/main
    04022cf
    ```
-2. 更新 Index，内容为 commit 2 tree 对象的内容
 
-```diff
-- .git/index
-+ .git/index
-```
+2. 更新 Index，内容为 commit 2 的文件列表（把 tree 展平得到的列表）
 
-```sh
-$ git ls-files -s # Index content
-dbee026 apple.txt
-
-$ git cat-file -p 04022cf # commit 2 content
-tree 9fb894a
-$ git cat-file -p 9fb894a # commit 2 tree content
-dbee026 apple.txt
-```
+   ```diff
+   - .git/index
+   + .git/index
+   ```
 
 操作完成后，历史记录如下：
 
 ```
 04022cf (HEAD -> feat) commit 2
 8de34b2 commit 1
-```
-
-操作完成后，文件状态如下：
-
-```
-工作区：apple.txt
-暂存区：
 ```
 
 > [!NOTE]
@@ -1171,30 +1140,23 @@ dbee026 apple.txt
 假设有以上提交历史，此时执行 `git reset --hard 04022cf` 后，Git 会做以下事情：
 
 1. 更新 main 指针，指向 commit 2
+
    ```diff
    - .git/refs/heads/main
    + .git/refs/heads/main
    ```
+
    ```sh
    $ cat .git/refs/heads/main
    04022cf
    ```
-2. 更新 Index，内容为 commit 2 tree 对象的内容
 
-```diff
-- .git/index
-+ .git/index
-```
+2. 更新 Index，内容为 commit 2 的文件列表（把 tree 展平得到的列表）
 
-```sh
-$ git ls-files -s # Index content
-dbee026 apple.txt
-
-$ git cat-file -p 04022cf # commit 2 content
-tree 9fb894a
-$ git cat-file -p 9fb894a # commit 2 tree content
-dbee026 apple.txt
-```
+   ```diff
+   - .git/index
+   + .git/index
+   ```
 
 3. 更新 Working Tree，内容与 Index 相同
 
@@ -1203,13 +1165,6 @@ dbee026 apple.txt
 ```
 04022cf (HEAD -> feat) commit 2
 8de34b2 commit 1
-```
-
-操作完成后，文件状态如下：
-
-```
-工作区：
-暂存区：
 ```
 
 > [!NOTE]
