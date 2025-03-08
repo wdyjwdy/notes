@@ -1255,6 +1255,9 @@ apple.txt (v1)
 
 2. 删除暂存的工作
 
+> [!CAUTION]
+> 注意 pop 操作不会更新 Index
+
 ## Restore
 
 Git Restore 会撤销文件的修改，例如：
