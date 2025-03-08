@@ -1070,7 +1070,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
    ```
 
    ```sh
-   $ cat .git/refs/heads/main
+   $ cat .git/refs/heads/main # value
    04022cf
    ```
 
@@ -1105,7 +1105,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
    ```
 
    ```sh
-   $ cat .git/refs/heads/main
+   $ cat .git/refs/heads/main # value
    04022cf
    ```
 
@@ -1147,7 +1147,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
    ```
 
    ```sh
-   $ cat .git/refs/heads/main
+   $ cat .git/refs/heads/main # value
    04022cf
    ```
 
@@ -1219,7 +1219,7 @@ apple.txt (v1)
    ```
 
    ```sh
-   $ cat .git/refs/stash
+   $ cat .git/refs/stash # value
    d82a947
    ```
 
@@ -1329,10 +1329,3 @@ Git Log 会打印提交记录，例如：
 Git Reflog 会打印操作记录，例如：
 
 1. `git reflog`: 打印操作记录
-
-```txt
-# git reflog
-973ade1 (HEAD -> main) HEAD@{0}: reset: moving to HEAD~1
-758e4c4 HEAD@{1}: commit: 2 # reset 之前的 commit
-973ade1 (HEAD -> main) HEAD@{2}: commit: 1
-```
