@@ -1186,6 +1186,56 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 
 ## Restore
 
+Git Restore 会撤销文件的修改，例如：
+
+1. `git restore apple.txt`: 撤销对 apple.txt 的修改
+2. `git restore --staged apple.txt`: 撤销对 apple.txt 的暂存
+
+> ![TIP]
+> 撤销命令通常都会集成在 IDE 里，了解即可
+
+### 撤销修改
+
+```txt
+# Working Tree
+apple.txt (v3)
+# Index
+apple.txt (v2)
+# Repository
+apple.txt (v1)
+```
+
+假设有以上文件状态，此时执行 `git restore apple.txt` 后，Git 会做以下事情：
+
+1. 用 Index 的内容还原工作区
+
+   ```diff
+   # Working Tree
+   - apple.txt (v3)
+   + apple.txt (v2)
+   ```
+
+### 撤销暂存
+
+```txt
+# Working Tree
+apple.txt (v3)
+# Index
+apple.txt (v2)
+# Repository
+apple.txt (v1)
+```
+
+假设有以上文件状态，此时执行 `git restore --staged apple.txt` 后，Git 会做以下事情：
+
+1. 用 Commit (HEAD) 的内容还原 Index
+
+   ```diff
+   # Index
+   - apple.txt (v2)
+   + apple.txt (v1)
+   ```
+
 ## Log
 
 ## Reflog
