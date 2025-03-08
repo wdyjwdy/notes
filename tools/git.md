@@ -100,7 +100,7 @@ hello
 
 Git Commit 会将 Index 中的内容提交到 Repository，例如：
 
-1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim-cheet-sheet.md) 输入提交信息
+1. `git commit`: 提交 Index 中的内容，并打开 [Vim](../vim.md) 输入提交信息
 2. `git commit -m 'update'`: 提交 Index 中的内容，并使用 'update' 作为提交信息
 3. `git commit --amend`: 等价于 `git reset --soft HEAD~1` 加 `git commit`（参考 [Reset](#reset) 和 [Commit](commit)）
 
