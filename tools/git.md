@@ -1178,23 +1178,92 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 
 ## Stash
 
-1. `git stash`:
-2. `git stash pop`
-3. `git stash --index`
-4. `git stash drop stash@{0}`
-5. `git stash list`
+1. `git stash`: 暂存 Working Tree 和 Index
+2. `git stash pop`: 取出暂存并恢复 Working Tree 和 Index
+3. `git stash drop stash@{0}`: 丢弃暂存
+4. `git stash list`: 查看暂存列表
+
+### 暂存工作
+
+```txt
+# Working Tree
+apple.txt (v3)
+# Index
+apple.txt (v2)
+# Repository
+apple.txt (v1)
+```
+
+假设有以上文件状态，此时执行 `git stash` 后，Git 会做以下事情：
+
+1. 将 Working Tree 和 Index 的文件保存为 blob 对象，并记录在 commit 中
+
+   ```diff
+   .git/objects
+   # Working Tree (blob, tree, commit)
+   + ├── d82a947
+   + ├── 246b33c
+   + ├── c68a266
+   # Index (tree, commit)
+   + ├── 280a3c0
+   + ├── 7cf7b97
+     └── 4f98016 # blob 已经添加过了
+   ```
+
+2. 添加 refs/stash 文件，指向 Working Tree 的 commit 对象
+
+   ```diff
+   + .git/refs/stash
+   ```
+
+   ```sh
+   $ cat .git/refs/stash
+   8d71850
+   ```
+
+3. 用 HEAD 更新 Working Tree 和 Index
+
+   ```diff
+   # Working Tree
+   - apple.txt (v3)
+   + apple.txt (v1)
+   # Index
+   - apple.txt (v2)
+   + apple.txt (v1)
+   ```
+
+### 恢复工作
+
+```txt
+# Working Tree
+apple.txt (v1)
+# Index
+apple.txt (v1)
+# Repository
+apple.txt (v1)
+```
+
+上一节暂存后，文件状态如上，继续执行 `git stash pop` 后，Git 会做以下事情：
+
+1. 用 stash commit 更新 Working Tree
+
+   ```diff
+   # Working Tree
+   - apple.txt (v1)
+   + apple.txt (v3)
+   ```
 
 ## Restore
 
 Git Restore 会撤销文件的修改，例如：
 
-1. `git restore apple.txt`: 撤销对 apple.txt 的修改
-2. `git restore --staged apple.txt`: 撤销对 apple.txt 的暂存
+1. `git restore apple.txt`: 丢弃对 apple.txt 的修改（Edit 的逆操作）
+2. `git restore --staged apple.txt`: 取消对 apple.txt 的添加（[Add](#add) 的逆操作）
 
 > [!TIP]
 > 撤销命令通常都会集成在 IDE 里，了解即可
 
-### 撤销修改
+### 丢弃修改
 
 ```txt
 # Working Tree
@@ -1215,7 +1284,7 @@ apple.txt (v1)
    + apple.txt (v2)
    ```
 
-### 撤销暂存
+### 取消添加
 
 ```txt
 # Working Tree
@@ -1237,6 +1306,16 @@ apple.txt (v1)
    ```
 
 ## Log
+
+Git Log 会打印提交记录，例如：
+
+1. `git log`: 打印提交记录
+2. `git log --oneline`: 打印提交记录，单行显示
+3. `git log --graph`: 打印提交记录，图形显示
+4. `git log hello.txt`: 打印 hello.txt 文件的提交记录
+
+> [!TIP]
+> 日志命令通常都会集成在 IDE 里，了解即可
 
 ## Reflog
 
