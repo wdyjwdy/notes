@@ -1178,6 +1178,8 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 
 ## Stash
 
+Git Stash 会暂存当前的工作，例如：
+
 1. `git stash`: 暂存 Working Tree 和 Index
 2. `git stash pop`: 取出暂存并恢复 Working Tree 和 Index
 3. `git stash drop stash@{0}`: 丢弃暂存
@@ -1324,4 +1326,13 @@ Git Log 会打印提交记录，例如：
 
 ## Reflog
 
-## Remote
+Git Reflog 会打印操作记录，例如：
+
+1. `git reflog`: 打印操作记录
+
+```txt
+# git reflog
+973ade1 (HEAD -> main) HEAD@{0}: reset: moving to HEAD~1
+758e4c4 HEAD@{1}: commit: 2 # reset 之前的 commit
+973ade1 (HEAD -> main) HEAD@{2}: commit: 1
+```
