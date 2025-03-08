@@ -1200,17 +1200,17 @@ apple.txt (v1)
 
    ```diff
    .git/objects
-   # Working Tree (blob, tree, commit)
-   + ├── d82a947
-   + ├── 246b33c
+   # blob, tree, commit (apple.txt v3, Working Tree)
    + ├── c68a266
-   # Index (tree, commit)
+   + ├── 246b33c
+   + ├── d82a947
+   # blob, tree, commit (apple.txt v2, Index)
    + ├── 280a3c0
    + ├── 7cf7b97
-     └── 4f98016 # blob 已经添加过了
+   + └── 4f98016
    ```
 
-2. 添加 refs/stash 文件，指向 Working Tree 的 commit 对象
+2. 添加 refs/stash 文件，指向记录 Working Tree 的 commit 对象
 
    ```diff
    + .git/refs/stash
@@ -1218,7 +1218,7 @@ apple.txt (v1)
 
    ```sh
    $ cat .git/refs/stash
-   8d71850
+   d82a947
    ```
 
 3. 用 HEAD 更新 Working Tree 和 Index
@@ -1252,6 +1252,8 @@ apple.txt (v1)
    - apple.txt (v1)
    + apple.txt (v3)
    ```
+
+2. 删除暂存的工作
 
 ## Restore
 
