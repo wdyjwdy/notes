@@ -1191,7 +1191,7 @@ Git Restore 会撤销文件的修改，例如：
 1. `git restore apple.txt`: 撤销对 apple.txt 的修改
 2. `git restore --staged apple.txt`: 撤销对 apple.txt 的暂存
 
-> ![TIP]
+> [!TIP]
 > 撤销命令通常都会集成在 IDE 里，了解即可
 
 ### 撤销修改
@@ -1207,7 +1207,7 @@ apple.txt (v1)
 
 假设有以上文件状态，此时执行 `git restore apple.txt` 后，Git 会做以下事情：
 
-1. 用 Index 的内容还原工作区
+1. 用 Index 的内容还原 Working Tree
 
    ```diff
    # Working Tree
