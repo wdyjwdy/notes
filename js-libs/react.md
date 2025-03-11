@@ -1,6 +1,8 @@
 # React
 
-## Passing Props
+## Basic
+
+### Passing Props
 
 1. Pass props
 
@@ -30,6 +32,14 @@
    }
    ```
 
+3. Pass all props
+
+   ```jsx
+   function Parent(props) {
+     return <Child {...props} />;
+   }
+   ```
+
 > [!NOTE]
 > React component functions accept a single argument, a props object:
 >
@@ -40,7 +50,7 @@
 > }
 > ```
 
-## Conditional Rendering
+### Conditional Rendering
 
 1. if statement
 
@@ -89,7 +99,7 @@
 > 0 && A; // return 0
 > ```
 
-## Rendering Lists
+### Rendering Lists
 
 1. Rendering data from arrays
 
@@ -112,8 +122,22 @@
 
 > [!NOTE]
 > Why does React need keys?
+>
 > 当修改列表时，React 需要用 key 来判断列表元素是否发生变化（移动，删除，插入，更新）,
 > 从而仅更新变化的元素，而不是重新渲染整个列表。
 >
 > 1. 使用 index 作 key，当删除第一个元素时，后续元素的 index 会改变，导致 React 重新渲染整个列表。
 > 2. 使用 id 作 key，当删除第一个元素时，后续元素的 id 不变，React 只更新变化的元素。
+>
+> 因此，当列表不会发生变化时，使用 index 作 key 是可以的。
+
+#### Pure functions
+
+definition:
+
+1. Same inputs, same output
+2. No side effects
+
+benefit：
+
+1. Skipping rendering components whose inputs have not changed
