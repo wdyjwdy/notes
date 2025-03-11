@@ -1,6 +1,6 @@
 # React
 
-### Passing Props
+## Passing Props
 
 1. Pass props
 
@@ -40,7 +40,7 @@
 > }
 > ```
 
-### Conditional Rendering
+## Conditional Rendering
 
 1. if statement
 
@@ -72,7 +72,7 @@
    }
    ```
 
-> [!NOTE]
+> [!TIP]
 >
 > 1. ternary operator
 >
@@ -88,3 +88,32 @@
 > false && A; // return false
 > 0 && A; // return 0
 > ```
+
+## Rendering Lists
+
+1. Rendering data from arrays
+
+   ```jsx
+   function List() {
+     const fruits = [
+       { id: 1, name: "Apple" },
+       { id: 2, name: "Banana" },
+       { id: 3, name: "Cherry" },
+     ];
+     return (
+       <ul>
+         {fruits.map(({ id, name }) => (
+           <li key={id}>{name}</li>
+         ))}
+       </ul>
+     );
+   }
+   ```
+
+> [!NOTE]
+> Why does React need keys?
+> 当修改列表时，React 需要用 key 来判断列表元素是否发生变化（移动，删除，插入，更新）,
+> 从而仅更新变化的元素，而不是重新渲染整个列表。
+>
+> 1. 使用 index 作 key，当删除第一个元素时，后续元素的 index 会改变，导致 React 重新渲染整个列表。
+> 2. 使用 id 作 key，当删除第一个元素时，后续元素的 id 不变，React 只更新变化的元素。
