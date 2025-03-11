@@ -131,7 +131,7 @@
 >
 > 因此，当列表不会发生变化时，使用 index 作 key 是可以的。
 
-#### Pure functions
+### Pure functions
 
 definition:
 
@@ -141,3 +141,8 @@ definition:
 benefit：
 
 1. Skipping rendering components whose inputs have not changed
+
+### UI Tree
+
+1. Render trees: represent the nested relationship between React components
+2. Dependency trees: represent the module dependencies in a React app
