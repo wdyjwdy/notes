@@ -72,19 +72,19 @@
    }
    ```
 
-   > [!NOTE]
-   >
-   > 1. ternary operator
-   >
-   > ```js
-   > true ? A : B; // return A
-   > false ? A : B; // return B
-   > ```
-   >
-   > 2. AND operator
-   >
-   > ```js
-   > true && A; // return A
-   > false && A; // return false
-   > 0 && A; // return 0
-   > ```
+> [!NOTE]
+>
+> 1. ternary operator
+>
+> ```js
+> true ? A : B; // return A
+> false ? A : B; // return B
+> ```
+>
+> 2. AND operator
+>
+> ```js
+> true && A; // return A
+> false && A; // return false
+> 0 && A; // return 0
+> ```
