@@ -156,39 +156,6 @@ benefit：
 
 ### useState
 
-#### implement useState from scratch
-
-```js
-let state;
-
-function useState(initialValue) {
-  state = state ?? initialValue;
-
-  function setState(update) {
-    if (typeof update === "function") {
-      state = update(state);
-    } else {
-      state = update;
-    }
-    render();
-  }
-
-  return [state, setState];
-}
-```
-
 ### useReducer
 
-#### implement useReducer from scratch
-
-```js
-function useReducer(reducer, initialState) {
-  const [state, setState] = useState(initialState);
-
-  function dispatch(action) {
-    setState((s) => reducer(s, action));
-  }
-
-  return [state, dispatch];
-}
-```
+### useContext
