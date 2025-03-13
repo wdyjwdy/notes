@@ -147,9 +147,16 @@ benefit：
 1. Render trees: represent the nested relationship between React components
 2. Dependency trees: represent the module dependencies in a React app
 
+### ohter
+
+1. controlled components: driven by props
+2. uncontrolled components: driven by state
+
 ## Hooks
 
 ### useState
+
+#### implement useState from scratch
 
 ```js
 let state;
@@ -167,5 +174,21 @@ function useState(initialValue) {
   }
 
   return [state, setState];
+}
+```
+
+### useReducer
+
+#### implement useReducer from scratch
+
+```js
+function useReducer(reducer, initialState) {
+  const [state, setState] = useState(initialState);
+
+  function dispatch(action) {
+    setState((s) => reducer(s, action));
+  }
+
+  return [state, dispatch];
 }
 ```
