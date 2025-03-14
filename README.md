@@ -24,6 +24,10 @@ Frontend Study Notes
 - [Vim](tools/vim.md)
 - [Git](tools/git.md)
 
+## From scratch
+
+- [js](from-scratch/js.md), [react](from-scratch/react.md)
+
 ## Books
 
 - Javascript

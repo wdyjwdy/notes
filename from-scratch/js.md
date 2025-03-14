@@ -111,3 +111,37 @@ function flat(depth = 1) {
   return result;
 }
 ```
+
+## Function
+
+### call
+
+原理：将函数作为对象的属性调用，此时函数的 this 指向该对象
+
+```js
+function call(thisArg = window, ...args) {
+  const key = Symbol("key");
+  thisArg[key] = this;
+  const val = thisArg[key](...args);
+  delete thisArg[key];
+  return val;
+}
+```
+
+### apply
+
+```js
+function apply(thisArg, args) {
+  return this.call(thisArg, ...args);
+}
+```
+
+### bind
+
+```js
+function bind(thisArg = window, ...args) {
+  return (...rest) => {
+    return this.call(thisArg, ...args, ...rest);
+  };
+}
+```
