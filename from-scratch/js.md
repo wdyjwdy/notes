@@ -23,47 +23,6 @@ function map(callback, thisArg = undefined) {
 }
 ```
 
-### filter
-
-- Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.filter)
-- Time: $O(n)$
-
-```js
-function filter(callback, thisArg = undefined) {
-  const array = this;
-  const n = array.length;
-  const result = [];
-
-  for (let i = 0; i < n; i++) {
-    if (!Object.hasOwn(array, i)) continue; // skip hole
-
-    if (callback.call(thisArg, array[i], i, array)) {
-      result[result.length] = array[i];
-    }
-  }
-
-  return result;
-}
-```
-
-### forEach
-
-- Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.foreach)
-- Time: $O(n)$
-
-```js
-function forEach(callback, thisArg = undefined) {
-  const array = this;
-  const n = array.length;
-
-  for (let i = 0; i < n; i++) {
-    if (!Object.hasOwn(array, i)) continue; // skip hole
-
-    callback.call(thisArg, array[i], i, array);
-  }
-}
-```
-
 ### reduce
 
 - Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.reduce)
@@ -88,4 +47,67 @@ function reduce(callback, initialValue) {
 }
 ```
 
-###
+### push
+
+- Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.push)
+- Time: $O(k)$
+
+```js
+function push(...items) {
+  const array = this;
+  const n = array.length;
+  const k = items.length;
+
+  for (let i = 0; i < k; i++) {
+    array[n + i] = items[i];
+  }
+
+  return array.length;
+}
+```
+
+### pop
+
+- Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.pop)
+- Time: $O(1)$
+
+```js
+function pop() {
+  const array = this;
+  const n = array.length;
+
+  if (n === 0) return undefined;
+
+  const value = array[n - 1];
+  delete array[n - 1];
+  array.length = n - 1;
+
+  return value;
+}
+```
+
+### flat
+
+- Ref: [Ecma Standard](https://tc39.es/ecma262/#sec-array.prototype.flat)
+- Time: $O(n)$
+
+```js
+function flat(depth = 1) {
+  const array = this;
+  const n = array.length;
+  let result = [];
+
+  for (let i = 0; i < n; i++) {
+    if (!Object.hasOwn(array, i)) continue; // skip hole
+
+    const value = array[i];
+    if (Array.isArray(value) && depth > 0) {
+      result.push(...flat.call(value, depth - 1));
+    } else {
+      result.push(value);
+    }
+  }
+
+  return result;
+}
+```
