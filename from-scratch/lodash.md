@@ -76,6 +76,8 @@ function curry(fn) {
 
 ## Clone Shallow
 
+![Clone Shallow](../imgs/lodash-clone-shallow.svg)
+
 ```js
 function cloneShallow(target) {
   const clone = Array.isArray(target) ? [] : {};
@@ -87,6 +89,8 @@ function cloneShallow(target) {
 ```
 
 ## Clone Deep
+
+![Clone Deep](../imgs/lodash-clone-deep.svg)
 
 ```js
 function cloneDeep(target) {
