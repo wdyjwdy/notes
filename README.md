@@ -27,6 +27,7 @@ Frontend Study Notes
 ## From scratch
 
 - [js](from-scratch/js.md), [react](from-scratch/react.md)
+- [lodash](from-scratch/lodash.md)
 
 ## Books
 

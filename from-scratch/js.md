@@ -116,7 +116,7 @@ function flat(depth = 1) {
 
 ### call
 
-原理：将函数作为对象的属性调用，此时函数的 this 指向该对象
+- 原理：将函数作为对象的属性调用，此时函数的 this 指向该对象
 
 ```js
 function call(thisArg = window, ...args) {
@@ -143,5 +143,38 @@ function bind(thisArg = window, ...args) {
   return (...rest) => {
     return this.call(thisArg, ...args, ...rest);
   };
+}
+```
+
+## Object
+
+### instanceOf
+
+1. 遍历 `instance` 的原型链
+2. 检查 `constructor` 的原型是否在其中
+
+```js
+function Instanceof(instance, constructor) {
+  let proto = Object.getPrototypeOf(instance);
+  while (proto) {
+    if (proto === constructor.prototype) return true;
+    proto = Object.getPrototypeOf(proto);
+  }
+  return false;
+}
+```
+
+### new
+
+1. 创建一个空对象
+2. 调用构造函数（this -> 空实例）
+3. 空实例原型 -> 构造函数原型
+
+```js
+function New(constructor, ...args) {
+  let instance = {};
+  constructor.call(instance, ...args);
+  Object.setPrototypeOf(instance, constructor.prototype);
+  return instance;
 }
 ```
