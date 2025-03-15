@@ -178,3 +178,43 @@ function New(constructor, ...args) {
   return instance;
 }
 ```
+
+### create
+
+```js
+function create(proto) {
+  const instance = {};
+  Object.setPrototypeOf(instance, proto);
+  return instance;
+}
+```
+
+### assign
+
+```js
+function assign(target, ...sources) {
+  for (const source of sources) {
+    for (const key in source) {
+      if (Object.hasOwn(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+  return target;
+}
+```
+
+### keys
+
+- 返回一个数组，包含[自身可枚举](./js/object.md/#object-property)属性的键
+
+```js
+function keys() {
+  const arr = [];
+  for (const key in this) {
+    if (!Object.hasOwn(this, key)) continue;
+    arr.push(key);
+  }
+  return arr;
+}
+```
