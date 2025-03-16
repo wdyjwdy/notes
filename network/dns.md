@@ -1,6 +1,19 @@
 # DNS
 
-[Domain Name System](https://datatracker.ietf.org/doc/html/rfc1035) (DNS), translates hostnames to IP addresses.
+[Domain Name System](https://datatracker.ietf.org/doc/html/rfc1035) (DNS), translates hostnames to IP addresses. DNS belongs to the application layer and is based on UDP protocols.
+
+> ![TIP]
+>
+> **Why does DNS primarily use the UDP?**
+>
+> 1. Speed: UDP is connectionless
+> 2. Simplicity: UDP has a simple protocol structure
+>
+> **When is TCP used?**
+>
+> 1. When the data exceeds 512 Bytes
+>
+> [为什么 DNS 使用 UDP 协议](https://draven.co/whys-the-design-dns-udp-tcp/)
 
 ## Lookup
 
@@ -52,8 +65,8 @@ DNS server cached records are tampered with, resulting in an incorrect IP addres
 
 **types**
 
-1. local server hijacking
-2. router hijacking
+- router hijacking
+- local server hijacking
 
 ![hijacking](../imgs/network-dns-hijacking.svg)
 
@@ -67,3 +80,11 @@ DNS server cached records are tampered with, resulting in an incorrect IP addres
 - changing router passwords
 - using VPN
 - using Google DNS
+
+## Load Balancing
+
+> [DNS Load Balancing](https://pinggy.io/blog/dns_load_balancing/)
+
+DNS load balancing uses the DNS to distribute site traffic across several servers
+
+**Round-Robin DNS**: The server cyclically returns IP addresses in different orders
