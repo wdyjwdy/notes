@@ -45,3 +45,23 @@ sequenceDiagram
 > **If TLD returns only the domain, how do Local server kown its IP?**
 >
 > TLD returns a Glue Record: is a type of DNS record that associates a nameserver's hostname with its IP address
+
+## Hijacking
+
+DNS server cached records are tampered with, resulting in an incorrect IP address being returned.
+
+**types**
+
+1. local server hijacking
+2. router hijacking
+
+**Usage**
+
+- block a specific domain name (Great Firewall)
+- ISP collects data (redeirect to a particular IP when access an unknown domain)
+
+**Defense**
+
+- changing router passwords
+- using VPN
+- using Google DNS
