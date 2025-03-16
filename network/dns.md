@@ -12,7 +12,7 @@
 > **When is TCP used?**
 >
 > 1. When the data exceeds 512 Bytes
->
+
 > [为什么 DNS 使用 UDP 协议](https://draven.co/whys-the-design-dns-udp-tcp/)
 
 ## Lookup
@@ -88,3 +88,5 @@ DNS server cached records are tampered with, resulting in an incorrect IP addres
 DNS load balancing uses the DNS to distribute site traffic across several servers
 
 **Round-Robin DNS**: The server cyclically returns IP addresses in different orders
+
+![Round-Robin](../imgs/network-dns-load-banlancing.svg)
