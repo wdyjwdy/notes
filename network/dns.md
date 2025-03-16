@@ -22,7 +22,7 @@ sequenceDiagram
 2. Browser
 3. DNS Servers
 
-### Servers
+## Servers
 
 | Type                          | Description                                |
 | ----------------------------- | ------------------------------------------ |
@@ -31,10 +31,12 @@ sequenceDiagram
 | Top-level Domain (TLD) Server | Domain Name -> Authoritative DNS Server IP |
 | Authoritative DNS Server      | Domain Name -> IP                          |
 
-> [!TIP] > **ISP**
+> [!TIP]
+>
+> **ISP**
 > When a host connects to an ISP, the ISP provides its local DNS servers through DHCP
 
-### Records
+## Records
 
 | Type  | Description                           |
 | ----- | ------------------------------------- |
@@ -43,5 +45,7 @@ sequenceDiagram
 | NS    | Domain Name -> DNS Server Domain Name |
 | AAAA  | Domain Name -> IPv6                   |
 
-> [!TIP] > **If TLD returns only the domain, how do Local server kown its IP?**
+> [!TIP]
+>
+> **If TLD returns only the domain, how do Local server kown its IP?**
 > TLD returns a Glue Record: is a type of DNS record that associates a nameserver's hostname with its IP address
