@@ -31,11 +31,6 @@ sequenceDiagram
 | Top-level Domain (TLD) Server | Domain Name -> Authoritative DNS Server IP |
 | Authoritative DNS Server      | Domain Name -> IP                          |
 
-> [!TIP]
->
-> **ISP**
-> When a host connects to an ISP, the ISP provides its local DNS servers through DHCP
-
 ## Records
 
 | Type  | Description                           |
@@ -48,4 +43,5 @@ sequenceDiagram
 > [!TIP]
 >
 > **If TLD returns only the domain, how do Local server kown its IP?**
+>
 > TLD returns a Glue Record: is a type of DNS record that associates a nameserver's hostname with its IP address
