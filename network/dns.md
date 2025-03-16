@@ -1,42 +1,43 @@
 # DNS
 
-Domain Name System
+(Domain Name System)[https://datatracker.ietf.org/doc/html/rfc1035] (DNS), translates hostnames to IP addresses.
 
 ## Lookup
 
 ```mermaid
 sequenceDiagram
-  Client ->> Resolver: Domain Name
-  Resolver ->> Root: Domain Name
-  Root ->> Resolver: TLD IP
-  Resolver ->> TLD: Domain Name
-  TLD ->> Resolver: Auth IP
-  Resolver ->> Auth: Domain Name
-  Auth ->> Resolver: IP
-  Resolver ->> Client: IP
+  Client ->> Local: Domain Name
+  Local ->> Root: Domain Name
+  Root ->> Local: TLD Server IP
+  Local ->> TLD: Domain Name
+  TLD ->> Local: Auth Server IP
+  Local ->> Auth: Domain Name
+  Auth ->> Local: IP
+  Local ->> Client: IP
 ```
 
-### Cache
+## Caching
 
 1. Operating System
 2. Browser
-3. DNS Server
+3. DNS Servers
 
-### Server
+### Servers
 
-| Type                      | Description                                 |
-| ------------------------- | ------------------------------------------- |
-| DNS Resolver              | Proxy Query                                 |
-| Root Name Server          | Domain Name -> TLD Name Server IP           |
-| TLD Name Server           | Domain Name -> Authoritative Name Server IP |
-| Authoritative Name Server | Domain Name -> IP                           |
+| Type                          | Description                                |
+| ----------------------------- | ------------------------------------------ |
+| Local DNS Server              | Proxy Query                                |
+| Root DNS Server               | Domain Name -> TLD Server IP               |
+| Top-level Domain (TLD) Server | Domain Name -> Authoritative DNS Server IP |
+| Authoritative DNS Server      | Domain Name -> IP                          |
 
-### Message
+ISP: When a host connects to an ISP, the ISP provides its local DNS servers through DHCP
 
-| Type  | Description                      |
-| ----- | -------------------------------- |
-| A     | Domain Name -> IPv4              |
-| CNAME | Domain Name Alias -> Domain Name |
-| AAAA  | Domain Name -> IPv6              |
-| PTR   | IP -> Domain Name                |
-| MX    | Mail -> IP                       |
+### Messages
+
+| Type  | Description                           |
+| ----- | ------------------------------------- |
+| A     | Domain Name -> IPv4                   |
+| CNAME | Domain Name Alias -> Domain Name      |
+| NS    | Domain Name -> DNS Server Domain Name |
+| AAAA  | Domain Name -> IPv6                   |
