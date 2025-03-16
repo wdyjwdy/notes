@@ -55,6 +55,8 @@ DNS server cached records are tampered with, resulting in an incorrect IP addres
 1. local server hijacking
 2. router hijacking
 
+![hijacking](../imgs/network-dns-hijacking.svg)
+
 **Usage**
 
 - block a specific domain name (Great Firewall)
