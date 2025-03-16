@@ -1,6 +1,6 @@
 # DNS
 
-(Domain Name System)[https://datatracker.ietf.org/doc/html/rfc1035] (DNS), translates hostnames to IP addresses.
+[Domain Name System](https://datatracker.ietf.org/doc/html/rfc1035) (DNS), translates hostnames to IP addresses.
 
 ## Lookup
 
@@ -31,9 +31,10 @@ sequenceDiagram
 | Top-level Domain (TLD) Server | Domain Name -> Authoritative DNS Server IP |
 | Authoritative DNS Server      | Domain Name -> IP                          |
 
-ISP: When a host connects to an ISP, the ISP provides its local DNS servers through DHCP
+> [!TIP] > **ISP**
+> When a host connects to an ISP, the ISP provides its local DNS servers through DHCP
 
-### Messages
+### Records
 
 | Type  | Description                           |
 | ----- | ------------------------------------- |
@@ -41,3 +42,6 @@ ISP: When a host connects to an ISP, the ISP provides its local DNS servers thro
 | CNAME | Domain Name Alias -> Domain Name      |
 | NS    | Domain Name -> DNS Server Domain Name |
 | AAAA  | Domain Name -> IPv6                   |
+
+> [!TIP] > **If TLD returns only the domain, how do Local server kown its IP?**
+> TLD returns a Glue Record: is a type of DNS record that associates a nameserver's hostname with its IP address
