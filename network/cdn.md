@@ -7,7 +7,7 @@ sequenceDiagram
   Client ->> Local: Domain Name
   Local ->> DNS: Domain Name
   DNS ->> Local: CDN Authoritative Server IP
-  Local ->> CDN
+  Local ->> CDN: Domain Name
   CDN ->> Local: CDN Content Server IP
   Local ->> Client: CDN Content Server IP
 ```
@@ -25,7 +25,7 @@ flowchart LR
   A -- Yes --> B{{Cache Expired?}}
   A -- No --> C[Origin Fetch]
   B -- Yes --> D[Origin Fetch]
-  B -- No --> Use Cache
+  B -- No --> E[Use Cache]
 ```
 
 ## Servers
