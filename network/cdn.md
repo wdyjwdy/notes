@@ -7,8 +7,8 @@ sequenceDiagram
   Client ->> Local: Domain Name
   Local ->> DNS: Domain Name
   DNS ->> Local: CDN Authoritative Server IP
-  Local ->> CDN: Domain Name
-  CDN ->> Local: CDN Content Server IP
+  Local ->> CDN Auth: Domain Name
+  CDN Auth ->> Local: CDN Content Server IP
   Local ->> Client: CDN Content Server IP
 ```
 
