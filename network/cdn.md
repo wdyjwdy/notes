@@ -2,6 +2,8 @@
 
 Content Distribution Network (CDN), reduces the distance between the user and the assets.
 
+![CDN](../imgs/network-cdn.svg)
+
 ## Lookup
 
 ```mermaid
