@@ -37,7 +37,9 @@ flowchart LR
   B -- No --> E[Use Cache]
 ```
 
-> [!TIP] > **Canary Deployment**: allows a small percentage of users to access the updated content, thus updating the CDN cache.
+> [!TIP]
+>
+> **Canary Deployment**: allows a small percentage of users to access the updated content, thus updating the CDN cache.
 
 ## Servers
 
