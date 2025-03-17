@@ -17,16 +17,19 @@ sequenceDiagram
 1. **Geographically closest**: select the CDN cluster that is closest to the user's location based on their IP address.
 2. **RTT closest**: select the CDN cluster that has the lowest round-trip time to the user's location.
 
-## Caching
+## Cache Update
 
-If a client requests a video from a cluster that is not storing the video, then the cluster retrieves the video (from a central repository or from another cluster) and stores a copy locally while streaming the video to the client at the same time.
+If the CDN does not storing the assets, then the assets needs to be updated.
+
+1. **Push**: manually push the assets to the origin server, then propagate to other CDN
+2. **Pull**: CDN automatically pull the assets from the origin server (or another CDN cluster)
 
 ```mermaid
 flowchart LR
   Request --> A{{Cache Exists?}}
   A -- Yes --> B{{Cache Expired?}}
-  A -- No --> C[Origin Fetch]
-  B -- Yes --> D[Origin Fetch]
+  A -- No --> C[Origin Pull]
+  B -- Yes --> D[Origin Pull]
   B -- No --> E[Use Cache]
 ```
 
