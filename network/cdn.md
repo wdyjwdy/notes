@@ -1,5 +1,7 @@
 # CDN
 
+Content Distribution Network (CDN), reduces the distance between the user and the assets.
+
 ## Lookup
 
 ```mermaid
@@ -19,7 +21,7 @@ sequenceDiagram
 
 ## Cache Update
 
-If the CDN does not storing the assets, then the assets needs to be updated.
+If the CDN does not storing the assets or the assets are expired, then the assets needs to be updated.
 
 1. **Push**: manually push the assets to the origin server, then propagate to other CDN
 2. **Pull**: CDN automatically pull the assets from the origin server (or another CDN cluster)
