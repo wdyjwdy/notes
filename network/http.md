@@ -13,6 +13,7 @@ HyperText Transfer Protocol (HTTP), the Web’s application-layer protocol.
 ## Non-Persistent and Persistent Connections
 
 1. **non-persistent connections**
+
    each request/response pair be sent over a separate TCP connection, delay is 4 RTTs
 
 ```mermaid
@@ -27,7 +28,8 @@ sequenceDiagram
   end
 ```
 
-2. persistent connections
+2. **persistent connections**
+
    each request/response pair be sent over the same TCP connection, delay is 3 RTTs
 
 ```mermaid
