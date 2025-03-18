@@ -74,10 +74,10 @@ sequenceDiagram
 
 ## Stateless and Cookie
 
-Because an HTTP server maintains no information about the
-clients, HTTP is said to be a **stateless** protocol. However,
-it is often desirable for a Web site to identify users, For
-this purposes, HTTP uses **cookies**.
+Because an HTTP server maintains no information about the clients,
+HTTP is said to be a **stateless** protocol. However, it is often
+desirable for a Web site to identify users, For this purposes, HTTP
+uses **cookies**.
 
 Cookie technology has four components:
 
@@ -102,7 +102,7 @@ end
 2. the server creates a unique ID, and points to the database
 3. the server responds to browser, including in the HTTP response a `Set-cookie: ID` header
 4. the browser receives the response, then appends a line to the cookie file (includes the hostname of the server and the ID)
-
 5. second visit
 6. the browser consults the cookie file, extracts ID for this site, and puts a cookie header line: `Cookie: ID`
-7. the server responds to browser
+7. the server fetches user information by ID
+8. the server responds to browser
