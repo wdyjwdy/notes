@@ -71,3 +71,38 @@ sequenceDiagram
 
    (data data data data data ...)
    ```
+
+## Stateless and Cookie
+
+Because an HTTP server maintains no information about the
+clients, HTTP is said to be a **stateless** protocol. However,
+it is often desirable for a Web site to identify users, For
+this purposes, HTTP uses **cookies**.
+
+Cookie technology has four components:
+
+1. a cookie header line in the HTTP response message
+2. a cookie header line in the HTTP request message
+3. a cookie file kept on the user’s end system and managed by the user’s browser
+4. a back-end database at the Web site
+
+```mermaid
+sequenceDiagram
+  Client ->> Server: first request
+  Server <<-->> Database: create user ID: 1234
+  Server ->> Client: response and set-cookie: 1234
+  rect whitesmoke
+  Client ->> Server: second request with cookie: 1234
+  Server <<-->> Database: access user ID: 1234
+  Server ->> Client: response
+end
+```
+
+1. fisrt visit
+2. the server creates a unique ID, and points to the database
+3. the server responds to browser, including in the HTTP response a `Set-cookie: ID` header
+4. the browser receives the response, then appends a line to the cookie file (includes the hostname of the server and the ID)
+
+5. second visit
+6. the browser consults the cookie file, extracts ID for this site, and puts a cookie header line: `Cookie: ID`
+7. the server responds to browser
