@@ -106,3 +106,58 @@ end
 6. the browser consults the cookie file, extracts ID for this site, and puts a cookie header line: `Cookie: ID`
 7. the server fetches user information by ID
 8. the server responds to browser
+
+## Web Caching
+
+A **Web cache** also called a **proxy server** is a network entity that satisfies HTTP
+requests on the behalf of an origin Web server. The Web cache has its own disk
+storage and keeps copies of recently requested objects in this storage. Once a browser is configured, each
+browser request for an object is first directed to the Web cache. Typically a Web cache is purchased and installed by an ISP.
+
+Benefits:
+
+- reduce the response time for a client request
+- reduce traffic on an institution’s access link to the Internet
+
+```mermaid
+sequenceDiagram
+  participant Client
+  participant Proxy
+  participant Server
+  Note over Client, Server: Cache Miss
+  Client ->> Proxy: request
+  Proxy ->> Server: request
+  Server ->> Proxy: response
+  Proxy ->> Client: response
+  Note over Client, Server: Cache Hit
+  Client ->> Proxy: request
+  Proxy ->> Client: response
+```
+
+Although caching can reduce user-perceived response times, it introduces a new
+problem—the copy of an object residing in the cache may be stale.
+
+Fortunately, HTTP has a mechanism that allows a cache to verify that its objects are up to date.
+This mechanism is called the conditional GET.
+
+```mermaid
+sequenceDiagram
+  participant Client
+  participant Proxy
+  participant Server
+  Note over Client, Server: first visit
+  Client ->> Proxy: request
+  Proxy ->> Server: request
+  Server ->> Proxy: response (Last-Modified: 03-19)
+  Proxy ->> Client: response
+  Note over Client, Server: one week later
+  Client ->> Proxy: request
+  Proxy ->> Server: request (If-modified-since: 03-19)
+  Server ->> Proxy: response (304 Not Modified)
+  Proxy ->> Client: response
+```
+
+- Step 3: the Proxy caches the object and the last-modified date locally.
+- Step 6: the Proxy performs an up-to-date check by issuing a conditional GET
+  1. If the object has not been modified since 03-19. Then, the Server sends a response message, which tells the Proxy that it
+     can forward its copy of the object to Client.
