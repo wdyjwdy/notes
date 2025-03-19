@@ -145,12 +145,12 @@ sequenceDiagram
   participant Client
   participant Proxy
   participant Server
-  Note over Client, Server: first visit
+  Note over Client, Server: Cache Miss
   Client ->> Proxy: request
   Proxy ->> Server: request
   Server ->> Proxy: response (Last-Modified: 03-19)
   Proxy ->> Client: response
-  Note over Client, Server: one week later
+  Note over Client, Server: Cache Hit and Up-to-date Check
   Client ->> Proxy: request
   Proxy ->> Server: request (If-modified-since: 03-19)
   Server ->> Proxy: response (304 Not Modified)
