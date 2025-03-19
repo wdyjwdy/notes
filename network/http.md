@@ -214,3 +214,16 @@ request each one.
 ### Header Compression
 
 Compressing using the HPACK algorithm reduces the header size.
+
+## Head of Line Blocking
+
+Using a single TCP connection, the big object will take a long time,
+while the small objects are delayed as they wait behind the big object.
+
+1. [HTTP 1](#http-1) work around this problem by opening multiple parallel TCP connections
+2. [HTTP 2](#http-2) work around this problem by breaking down an HTTP message into independent frames
+
+> [!CAUTION]
+>
+> [Pipelining](#pipelining) does not solve this problem.
+> On the client side, requests still need to be received in order.
