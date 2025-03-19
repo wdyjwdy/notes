@@ -157,7 +157,7 @@ sequenceDiagram
 
 1. **without pipelining**
 
-   Send HTTP requests separately, delay is 3 RTTs
+   Send HTTP requests after receiving a response, delay is 3 RTTs
 
    ```mermaid
    sequenceDiagram
@@ -170,7 +170,7 @@ sequenceDiagram
 
 2. **with pipelining**
 
-   Batch send HTTP requests, delay is 2 RTTs
+   Send multiple HTTP requests without waiting for a response, delay is 2 RTTs
 
    ```mermaid
    sequenceDiagram
@@ -191,8 +191,26 @@ changes how the data is formatted and transported between the client and server.
 
 ### Framing
 
+Break down an HTTP message into independent frames, interleave them, and
+then reassemble them on the other end. The frame is encoded as binary,
+are more efficient to parse.
+
+![frame](../imgs/network-http-frame.svg)
+
 ### Response Message Prioritization
+
+When a client sends concurrent requests to a server, it can prioritize the
+responses it is requesting by assigning a weight between 1 and 256 to each
+message. Using these weights, the server can send first the frames for the
+responses with the highest priority.
 
 ### Server Pushing
 
+The server can send multiple responses for a single client request.
+In addition to the response to the original request, the server can
+push additional objects to the client, without the client having to
+request each one.
+
 ### Header Compression
+
+Compressing using the HPACK algorithm reduces the header size.
