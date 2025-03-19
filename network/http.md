@@ -48,24 +48,25 @@ Cookie technology has four components:
 
 ```mermaid
 sequenceDiagram
-  Client ->> Server: first request
-  Server <<-->> Database: create user ID: 1234
-  Server ->> Client: response and set-cookie: 1234
-  rect whitesmoke
-  Client ->> Server: second request with cookie: 1234
-  Server <<-->> Database: access user ID: 1234
+  participant Client
+  participant Server
+  participant Database
+  Note over Client, Database: first visit
+  Client ->> Server: request
+  Server <<-->> Database: create ID: 1234
+  Server ->> Client: response (set-cookie: 1234)
+  Note over Client, Database: second visit
+  Client ->> Server: request (cookie: 1234)
+  Server <<-->> Database: access ID: 1234
   Server ->> Client: response
-end
 ```
 
 1. fisrt visit
-2. the server creates a unique ID, and points to the database
-3. the server responds to browser, including in the HTTP response a `Set-cookie: ID` header
-4. the browser receives the response, then appends a line to the cookie file (includes the hostname of the server and the ID)
-5. second visit
-6. the browser consults the cookie file, extracts ID for this site, and puts a cookie header line: `Cookie: ID`
-7. the server fetches user information by ID
-8. the server responds to browser
+2. the server creates a unique ID in database, then responds to browser, including in the HTTP response a `Set-cookie: ID` header
+3. the browser receives the response, then appends a line to the cookie file (includes the hostname of the server and the ID)
+4. second visit, the browser consults the cookie file, extracts ID for this site, and puts a cookie header line: `Cookie: ID`
+5. the server fetches user information by ID
+6. the server responds to browser
 
 ## Web Caching
 
