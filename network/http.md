@@ -4,12 +4,6 @@ HyperText Transfer Protocol (HTTP), the Web’s application-layer protocol.
 
 > RFC: [HTTP/1.0](https://datatracker.ietf.org/doc/html/rfc1945), [HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7230), [HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)
 
-> [!TIP]
->
-> **stateless**
->
-> server maintains no information about the clients
-
 ## Non-Persistent and Persistent Connections
 
 1. **non-persistent connections**
@@ -72,7 +66,7 @@ sequenceDiagram
    (data data data data data ...)
    ```
 
-## Stateless and Cookie
+## Cookie
 
 Because an HTTP server maintains no information about the clients,
 HTTP is said to be a **stateless** protocol. However, it is often
