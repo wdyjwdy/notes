@@ -121,6 +121,7 @@ Benefits:
 
 ```mermaid
 sequenceDiagram
+  autonumber
   participant Client
   participant Proxy
   participant Server
@@ -135,10 +136,9 @@ sequenceDiagram
 ```
 
 Although caching can reduce user-perceived response times, it introduces a new
-problem—the copy of an object residing in the cache may be stale.
-
-Fortunately, HTTP has a mechanism that allows a cache to verify that its objects are up to date.
-This mechanism is called the conditional GET.
+problem: the copy of an object residing in the cache may be stale. Fortunately,
+HTTP has a mechanism that allows a cache to verify that its objects are up to date.
+This mechanism is called the **conditional GET**.
 
 ```mermaid
 sequenceDiagram
