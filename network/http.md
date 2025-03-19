@@ -121,7 +121,6 @@ Benefits:
 
 ```mermaid
 sequenceDiagram
-  autonumber
   participant Client
   participant Proxy
   participant Server
@@ -142,6 +141,7 @@ This mechanism is called the **conditional GET**.
 
 ```mermaid
 sequenceDiagram
+  autonumber
   participant Client
   participant Proxy
   participant Server
