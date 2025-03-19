@@ -122,6 +122,9 @@ sequenceDiagram
   1. If the object has not been modified since 03-19. Then, the Server sends a response message, which tells the Proxy that it
      can forward its copy of the object to Client.
 
+> [!TIP]
+> Last-Modified and If-modified-since can be replaced by ETag and If-None-Match.
+
 ## HTTP 1
 
 ### Persistent Connections
