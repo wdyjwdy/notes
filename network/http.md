@@ -4,40 +4,6 @@ HyperText Transfer Protocol (HTTP), the Web’s application-layer protocol.
 
 > RFC: [HTTP/1.0](https://datatracker.ietf.org/doc/html/rfc1945), [HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7230), [HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)
 
-## Non-Persistent and Persistent Connections
-
-1. **non-persistent connections**
-
-   each request/response pair be sent over a separate TCP connection, delay is 4 RTTs
-
-```mermaid
-sequenceDiagram
-  rect whitesmoke
-  Client ->> Server: get
-  Server ->> Client: HTML
-  end
-  rect whitesmoke
-  Client ->> Server: get
-  Server ->> Client: JPEG
-  end
-```
-
-2. **persistent connections**
-
-   each request/response pair be sent over the same TCP connection, delay is 3 RTTs
-
-```mermaid
-sequenceDiagram
-  rect whitesmoke
-  Client ->> Server: get
-  Server ->> Client: HTML
-  Client ->> Server: get
-  Server ->> Client: JPEG
-  end
-```
-
-## With and Without Pipelining
-
 ## Messages
 
 ![message](../imgs/network-http-message.svg)
@@ -155,3 +121,78 @@ sequenceDiagram
 - Step 6: the Proxy performs an up-to-date check by issuing a conditional GET
   1. If the object has not been modified since 03-19. Then, the Server sends a response message, which tells the Proxy that it
      can forward its copy of the object to Client.
+
+## HTTP 1
+
+### Persistent Connections
+
+1. **non-persistent connections**
+
+   each request/response pair be sent over a separate TCP connection, delay is 4 RTTs
+
+   ```mermaid
+   sequenceDiagram
+     Note over Client, Server: TCP Handshake
+     Client ->> Server: request
+     Server ->> Client: HTML
+     Note over Client, Server: TCP Handshake
+     Client ->> Server: request
+     Server ->> Client: JPEG
+   ```
+
+2. **persistent connections**
+
+   each request/response pair be sent over the same TCP connection, delay is 3 RTTs
+
+   ```mermaid
+   sequenceDiagram
+     Note over Client, Server: TCP Handshake
+     Client ->> Server: request
+     Server ->> Client: HTML
+     Client ->> Server: request
+     Server ->> Client: JPEG
+   ```
+
+### Pipelining
+
+1. **without pipelining**
+
+   Send HTTP requests separately, delay is 3 RTTs
+
+   ```mermaid
+   sequenceDiagram
+     Note over Client, Server: TCP Handshake
+     Client ->> Server: request
+     Server ->> Client: PNG
+     Client ->> Server: request
+     Server ->> Client: JPEG
+   ```
+
+2. **with pipelining**
+
+   Batch send HTTP requests, delay is 2 RTTs
+
+   ```mermaid
+   sequenceDiagram
+     Note over Client, Server: TCP Handshake
+     Client ->> Server: request
+     Client ->> Server: request
+     Server ->> Client: PNG
+     Server ->> Client: JPEG
+   ```
+
+## HTTP 2
+
+The primary goals for HTTP/2 are to reduce perceived latency by enabling request
+and response multiplexing over a single TCP connection, provide request prioritization
+and server push, and provide efficient compression of HTTP header fields. HTTP/2
+does not change HTTP methods, status codes, URLs, or header fields. Instead, HTTP/2
+changes how the data is formatted and transported between the client and server.
+
+### Framing
+
+### Response Message Prioritization
+
+### Server Pushing
+
+### Header Compression
