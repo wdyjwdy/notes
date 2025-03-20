@@ -16,9 +16,15 @@ Extending the host-to-host delivery service provided by the network layer to a *
 2. **demultiplexing**: delivering the data in segment to the correct socket
 
 > [!TIP]
+>
+> **How does TCP identify a socket?**
+>
 > TCP socket is fully identified by **(source IP, source Port, destination IP, destination Port)**. if two TCP segments have different source IP or Port, they will be directed to two different sockets.
 
 > [!TIP]
+>
+> **TCP requires establishing a connection**
+>
 > Unlike UDP, TCP requires establishing a connection. When the server receives a connection request, it creates a new socket. All subsequently arriving segments will be demultiplexed to this socket.
 
 ![multiplexing](../imgs/network-udp-multiplexing.svg)
