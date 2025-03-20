@@ -1,6 +1,12 @@
 # TCP
 
-Transmission Control Protocol, [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293)
+[Transmission Control Protocol](https://datatracker.ietf.org/doc/html/rfc9293) (TCP),
+which provides areliable, connection-oriented service to the invoking application.
+
+Services provided by TCP:
+
+1. reliable data transfer
+2. congestion control
 
 ## Header
 
@@ -9,7 +15,7 @@ Transmission Control Protocol, [RFC 9293](https://datatracker.ietf.org/doc/html/
 title: "TCP Packet"
 ---
 packet-beta
-0-15: "Source Port"
+0-15: "Source Port";'[p/;]
 16-31: "Destination Port"
 32-63: "Sequence Number"
 64-95: "Acknowledgment Number"
