@@ -16,7 +16,7 @@ Extending the host-to-host delivery service provided by the network layer to a *
 2. **demultiplexing**: delivering the data in segment to the correct socket
 
 > [!TIP]
-> UDP socket is fully identified by (destination IP, destination Port). if two UDP segments have different source IP or Port, but have the same destination IP and Port, they will be directed to the same process via the same socket.
+> UDP socket is fully identified by **(destination IP, destination Port)**. if two UDP segments have different source IP or Port, but have the same destination IP and Port, they will be directed to the same process via the same socket.
 
 ![multiplexing](../imgs/network-udp-multiplexing.svg)
 
