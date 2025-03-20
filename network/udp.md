@@ -10,12 +10,13 @@ Services provided by UDP:
 
 ## Multiplexing
 
-1. **multiplexing**: gathering data from different sockets, and passing the segments to the network layer
-2. **demultiplexing**: delivering the data in a transport-layer segment to the correct socket
+Extending the host-to-host delivery service provided by the network layer to a **process-to-process** delivery service.
 
-Each socket in the host could be assigned a port number, and when
-a segment arrives at the host, the transport layer examines the destination port
-number in the segment and directs the segment to the corresponding socket.
+1. **multiplexing**: gathering data from different sockets, and passing the segments to the network layer
+2. **demultiplexing**: delivering the data in segment to the correct socket
+
+> [!TIP]
+> UDP socket is fully identified by (destination IP, destination Port). if two UDP segments have different source IP or Port, but have the same destination IP and Port, they will be directed to the same process via the same socket.
 
 ![multiplexing](../imgs/network-udp-multiplexing.svg)
 
@@ -30,3 +31,5 @@ title UDP Packet
 48-63: "Checksum"
 64-95: "Data (variable length)"
 ```
+
+Port number is a 16-bit number, ranging from 0 to 65535. The port numbers ranging from 0 to 1023 are called well-known port numbers, they are reserved for use by well-known application protocols.
