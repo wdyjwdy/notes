@@ -4,8 +4,9 @@
 
 Services provided by TCP:
 
-1. reliable data transfer
-2. congestion control
+1. data delivery (multiplexing)
+2. reliable data transfer
+3. congestion control
 
 ## Multiplexing
 
