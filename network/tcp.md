@@ -8,6 +8,32 @@ Services provided by TCP:
 2. reliable data transfer
 3. congestion control
 
+## Header
+
+```mermaid
+---
+title: "TCP Packet"
+---
+packet-beta
+0-15: "Source Port"
+16-31: "Destination Port"
+32-63: "Sequence Number"
+64-95: "Acknowledgment Number"
+96-99: "Data Offset"
+100-105: "Reserved"
+106: "URG"
+107: "ACK"
+108: "PSH"
+109: "RST"
+110: "SYN"
+111: "FIN"
+112-127: "Window"
+128-143: "Checksum"
+144-159: "Urgent Pointer"
+160-191: "(Options and Padding)"
+192-255: "Data (variable length)"
+```
+
 ## Multiplexing
 
 Extending the host-to-host delivery service provided by the network layer to a **process-to-process** delivery service.
@@ -28,32 +54,6 @@ Extending the host-to-host delivery service provided by the network layer to a *
 > Unlike UDP, TCP requires establishing a connection. When the server receives a connection request, it creates a new socket. All subsequently arriving segments will be demultiplexed to this socket.
 
 ![multiplexing](../imgs/network-udp-multiplexing.svg)
-
-## Header
-
-```mermaid
----
-title: "TCP Packet"
----
-packet-beta
-0-15: "Source Port";'[p/;]
-16-31: "Destination Port"
-32-63: "Sequence Number"
-64-95: "Acknowledgment Number"
-96-99: "Data Offset"
-100-105: "Reserved"
-106: "URG"
-107: "ACK"
-108: "PSH"
-109: "RST"
-110: "SYN"
-111: "FIN"
-112-127: "Window"
-128-143: "Checksum"
-144-159: "Urgent Pointer"
-160-191: "(Options and Padding)"
-192-255: "Data (variable length)"
-```
 
 ## Connection
 
