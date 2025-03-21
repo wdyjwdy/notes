@@ -55,6 +55,107 @@ Extending the host-to-host delivery service provided by the network layer to a *
 
 ![multiplexing](../imgs/network-udp-multiplexing.svg)
 
+## Reliable Data Transfer
+
+假设网络层满足以下条件：
+
+1. 不会丢包
+2. 不会出现比特错误
+3. 不会乱序
+
+实现可靠传输很简单：
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  Note over S, R: ✅
+  S ->> R: data
+```
+
+### ARQ
+
+Automatic Repeat reQuest (ARQ) protocols
+
+假设网络层满足以下条件：
+
+1. 不会丢包
+2. 会出现比特错误
+3. 不会乱序
+
+需要一个重传机制，来确保错误的数据被重传，实现重传机制需要增加两个字段：
+
+1. **Checksum**: 检测数据是否出错
+2. **ACK**: 反馈结果（1 表示没错，0 表示有错，需要重传）
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  Note over S, R: ✅ received
+  S ->> R: data, checksum
+  R ->> S: ack=1
+
+  Note over S, R: ❌ retransmit
+  S ->> R: data, checksum
+  R ->> S: ack=0
+  S ->> R: data, checksum
+```
+
+> [!TIP]
+>
+> **Stop-and-wait protocols**
+>
+> the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
+
+如果 ACK 包也发生了比特错误，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道该数据是新数据还是重传数据，因此需要新增一个字段来区分：
+
+1. **SEQ**: sequence number, determine whether or not the received packet is a retransmission
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  Note over S, R: ✅ received
+  S ->> R: data, checksum, seq=0
+  R ->> S: ack=1
+  S ->> R: data, checksum, seq=1
+
+  Note over S, R: ❌ retransmit
+  S ->> R: data, checksum, seq=0
+  R ->> S: ack=1
+  S ->> R: data, checksum, seq=0
+```
+
+假设网络层满足以下条件：
+
+1. 会丢包
+2. 会出现比特错误
+3. 不会乱序
+
+如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
+
+1. Data 包丢了
+2. ACK 包丢了
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  Note over S, R: ❌ data loss
+  S --x R: data, checksum, seq=0
+  S ->> R: data, checksum, seq=0
+
+  Note over S, R: ❌ ack loss
+  S ->> R: data, checksum, seq=0
+  R --x S: ack=1
+  S ->> R: data, checksum, seq=0
+```
+
 ## Connection
 
 ### 三次握手
