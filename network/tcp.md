@@ -160,6 +160,12 @@ sequenceDiagram
 
 ![pipelining](../imgs/network-tcp-pipelining.svg)
 
+> [!TIP]
+>
+> **Why not allow an unlimited number of such packets?**
+>
+> one reason is congestion control.
+
 ## Connection
 
 ### 三次握手
