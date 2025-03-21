@@ -158,7 +158,7 @@ sequenceDiagram
 
 由于 Stop-and-wait protocols 效率较低，需要进行 pipelining
 
-![pipelining](imgs/network-tcp-pipelining.svg)
+![pipelining](../imgs/network-tcp-pipelining.svg)
 
 ## Connection
 
