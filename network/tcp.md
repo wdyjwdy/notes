@@ -74,9 +74,7 @@ sequenceDiagram
   S ->> R: data
 ```
 
-### ARQ
-
-Automatic Repeat reQuest (ARQ) protocols
+### ARQ (Automatic Repeat reQuest)
 
 假设网络层满足以下条件：
 
@@ -155,6 +153,12 @@ sequenceDiagram
   R --x S: ack=1
   S ->> R: data, checksum, seq=0
 ```
+
+### GBN (Go-Back-N)
+
+由于 Stop-and-wait protocols 效率较低，需要进行 pipelining
+
+![pipelining](imgs/network-tcp-pipelining.svg)
 
 ## Connection
 
