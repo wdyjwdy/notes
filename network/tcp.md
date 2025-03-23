@@ -57,13 +57,9 @@ Extending the host-to-host delivery service provided by the network layer to a *
 
 ## Reliable Data Transfer
 
-假设网络层满足以下条件：
+### ARQ (Automatic Repeat reQuest)
 
-1. 不会丢包
-2. 不会出现比特错误
-3. 不会乱序
-
-实现可靠传输很简单：
+假设网络层满足：不会丢包，不会出错，不会乱序，则实现可靠传输很简单：
 
 ```mermaid
 sequenceDiagram
@@ -74,18 +70,10 @@ sequenceDiagram
   S ->> R: data
 ```
 
-### ARQ (Automatic Repeat reQuest)
-
-假设网络层满足以下条件：
-
-1. 不会丢包
-2. 会出现比特错误
-3. 不会乱序
-
-需要一个重传机制，来确保错误的数据被重传，实现重传机制需要增加两个字段：
+假设网络层满足：不会丢包，会出错，不会乱序，则需要一个重传机制，来确保错误的数据被重传，实现重传机制需要增加两个字段：
 
 1. **Checksum**: 检测数据是否出错
-2. **ACK**: 反馈结果（1 表示没错，0 表示有错，需要重传）
+2. **Acknowledgment Number**: 反馈结果（1 表示没错，0 表示有错，需要重传）
 
 ```mermaid
 sequenceDiagram
@@ -110,7 +98,7 @@ sequenceDiagram
 
 如果 ACK 包也发生了比特错误，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道该数据是新数据还是重传数据，因此需要新增一个字段来区分：
 
-1. **SEQ**: sequence number, determine whether or not the received packet is a retransmission
+1. **Sequence Number**: determine whether or not the received packet is a retransmission
 
 ```mermaid
 sequenceDiagram
@@ -128,13 +116,7 @@ sequenceDiagram
   S ->> R: data, checksum, seq=0
 ```
 
-假设网络层满足以下条件：
-
-1. 会丢包
-2. 会出现比特错误
-3. 不会乱序
-
-如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
+假设网络层满足：会丢包，会出错，不会乱序，如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
 
 1. Data 包丢了
 2. ACK 包丢了
@@ -165,6 +147,8 @@ sequenceDiagram
 > **Why not allow an unlimited number of such packets?**
 >
 > one reason is congestion control.
+
+In a Go-Back-N (GBN) protocol, the sender is allowed to transmit multiple packets without waiting for an acknowledgment,
 
 ## Connection
 
