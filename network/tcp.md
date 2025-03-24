@@ -34,25 +34,25 @@ packet-beta
 192-255: "Data (variable length)"
 ```
 
-Used for multiplexing:
+Used for [multiplexing](#multiplexing):
 
 - **Source Port**
 - **Destination Port**
 
-Used for reliable data transfer:
+Used for [reliable data transfer](#reliable-data-transfer):
 
 - **Sequence Number**
 - **Acknowledgment Number**
 - **Checksum**
 - **ACK**: indicate Acknowledgment Number field is valid
 
-User for connection establishment:
+User for [connection establishment](#connection-establishment):
 
 - **SYN**
 - **FIN**
 - **RST**
 
-Used for congestion control:
+Used for [congestion control](#congestion-control):
 
 - **Window**
 
@@ -97,7 +97,7 @@ sequenceDiagram
 >
 > **Stale segments**
 >
-> segments that are still in the network but belong to a closed TCP connection
+> Segments that are still in the network but belong to a closed TCP connection.
 
 ## Multiplexing
 
@@ -212,7 +212,7 @@ sequenceDiagram
   S ->> R: data, checksum, seq=0
 ```
 
-### stop-and-wait vs pipelining
+### Stop-and-wait vs Pipelining
 
 - **Stop-and-wait protocols**: 数据包确认接收后，才能发送下一个
 - **pipelining protocols**: 允许发送多个数据包而不等待确认
@@ -265,9 +265,9 @@ GBN 协议在某个数据包丢失或出错或乱序时，会导致大量数据�
 > receiver window: [3, 0, 1]
 > ```
 
-## Connection
+## Connection Establishment
 
-### three-way handshake
+### Three-way Handshake
 
 ```mermaid
 %%{init: { "showSequenceNumbers": "true" } }%%
