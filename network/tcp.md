@@ -70,7 +70,9 @@ Suppose that the file consisting of 500,000 bytes, that the MSS is 1,000 bytes.
 
 ![Sequence Numbers](../imgs/network-tcp-seqnum.svg)
 
-> [!TIP] > **MSS (Maximum Segment Size)**
+> [!TIP]
+>
+> **MSS (Maximum Segment Size)**
 >
 > the largest amount of data.
 
@@ -89,11 +91,13 @@ sequenceDiagram
 
 > [!TIP]
 >
-> **初始序列号**
+> **Initial Sequence Number**
 >
-> 事实上，TCP 随机选择初始序列号，为了与过期的数据段产生碰撞。
+> In fact, TCP randomly selects the initial sequence number to avoid collisions with stale segments.
 >
-> 过期的数据段：已经断开 TCP 连接，但仍然在网络中的数据段
+> **Stale segments**
+>
+> segments that are still in the network but belong to a closed TCP connection
 
 ## Multiplexing
 
