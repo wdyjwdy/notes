@@ -127,8 +127,8 @@ sequenceDiagram
 
 假设网络层满足以上条件，如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
 
-1. Data 包丢了
-2. ACK 包丢了
+1. Data 包丢了（或超时了）
+2. ACK 包丢了（或超时了）
 
 ```mermaid
 sequenceDiagram
@@ -145,25 +145,34 @@ sequenceDiagram
   S ->> R: data, checksum, seq=0
 ```
 
-### GBN (Go-Back-N)
+### Stop-and-wait vs Pipelining
 
-> [!TIP]
->
-> **Stop-and-wait protocols**
->
-> the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
-
-由于 Stop-and-wait protocols 效率较低，需要进行 pipelining
+- **Stop-and-wait protocols**
+  the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
+- **pipelining protocols**
+  the sender is allowed to send multiple packets without waiting for acknowledgments
 
 ![pipelining](../imgs/network-tcp-pipelining.svg)
 
-> [!TIP]
->
-> **Why not allow an unlimited number of such packets?**
->
-> one reason is congestion control.
+由图可知 Stop-and-wait 效率低于 Pipelining
 
-In a Go-Back-N (GBN) protocol, the sender is allowed to transmit multiple packets without waiting for an acknowledgment,
+### GBN (Go-Back-N)
+
+GBN 是一个 pipelining 协议，但它限制了管道中数据包的数量，即窗口大小。
+
+- 发送方重传时，会重传目标数据包，及其之后的数据包
+- 接收方收到逆序数据包时，直接丢弃
+
+![gbn](../imgs/network-tcp-gbn.svg)
+
+### SR (Selective Repeat)
+
+GBN 协议在某个数据包丢失或出错或乱序时，会导致大量数据包被重传，效率较低。而 SR 协议允许保留正确到达的数据包。
+
+- 发送方重传时，只会重传目标数据包
+- 接收方收到逆序数据包时，会缓存下来
+
+![sr](../imgs/network-tcp-sr.svg)
 
 ## Connection
 
