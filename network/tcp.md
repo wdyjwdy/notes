@@ -69,9 +69,10 @@ sequenceDiagram
   participant S as Sender
   participant R as Receiver
 
-  Note over S, R: ✅ received
   S ->> R: data
 ```
+
+---
 
 - 不丢包 ✅
 - 会出错 ❌
@@ -79,7 +80,7 @@ sequenceDiagram
 假设网络层满足以上条件，则需确保出错的数据被重传，实现重传机制需要增加两个字段：
 
 1. **Checksum**: 检测数据是否出错
-2. **Acknowledgment Number**: 反馈结果（1 表示没错，0 表示有错，需要重传）
+2. **Acknowledgment Number**: 反馈结果（返回一次表示没错，返回两次表示有错，需要重传）
 
 ```mermaid
 sequenceDiagram
@@ -88,21 +89,16 @@ sequenceDiagram
 
   Note over S, R: ✅ received
   S ->> R: data, checksum
-  R ->> S: ack=1
+  R ->> S: ack
 
   Note over S, R: ❌ retransmit
   S ->> R: data, checksum
-  R ->> S: ack=0
+  R ->> S: ack
+  R ->> S: ack
   S ->> R: data, checksum
 ```
 
-> [!TIP]
->
-> **Stop-and-wait protocols**
->
-> the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
-
-如果 ACK 包也发生了比特错误，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道该数据是新数据还是重传数据，因此需要新增一个字段来区分：
+如果 ACK 包也出错，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道到达的数据是新数据还是重传数据，因此需要新增一个字段来区分：
 
 1. **Sequence Number**: determine whether or not the received packet is a retransmission
 
@@ -113,16 +109,21 @@ sequenceDiagram
 
   Note over S, R: ✅ received
   S ->> R: data, checksum, seq=0
-  R ->> S: ack=1
+  R ->> S: ack
   S ->> R: data, checksum, seq=1
 
   Note over S, R: ❌ retransmit
   S ->> R: data, checksum, seq=0
-  R ->> S: ack=1
+  R ->> S: ack (bit error)
   S ->> R: data, checksum, seq=0
 ```
 
-假设网络层满足：会丢包，会出错，不会乱序，如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
+---
+
+- 会丢包 ❌
+- 会出错 ❌
+
+假设网络层满足以上条件，如果出现丢包，发送方在等待一段时间后，需要重传数据，丢包有两种情况：
 
 1. Data 包丢了
 2. ACK 包丢了
@@ -143,6 +144,12 @@ sequenceDiagram
 ```
 
 ### GBN (Go-Back-N)
+
+> [!TIP]
+>
+> **Stop-and-wait protocols**
+>
+> the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
 
 由于 Stop-and-wait protocols 效率较低，需要进行 pipelining
 
