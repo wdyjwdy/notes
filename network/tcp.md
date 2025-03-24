@@ -59,18 +59,24 @@ Extending the host-to-host delivery service provided by the network layer to a *
 
 ### ARQ (Automatic Repeat reQuest)
 
-假设网络层满足：不会丢包，不会出错，不会乱序，则实现可靠传输很简单：
+- 不丢包 ✅
+- 不出错 ✅
+
+假设网络层满足以上条件，实现可靠传输很简单：
 
 ```mermaid
 sequenceDiagram
   participant S as Sender
   participant R as Receiver
 
-  Note over S, R: ✅
+  Note over S, R: ✅ received
   S ->> R: data
 ```
 
-假设网络层满足：不会丢包，会出错，不会乱序，则需要一个重传机制，来确保错误的数据被重传，实现重传机制需要增加两个字段：
+- 不丢包 ✅
+- 会出错 ❌
+
+假设网络层满足以上条件，则需确保出错的数据被重传，实现重传机制需要增加两个字段：
 
 1. **Checksum**: 检测数据是否出错
 2. **Acknowledgment Number**: 反馈结果（1 表示没错，0 表示有错，需要重传）
