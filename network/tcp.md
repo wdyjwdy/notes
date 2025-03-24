@@ -89,6 +89,21 @@ sequenceDiagram
   R ->> S: ack: 536
 ```
 
+Suppose the starting sequence numbers are 42 and 79 for the client and server.
+
+- "hello": 5 bytes
+- "hi": 2 bytes
+
+```mermaid
+sequenceDiagram
+  participant C as Client
+  participant S as Server
+
+  C ->> S: seq: 42, data: "hello"
+  S ->> C: seq: 79, ack: 47, data: "hi"
+  C ->> S: seq: 47, ack: 81
+```
+
 > [!TIP]
 >
 > **Initial Sequence Number**
@@ -106,6 +121,8 @@ Extending the host-to-host delivery service provided by the network layer to a *
 1. **multiplexing**: gathering data from different sockets, and passing the segments to the network layer
 2. **demultiplexing**: delivering the data in segment to the correct socket
 
+![multiplexing](../imgs/network-udp-multiplexing.svg)
+
 > [!TIP]
 >
 > **How does TCP identify a socket?**
@@ -117,8 +134,6 @@ Extending the host-to-host delivery service provided by the network layer to a *
 > **TCP requires establishing a connection**
 >
 > Unlike UDP, TCP requires establishing a connection. When the server receives a connection request, it creates a new socket. All subsequently arriving segments will be demultiplexed to this socket.
-
-![multiplexing](../imgs/network-udp-multiplexing.svg)
 
 ## Reliable Data Transfer
 
