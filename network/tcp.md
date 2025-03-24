@@ -101,18 +101,20 @@ sequenceDiagram
 如果 ACK 包也出错，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道到达的数据是新数据还是重传数据，因此需要新增一个字段来区分：
 
 1. **Sequence Number**: determine whether or not the received packet is a retransmission
+   - transmitted packet: has the same sequence number as the most recently received packet
+   - new packet: has the different sequence number as the most recently received packet
 
 ```mermaid
 sequenceDiagram
   participant S as Sender
   participant R as Receiver
 
-  Note over S, R: ✅ received
+  Note over S, R: ✅ new packet
   S ->> R: data, checksum, seq=0
   R ->> S: ack
   S ->> R: data, checksum, seq=1
 
-  Note over S, R: ❌ retransmit
+  Note over S, R: ❌ transmitted packet
   S ->> R: data, checksum, seq=0
   R ->> S: ack (bit error)
   S ->> R: data, checksum, seq=0
