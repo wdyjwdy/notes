@@ -80,7 +80,9 @@ sequenceDiagram
 假设网络层满足以上条件，则需确保出错的数据被重传，实现重传机制需要增加两个字段：
 
 1. **Checksum**: 检测数据是否出错
-2. **Acknowledgment Number**: 反馈结果（返回一次表示没错，返回两次表示有错，需要重传）
+2. **Acknowledgment Number**: 反馈结果
+   - correct: 返回一次 ACK
+   - wrong: 返回两次 ACK
 
 ```mermaid
 sequenceDiagram
@@ -100,9 +102,9 @@ sequenceDiagram
 
 如果 ACK 包也出错，那么发送方在收到错误的 ACK 包后，也需要重传数据。但此时，接收方不知道到达的数据是新数据还是重传数据，因此需要新增一个字段来区分：
 
-1. **Sequence Number**: determine whether or not the received packet is a retransmission
-   - transmitted packet: has the same sequence number as the most recently received packet
-   - new packet: has the different sequence number as the most recently received packet
+1. **Sequence Number**: 确定数据包是否是重传的
+   - 重传的数据包：序列号和上一个包相同
+   - 新的数据包：序列号和上一个包不同
 
 ```mermaid
 sequenceDiagram
@@ -114,7 +116,7 @@ sequenceDiagram
   R ->> S: ack
   S ->> R: data, checksum, seq=1
 
-  Note over S, R: ❌ transmitted packet
+  Note over S, R: ❌ retransmited packet
   S ->> R: data, checksum, seq=0
   R ->> S: ack (bit error)
   S ->> R: data, checksum, seq=0
@@ -147,18 +149,29 @@ sequenceDiagram
 
 ### Stop-and-wait vs Pipelining
 
-- **Stop-and-wait protocols**
-  the sender will not send a new piece of data until it is sure that the receiver has correctly received the current packet.
-- **pipelining protocols**
-  the sender is allowed to send multiple packets without waiting for acknowledgments
+- **Stop-and-wait protocols**: 数据包确认接收后，才能发送下一个
+- **pipelining protocols**: 允许发送多个数据包而不等待确认
+
+由下图可知 Stop-and-wait 效率低于 Pipelining
 
 ![pipelining](../imgs/network-tcp-pipelining.svg)
 
-由图可知 Stop-and-wait 效率低于 Pipelining
+在管道协议中，数据包可能会乱序，因此 ACK 需要指定对应的 SEQ，例如：
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  S ->> R: data, checksum, seq=0
+  R ->> S: ack=0
+  S ->> R: data, checksum, seq=1
+  R ->> S: ack=1
+```
 
 ### GBN (Go-Back-N)
 
-GBN 是一个 pipelining 协议，但它限制了管道中数据包的数量，即窗口大小。
+GBN 是一个管道协议，但它限制了管道中数据包的数量，即窗口大小。
 
 - 发送方重传时，会重传目标数据包，及其之后的数据包
 - 接收方收到逆序数据包时，直接丢弃
