@@ -34,6 +34,59 @@ packet-beta
 192-255: "Data (variable length)"
 ```
 
+Used for multiplexing:
+
+- **Source Port**
+- **Destination Port**
+
+Used for reliable data transfer:
+
+- **Sequence Number**
+- **Acknowledgment Number**
+- **Checksum**
+- **ACK**: indicate Acknowledgment Number field is valid
+
+User for connection establishment:
+
+- **SYN**
+- **FIN**
+- **RST**
+
+Used for congestion control:
+
+- **Window**
+
+Other fields:
+
+- **Data Offset**: the length of the TCP header (the TCP header can be of variable length)
+
+### Sequence Numbers
+
+Suppose that the file consisting of 500,000 bytes, that the MSS is 1,000 bytes.
+
+- segment 1 gets assigned sequence number 0
+- segment 2 gets assigned sequence number 1,000
+- segment 500 gets assigned sequence number 499,000
+
+![Sequence Numbers](../imgs/network-tcp-seqnum.svg)
+
+> [!TIP] > **MSS (Maximum Segment Size)**
+>
+> the largest amount of data.
+
+### Acknowledgment Numbers
+
+Suppose that Receiver has received all bytes numbered 0 through 535. Then Sender puts 536 in the acknowledgment number field.
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  S ->> R: seq: 500
+  R ->> S: ack: 536
+```
+
 ## Multiplexing
 
 Extending the host-to-host delivery service provided by the network layer to a **process-to-process** delivery service.
@@ -147,7 +200,7 @@ sequenceDiagram
   S ->> R: data, checksum, seq=0
 ```
 
-### Stop-and-wait vs Pipelining
+### stop-and-wait vs pipelining
 
 - **Stop-and-wait protocols**: 数据包确认接收后，才能发送下一个
 - **pipelining protocols**: 允许发送多个数据包而不等待确认
@@ -197,12 +250,12 @@ GBN 协议在某个数据包丢失或出错或乱序时，会导致大量数据�
 > # 发送方 seq=0,1,2 的 ACK 丢失，正在重传 seq=0
 > sender window: [0, 1, 2]
 > # 接收方 seq=0,1,2 已确认，窗口右移，此时若收到重传的 seq=0 则会导致错误
-> receiver window: [3, 0, 1] 
+> receiver window: [3, 0, 1]
 > ```
 
 ## Connection
 
-### 三次握手
+### three-way handshake
 
 ```mermaid
 %%{init: { "showSequenceNumbers": "true" } }%%
