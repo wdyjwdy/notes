@@ -87,6 +87,14 @@ sequenceDiagram
   R ->> S: ack: 536
 ```
 
+> [!TIP]
+>
+> **初始序列号**
+>
+> 事实上，TCP 随机选择初始序列号，为了与过期的数据段产生碰撞。
+>
+> 过期的数据段：已经断开 TCP 连接，但仍然在网络中的数据段
+
 ## Multiplexing
 
 Extending the host-to-host delivery service provided by the network layer to a **process-to-process** delivery service.
