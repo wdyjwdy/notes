@@ -1,6 +1,6 @@
 # TCP
 
-[Transmission Control Protocol](https://datatracker.ietf.org/doc/html/rfc9293) (TCP), which provides areliable, connection-oriented service to the invoking application.
+Transmission Control Protocol (TCP), which provides a reliable, connection-oriented service to the invoking application.
 
 Services provided by TCP:
 
@@ -365,6 +365,7 @@ sequenceDiagram
 > [!TIP]
 >
 > **Is a three-way handshake okay?**
+>
 > If the server does not need to send additional data, the second and third steps of the handshake can be combined.
 >
 > **What happens if handshake packets are lost?**
