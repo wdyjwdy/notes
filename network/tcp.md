@@ -303,9 +303,7 @@ sequenceDiagram
 
 ### Flow Control
 
-TCP provides a flow-control service to its applications to eliminate the possibility of the sender overflowing the receiver’s buffer.
-
-the Sender makes sure throughout the connection’s life that $LastByteSent – LastByteAcked <= rwnd$
+TCP provides a flow-control service to its applications to eliminate the possibility of the sender overflowing the receiver’s buffer. The sender need makes sure that $LastByteSent – LastByteAcked <= ReceiveWindow$.
 
 ![flow-control](../imgs/network-tcp-flow-control.svg)
 
@@ -314,30 +312,46 @@ the Sender makes sure throughout the connection’s life that $LastByteSent – 
 ### Three-way Handshake
 
 ```mermaid
-%%{init: { "showSequenceNumbers": "true" } }%%
 sequenceDiagram
-  Client ->> Server: SYN
-  Server ->> Client: SYN, ACK
-  Client ->> Server: ACK
+  autonumber
+  participant C as Client
+  participant S as Server
+
+  Note left of C: CLOSED
+  Note right of S: LISTEN
+  C ->> S: syn=1, seq=80
+  Note left of C: SYN_SENT
+  S ->> C: syn=1, seq=30, ack=81
+  Note right of S: SYN_RCVD
+  C ->> S: syn=0, seq=81, ack=31
+  Note left of C: ESTABLISHED
+  Note right of S: ESTABLISHED
 ```
 
-1. 客户端请求建立连接，发送 SYN 报文 (SEQ: 100)
-2. 服务端返回 SYN 的 ACK，并请求建立连接，发送 SYN 报文 (SEQ: 300, ACK: 101)
-3. 客户端返回 SYN 的 ACK (SEQ: 101, ACK: 301)
-4. 客户端开始传数据 (SEQ: 101, ACK: 301)
+1. set SYN flag to 1, set SEQ to randomly value
+2. set SYN flag to 1, set SEQ to randomly value, set ACK to client SEQ + 1
+3. set SYN flag to 0, set SEQ to client SEQ + 1, set ACK to server SEQ + 1 (may carry data)
 
-### 四次挥手
+### Four-way Handshake
 
 ```mermaid
-%%{init: { "showSequenceNumbers": "true" } }%%
 sequenceDiagram
-  Client ->> Server: FIN
-  Server ->> Client: ACK
-  Server ->> Client: FIN
-  Client ->> Server: ACK
+  autonumber
+  participant C as Client
+  participant S as Server
+
+  C ->> S: fin=1, seq=80
+  Note left of C: FIN_WAIT_1
+  S ->> C: fin=1, seq=30, ack=81
+  Note left of C: FIN_WAIT_2
+  Note right of S: CLOSE_WAIT
+  S ->> C: fin=1, seq=30, ack=81
+  Note right of S: LAST_ACK
+  C ->> S: fin=0, seq=81, ack=31
+  Note right of S: CLOSED
+  Note left of C: TIME_WAIT
+  Note left of C: CLOSED
 ```
 
-1. 客户端请求断开连接，发送 FIN 报文 (SEQ: 100, ACK: 300)
-2. 服务端返回 FIN 的 ACK (SEQ: 300, ACK: 101)
-3. 服务端请求断开连接，发送 FIN 报文 (SEQ: 300, ACK: 101)
-4. 客户端返回 FIN 的 ACK (SEQ: 101, ACK: 301)
+**TIME_WAIT**: lets the TCP client resend the final ACK in case the ACK is lost.
+**RST flag**: when the socket is not running a service, an RST is returned.
