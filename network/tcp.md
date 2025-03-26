@@ -280,6 +280,27 @@ GBN 协议在某个数据包丢失或出错或乱序时，会导致大量数据�
 > receiver window: [3, 0, 1]
 > ```
 
+### Fast Retransmit
+
+One of the problems with timeout-triggered retransmissions is that the timeout period can be relatively long. In the case that three duplicate ACKs are received, the TCP sender performs a fast retransmit, retransmitting the missing segment before that segment’s timer expires.
+
+```mermaid
+sequenceDiagram
+  participant S as Sender
+  participant R as Receiver
+
+  R ->> S: ack=100
+  R ->> S: ack=100
+  R ->> S: ack=100
+  S ->> R: seq=100
+```
+
+> [!TIP]
+>
+> **Why 3 ACKs, rather than 2 ACKs?**
+>
+> Since TCP does not know whether a duplicate ACK is caused by a lost segment or just a reordering of segments
+
 ## Connection Establishment
 
 ### Three-way Handshake
