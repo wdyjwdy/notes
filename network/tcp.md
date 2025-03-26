@@ -104,16 +104,6 @@ sequenceDiagram
   C ->> S: seq: 47, ack: 81
 ```
 
-> [!TIP]
->
-> **Initial Sequence Number**
->
-> In fact, TCP randomly selects the initial sequence number to avoid collisions with stale segments.
->
-> **Stale segments**
->
-> Segments that are still in the network but belong to a closed TCP connection.
-
 ## Multiplexing
 
 Extending the host-to-host delivery service provided by the network layer to a **process-to-process** delivery service.
@@ -330,7 +320,19 @@ sequenceDiagram
 
 1. set SYN flag to 1, set SEQ to randomly value
 2. set SYN flag to 1, set SEQ to randomly value, set ACK to client SEQ + 1
-3. set SYN flag to 0, set SEQ to client SEQ + 1, set ACK to server SEQ + 1 (may carry data)
+3. set SYN flag to 0, set SEQ to client SEQ + 1, set ACK to server SEQ + 1 **(may carry data)**
+
+> [!TIP]
+>
+> **Why randomly select initial SEQ?**
+>
+> To avoid collisions with stale segments (segments that are still in the network but belong to a closed TCP connection).
+>
+> **What happens if handshake packets are lost?**
+>
+> 1. 1st handshake lost: Client retransmits SYN packet
+> 2. 2nd handshake lost: Client retransmits SYN packet, Server retransmits SYN-ACK packet
+> 3. 3rd handshake lost: Server retransmits SYN-ACK packet
 
 ### Four-way Handshake
 
@@ -353,5 +355,16 @@ sequenceDiagram
   Note left of C: CLOSED
 ```
 
-**TIME_WAIT**: lets the TCP client resend the final ACK in case the ACK is lost.
-**RST flag**: when the socket is not running a service, an RST is returned.
+- **TIME_WAIT**: lets the TCP client resend the final ACK in case the ACK is lost.
+- **RST flag**: when the socket is not running a service, an RST is returned.
+
+> [!TIP]
+>
+> **What happens if handshake packets are lost?**
+>
+> 1. 1st handshake lost: Client retransmits FIN packet
+> 2. 2nd handshake lost: Client retransmits FIN packet
+> 3. 3rd handshake lost: Server retransmits FIN packet
+> 4. 4th handshake lost: Server retransmits FIN packet
+>
+> If the FIN packet is never acknowledged, the connection will directly transition to the CLOSED state.
