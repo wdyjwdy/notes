@@ -328,6 +328,10 @@ sequenceDiagram
 >
 > To avoid collisions with stale segments (segments that are still in the network but belong to a closed TCP connection).
 >
+> **Why is it three-way handshake instead of two-way handshake?**
+>
+> To prevent old SYN segments from establishing a connection.
+>
 > **What happens if handshake packets are lost?**
 >
 > 1. 1st handshake lost: Client retransmits SYN packet
@@ -359,6 +363,9 @@ sequenceDiagram
 - **RST flag**: when the socket is not running a service, an RST is returned.
 
 > [!TIP]
+>
+> **Is a three-way handshake okay?**
+> If the server does not need to send additional data, the second and third steps of the handshake can be combined.
 >
 > **What happens if handshake packets are lost?**
 >
