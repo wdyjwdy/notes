@@ -299,7 +299,15 @@ sequenceDiagram
 >
 > **Why 3 ACKs, rather than 2 ACKs?**
 >
-> Since TCP does not know whether a duplicate ACK is caused by a lost segment or just a reordering of segments
+> Since TCP does not know whether a duplicate ACK is caused by a lost segment or just a reordering of segments.
+
+### Flow Control
+
+TCP provides a flow-control service to its applications to eliminate the possibility of the sender overflowing the receiver’s buffer.
+
+the Sender makes sure throughout the connection’s life that $LastByteSent – LastByteAcked <= rwnd$
+
+![flow-control](../imgs/network-tcp-flow-control.svg)
 
 ## Connection Establishment
 
