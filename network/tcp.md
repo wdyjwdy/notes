@@ -279,9 +279,10 @@ sequenceDiagram
   participant S as Sender
   participant R as Receiver
 
-  R ->> S: ack=100
-  R ->> S: ack=100
-  R ->> S: ack=100
+  R ->> S: ack=100 (original)
+  R ->> S: ack=100 (duplicate)
+  R ->> S: ack=100 (duplicate)
+  R ->> S: ack=100 (duplicate)
   S ->> R: seq=100
 ```
 
@@ -297,9 +298,9 @@ TCP provides a flow-control service to its applications to eliminate the possibi
 
 ![flow-control](../imgs/network-tcp-flow-control.svg)
 
-## Connection Establishment
+### Connection Establishment
 
-### Three-way Handshake
+**Three-way Handshake**
 
 ```mermaid
 sequenceDiagram
@@ -338,7 +339,9 @@ sequenceDiagram
 > 2. 2nd handshake lost: Client retransmits SYN packet, Server retransmits SYN-ACK packet
 > 3. 3rd handshake lost: Server retransmits SYN-ACK packet
 
-### Four-way Handshake
+---
+
+**Four-way Handshake**
 
 ```mermaid
 sequenceDiagram
@@ -376,3 +379,7 @@ sequenceDiagram
 > 4. 4th handshake lost: Server retransmits FIN packet
 >
 > If the FIN packet is never acknowledged, the connection will directly transition to the CLOSED state.
+
+## Congestion Control
+
+![congestion-control](../imgs/network-tcp-congestion-control.svg)
