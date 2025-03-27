@@ -384,3 +384,7 @@ sequenceDiagram
 
 ![congestion-control](../imgs/network-tcp-congestion-control.svg)
 ![slow-start](../imgs/network-tcp-slow-start.svg)
+
+- x = 4, cwnd >= ssthresh
+- x = 8, 3 ACKs, set ssthresh to 4, set cwnd = 9
+- x = 11, new ACK, set cwnd = 6
