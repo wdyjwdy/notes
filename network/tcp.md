@@ -383,3 +383,4 @@ sequenceDiagram
 ## Congestion Control
 
 ![congestion-control](../imgs/network-tcp-congestion-control.svg)
+![slow-start](../imgs/network-tcp-slow-start.svg)
