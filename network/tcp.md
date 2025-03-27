@@ -382,9 +382,28 @@ sequenceDiagram
 
 ## Congestion Control
 
+### Algorithm
+
 ![congestion-control](../imgs/network-tcp-congestion-control.svg)
-![slow-start](../imgs/network-tcp-slow-start.svg)
+
+### TCP Tahoe
+
+![Tahoe](../imgs/network-tcp-tahoe.svg)
 
 - x = 4, cwnd >= ssthresh
-- x = 8, 3 ACKs, set ssthresh to 4, set cwnd = 9
+- x = 8, 3 ACKs, set ssthresh to 6, set cwnd = 1
+- x = 12, cwnd >= ssthresh
+
+### TCP Reno
+
+![Reno](../imgs/network-tcp-reno.svg)
+
+- x = 4, cwnd >= ssthresh
+- x = 8, 3 ACKs, set ssthresh to 6, set cwnd = 9
 - x = 11, new ACK, set cwnd = 6
+
+### TCP CUBIC
+
+CUBIC only changes the congestion avoidance phase.
+
+![Cubic](../imgs/network-tcp-cubic.svg)
