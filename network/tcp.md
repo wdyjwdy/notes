@@ -300,7 +300,13 @@ TCP provides a flow-control service to its applications to eliminate the possibi
 
 ### Connection Establishment
 
-**Three-way Handshake**
+The purpose of the three-way handshake is to synchronize the connection state information:
+
+- Sequence Number
+- Congestion Window
+- MSS
+
+#### Three-way Handshake
 
 ```mermaid
 sequenceDiagram
@@ -339,9 +345,7 @@ sequenceDiagram
 > 2. 2nd handshake lost: Client retransmits SYN packet, Server retransmits SYN-ACK packet
 > 3. 3rd handshake lost: Server retransmits SYN-ACK packet
 
----
-
-**Four-way Handshake**
+#### Four-way Handshake
 
 ```mermaid
 sequenceDiagram
