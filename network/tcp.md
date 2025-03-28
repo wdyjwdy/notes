@@ -1,12 +1,10 @@
 # TCP
 
-Transmission Control Protocol (TCP), which provides a reliable, connection-oriented service to the invoking application.
+Services provided by TCP (Transmission Control Protocol):
 
-Services provided by TCP:
-
-1. data delivery (multiplexing)
-2. reliable data transfer
-3. congestion control
+1. [data delivery (multiplexing)](#multiplexing)
+2. [reliable data transfer](#reliable-data-transfer)
+3. [congestion control](#congestion-control)
 
 ## Header
 

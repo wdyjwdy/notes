@@ -1,12 +1,9 @@
 # UDP
 
-[User Datagram Protocol](https://datatracker.ietf.org/doc/html/rfc768) (UDP),
-which provides an unreliable, connectionless service to the invoking application.
+Services provided by UDP (User Datagram Protocol):
 
-Services provided by UDP:
-
-1. data delivery (multiplexing)
-2. error checking
+1. [data delivery (multiplexing)](#multiplexing)
+2. [error checking](#error-checking)
 
 ## Header
 
@@ -20,9 +17,18 @@ title UDP Packet
 64-95: "Data (variable length)"
 ```
 
-- Port: used to multiplexing
-- Length: the number of bytes in the UDP segment (header plus data)
-- Checksum: used by the receiving host to check whether errors have been introduced into the segment
+Used for [multiplexing](#multiplexing):
+
+- **Source Port**
+- **Destination Port**
+
+Used for simple data validation:
+
+- **Checksum**
+
+Other fields:
+
+- **Length**: the number of bytes in the UDP segment (header plus data)
 
 ## Multiplexing
 
