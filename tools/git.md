@@ -94,7 +94,7 @@ hello
 >    4c479de fruits/apple.txt
 >    ```
 
-![add](../imgs/git-add.png)
+![add](../imgs/git-add.svg)
 
 ## Commit
 
@@ -177,7 +177,7 @@ ce01362 hello.txt
    705d22a
    ```
 
-![commit](../imgs/git-commit.png)
+![commit](../imgs/git-commit.svg)
 
 ## Branch
 
@@ -929,8 +929,6 @@ Git Pull 会拉取远程仓库的代码到本地，例如：
 > [!NOTE]
 > 这里演示的是快速合并，如果是三路合并的话，则会产生一次新的提交
 
-![git pull](../imgs/git-pull-ff.png)
-
 ### 拉取远程仓库产生冲突
 
 ```sh
@@ -957,8 +955,6 @@ Git Pull 会拉取远程仓库的代码到本地，例如：
 * 5650cb4 commit 2
 * 8c7a5ee commit 1
 ```
-
-![git pull conflict](../imgs/git-pull.png)
 
 ## Push
 
@@ -1085,7 +1081,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 > 由于 `reset --soft` 仅仅移动了指针，因此还原 Reset 之前的状态很容易，
 > 只需要把指针移动回去：`git reset --soft 947a868`
 
-![git-reset-soft](../imgs/git-reset-soft.png)
+![git-reset-soft](../imgs/git-reset-soft.svg)
 
 ### 重置指针，暂存区
 
@@ -1127,7 +1123,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 > 由于 `reset --mixed` 仅仅移动了指针，并修改了 Index，因此还原 Reset 之前的状态很容易，
 > 只需要把指针移动回去，并把 Index 改回去：`git reset --mixed 947a868`
 
-![git-reset-mixed](../imgs/git-reset-mixed.png)
+![git-reset-mixed](../imgs/git-reset-mixed.svg)
 
 ### 重置指针，暂存区，工作区
 
@@ -1174,7 +1170,7 @@ Git Reset 用于还原 HEAD 到指定提交。例如：
 > 可以去垃圾对象里翻找，如果 Working Tree 的修改没有暂存，那么 Git 将会丢失
 > 这部分内容，但 IDE 的缓存文件里有可能可以找到
 
-![git-reset-hard](../imgs/git-reset-hard.png)
+![git-reset-hard](../imgs/git-reset-hard.svg)
 
 ## Stash
 
