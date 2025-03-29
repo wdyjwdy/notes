@@ -219,7 +219,7 @@ d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-![branch](../imgs/git-branch.png)
+![branch](../imgs/git-branch.svg)
 
 ### 删除分支
 
