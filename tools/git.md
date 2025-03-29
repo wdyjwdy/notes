@@ -788,7 +788,7 @@ Git Clone 会将 Github 上的代码仓库克隆到本地，例如：
 8c7a5ee commit 1
 ```
 
-![git clone](../imgs/git-clone.png)
+![git clone](../imgs/git-clone.svg)
 
 与在本地 init 的仓库相比，clone 下来的仓库，有以下一些变化：
 
@@ -886,7 +886,7 @@ Git Fetch 会同步远程仓库的代码到本地，例如：
 > [!NOTE]
 > 注意，`git fetch` 命令不会更新本地的 main 分支指针
 
-![git fetch](../imgs/git-fetch.png)
+![git fetch](../imgs/git-fetch.svg)
 
 ### FETCH_HEAD 是做什么工作的
 
