@@ -311,7 +311,7 @@ d58f2f5 commit 2
 43bed3d commit 1
 ```
 
-![switch](../imgs/git-switch.png)
+![switch](../imgs/git-switch.svg)
 
 ### 切换到提交
 
@@ -355,7 +355,7 @@ d58f2f5 (HEAD) commit 2
 > [!NOTE]
 > 如果想基于该提交工作，可以执行 `git switch -c <name>` 创建一个新分支开始工作
 
-![switch-detach](../imgs/git-switch-detach.png)
+![switch-detach](../imgs/git-switch-detach.svg)
 
 ## Merge
 
@@ -405,7 +405,7 @@ Git Merge 会合并分支，例如：
 * 1b157d3 commit 1
 ```
 
-![fast-forward](../imgs/git-merge-ff.png)
+![fast-forward](../imgs/git-merge-ff.svg)
 
 ### 三路合并
 
@@ -476,7 +476,7 @@ Git Merge 会合并分支，例如：
 > [!NOTE]
 > 注意，Merge 操作产生的提交，有两个 parent，即两个父节点
 
-![3-way-merge](../imgs/git-merge.png)
+![3-way-merge](../imgs/git-merge.svg)
 
 ### 三路合并产生冲突
 
@@ -602,7 +602,7 @@ Rebase 会将提交重新应用到指定分支，例如：
 > [!CAUTION]
 > 注意 rebase 后的 commit 哈希值会改变
 
-![git rebase](../imgs/git-rebase.png)
+![git rebase](../imgs/git-rebase.svg)
 
 ### 应用分支产生冲突
 
@@ -699,7 +699,7 @@ a0f247e (HEAD -> main, tag: v1) commit 3
 e7f88c9 commit 1
 ```
 
-![git tag](../imgs/git-tag.png)
+![git tag](../imgs/git-tag.svg)
 
 ### 创建内容标签
 
