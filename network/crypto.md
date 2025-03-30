@@ -6,30 +6,30 @@
 
 ### RSA
 
-**密钥生成过程**
+**Key Generation**
 
-1. 选择两个大质数 $p$ 和 $q$
-2. 计算 $n = pq$ 和 $z = (p - 1)(q - 1)$
-3. 选择一个小于 $n$ 的数 $e$，使得 $e$ 和 $z$ 互质
-4. 选择数 $d$，使得 $ed \mod z = 1$
-5. 最后，公钥为 $(n, e)$，私钥为 $(n, d)$
+1. Choose two large prime numbers $p$ and $q$
+2. Compute $n = pq$ and $z = (p - 1)(q - 1)$
+3. Choose a number $e$ less than $n$ such that $e$ and $z$ are coprime
+4. Choose a number $d$ such that $ed \mod z = 1$
+5. Finally, the public key is $(n, e)$ and the private key is $(n, d)$
 
-**信息加密解密过程**
+**Encryption and Decryption**
 
-1. 加密：$c = m^e \mod n$
-2. 解密：$m = c^d \mod n$
+1. Encryption: $c = m^e \mod n$
+2. Decryption: $m = c^d \mod n$
 
-其中 $m$ (Message) 需要满足 $m < n$。
+Where $m < n$
 
-**例子**
+**Example**
 
 | p   | q   | n   | z   | e   | d   |
 | --- | --- | --- | --- | --- | --- |
 | 11  | 13  | 143 | 120 | 7   | 103 |
 
-- 公钥：$(143, 7)$
-- 私钥：$(143, 103)$
-- 明文：`hello`
+- Public Key: $(143, 7)$
+- Private Key: $(143, 103)$
+- Message: `hello`
 
 | Message | ASCII | Encryption | Decryption | Message |
 | ------- | ----- | ---------- | ---------- | ------- |
