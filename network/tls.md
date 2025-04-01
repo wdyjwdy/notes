@@ -80,6 +80,8 @@ sequenceDiagram
 
 ### MD5
 
+![md5](../imgs/network-tls-md5.svg)
+
 ### SHA-1
 
 ## 数字签名
