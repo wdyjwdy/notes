@@ -1,6 +1,6 @@
-# UDP
+# User Datagram Protocol (UDP)
 
-Services provided by UDP (User Datagram Protocol):
+Services provided by UDP:
 
 1. [data delivery (multiplexing)](#multiplexing)
 2. [error checking](#error-checking)

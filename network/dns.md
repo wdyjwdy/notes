@@ -1,6 +1,9 @@
-# DNS
+# Domain Name System (DNS)
 
-[Domain Name System](https://datatracker.ietf.org/doc/html/rfc1035) (DNS), translates hostnames to IP addresses. DNS belongs to the application layer and is based on UDP protocols.
+DNS translates hostnames to IP addresses.
+
+- application layer
+- based on UDP
 
 > [!TIP]
 >

@@ -1,6 +1,6 @@
-# TCP
+# Transmission Control Protocol (TCP)
 
-Services provided by TCP (Transmission Control Protocol):
+Services provided by TCP:
 
 1. [data delivery (multiplexing)](#multiplexing)
 2. [reliable data transfer](#reliable-data-transfer)

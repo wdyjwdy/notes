@@ -1,6 +1,6 @@
-# CDN
+# Content Distribution Network (CDN)
 
-Content Distribution Network (CDN), reduces the distance between the user and the assets.
+CDN reduces the distance between the user and the assets.
 
 ![CDN](../imgs/network-cdn.svg)
 

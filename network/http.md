@@ -1,8 +1,4 @@
-# HTTP
-
-HyperText Transfer Protocol (HTTP), the Web’s application-layer protocol.
-
-> RFC: [HTTP/1.0](https://datatracker.ietf.org/doc/html/rfc1945), [HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7230), [HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)
+# HyperText Transfer Protocol (HTTP)
 
 ## Messages
 
