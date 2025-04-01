@@ -184,7 +184,7 @@ sequenceDiagram
   - 💬 algorithm list
   - 💬 client random
   - ⚙️ **exchange key generation**: the client calculates a private/public keypair for key exchange
-  - 💬 public key list
+  - 💬 client public key list
 - **Step 2**
   - 💬 selected version
   - 💬 selected algorithm
@@ -195,7 +195,5 @@ sequenceDiagram
   - ⚙️ **encryption keys caculation**: using `client public key`, `server private key`, `hash of ClientHello and ServerHello`
   - **verification data**: built from a hash of all handshake messages
 - **Step 3**
-  - ⚙️ **exchange key generation**: the client calculates a private/public keypair for key exchange
-  - 💬 client public key
   - ⚙️ **encryption keys caculation**: using `server public key`, `client private key`, `hash of ClientHello and ServerHello`
   - 💬 **verification data**: built from a hash of all handshake messages
