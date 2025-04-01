@@ -1,4 +1,4 @@
-# Transport Layer Security (TLS) 
+# Transport Layer Security (TLS)
 
 安全通信需要满足以下条件:
 
@@ -137,6 +137,7 @@ sequenceDiagram
   S ->> C: Server Hello
   C ->> S: Client Finished
   S ->> C: Server Finished
+  C ->> S: Data...
 ```
 
 - **Step 1**
@@ -154,13 +155,47 @@ sequenceDiagram
   - ⚙️ **exchange key generation**: the client calculates a private/public keypair for key exchange
   - 💬 client public key
   - ⚙️ **encryption keys caculation**: using `server random`, `client random`, `server public key`, `client private key`
-  - 💬 **verification data**: built from a hash of all handshake messages and encrypts it with the client private key
+  - 💬 **verification data**: built from a hash of all handshake messages
 - **Step 4**
   - ⚙️ **encryption keys caculation**: using `server random`, `client random`, `client public key`, `server private key`
-  - 💬 **verification data**: built from a hash of all handshake messages and encrypts it with the server private key
+  - 💬 **verification data**: built from a hash of all handshake messages
 
 > [!TIP]
 >
 > 1. `random` is used to prevent **playback attack**
->
 > 2. `verification data` is used to verify the integrity of the handshake messages
+
+## TLS 1.3
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant C as Client
+  participant S as Server
+
+  Note over C, S: TCP Handshake (3 TTL)
+  C ->> S: Client Hello
+  S ->> C: Server Hello,  Server Finished
+  C ->> S: Client Finished, Data...
+```
+
+- **Step 1**
+  - 💬 version list
+  - 💬 algorithm list
+  - 💬 client random
+  - ⚙️ **exchange key generation**: the client calculates a private/public keypair for key exchange
+  - 💬 public key list
+- **Step 2**
+  - 💬 selected version
+  - 💬 selected algorithm
+  - 💬 server random
+  - ⚙️ **exchange key generation**: the server calculates a private/public keypair for key exchange
+  - 💬 server public key
+  - 💬 certificate
+  - ⚙️ **encryption keys caculation**: using `client public key`, `server private key`, `hash of ClientHello and ServerHello`
+  - **verification data**: built from a hash of all handshake messages
+- **Step 3**
+  - ⚙️ **exchange key generation**: the client calculates a private/public keypair for key exchange
+  - 💬 client public key
+  - ⚙️ **encryption keys caculation**: using `server public key`, `client private key`, `hash of ClientHello and ServerHello`
+  - 💬 **verification data**: built from a hash of all handshake messages
