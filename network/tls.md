@@ -78,10 +78,9 @@ sequenceDiagram
 
 Key Generation:
 
-1. Public parameters: `p = 7`, `g = 3`
-2. Client parameters: `a = 10`, `A = g^a mod p = 4`
-3. Server parameters: `b = 20`, `B = g^b mod p = 2`
-4. Finally, the client computes the shared key `K = B^a mod p = 2`, the server computes the shared key `K = A^b mod p = 2`
+1. Client: `p = 7`, `g = 3`, private key `a = 10`, public key `A = g^a mod p = 4`
+2. Server: private key `b = 20`, public key `B = g^b mod p = 2`
+3. Finally, the client computes the shared key `K = B^a mod p = 2`, the server computes the shared key `K = A^b mod p = 2`
 
 Encryption and Decryption:
 
