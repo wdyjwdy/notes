@@ -67,6 +67,27 @@ Where $m < n$
 
 ### DH
 
+```mermaid
+sequenceDiagram
+  participant C as Client
+  participant S as Server
+
+  C ->> S: p, g, A
+  S ->> C: B
+```
+
+Key Generation:
+
+1. Public parameters: `p = 7`, `g = 3`
+2. Client parameters: `a = 10`, `A = g^a mod p = 4`
+3. Server parameters: `b = 20`, `B = g^b mod p = 2`
+4. Finally, the client computes the shared key `K = B^a mod p = 2`, the server computes the shared key `K = A^b mod p = 2`
+
+Encryption and Decryption:
+
+- Encryption: $c = K(m)$
+- Decryption: $m = K(c)$
+
 ## 摘要算法
 
 可以使用**哈希函数**，来进行完整性验证，B 通过计算 $Hash(H) = H$，来判断是否完整
